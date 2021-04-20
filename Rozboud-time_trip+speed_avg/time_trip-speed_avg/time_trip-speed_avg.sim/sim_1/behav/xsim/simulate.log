@@ -1,0 +1,6 @@
+Vivado Simulator 2020.2
+Time resolution is 1 ps
+Note: Stimulus process started
+Time: 0 ps  Iteration: 0  Process: /tb_time_trip/p_stimulus  File: C:/Users/Admin/time_trip-speed_avg/time_trip-speed_avg.srcs/sim_1/new/tb_time_trip.vhd
+Note: Stimulus process finished
+Time: 350 ns  Iteration: 0  Process: /tb_time_trip/p_stimulus  File: C:/Users/Admin/time_trip-speed_avg/time_trip-speed_avg.srcs/sim_1/new/tb_time_trip.vhd

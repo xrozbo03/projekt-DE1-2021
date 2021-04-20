@@ -1,0 +1,6 @@
+Vivado Simulator 2020.2
+Time resolution is 1 ps
+Note: Stimulus process started
+Time: 0 ps  Iteration: 0  Process: /tb_count_1sec/p_stimulus  File: C:/Users/Mark1/Downloads/BPC-DE1/DE1 projekt/Slvik cycle+count_1sec/projekt-DE1-2021/Slavik cycle+count_1sec/project_1/project_1.srcs/sim_1/new/tb_count_1sec.vhd
+Note: Stimulus process finished
+Time: 600 ns  Iteration: 0  Process: /tb_count_1sec/p_stimulus  File: C:/Users/Mark1/Downloads/BPC-DE1/DE1 projekt/Slvik cycle+count_1sec/projekt-DE1-2021/Slavik cycle+count_1sec/project_1/project_1.srcs/sim_1/new/tb_count_1sec.vhd

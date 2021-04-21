@@ -1,2 +1,2 @@
-INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/Admin/time_trip-speed_avg/time_trip-speed_avg.srcs/sim_1/new/tb_time_trip.vhd" into library xil_defaultlib
-INFO: [VRFC 10-3107] analyzing entity 'tb_time_trip'
+INFO: [VRFC 10-163] Analyzing VHDL file "D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg/time_trip-speed_avg.srcs/sim_1/new/tb_speed_avg.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'tb_speed_avg'

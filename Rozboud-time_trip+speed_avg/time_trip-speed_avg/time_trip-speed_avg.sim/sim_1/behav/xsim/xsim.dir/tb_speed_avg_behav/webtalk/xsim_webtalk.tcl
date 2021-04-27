@@ -1,6 +1,6 @@
 webtalk_init -webtalk_dir D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg/time_trip-speed_avg.sim/sim_1/behav/xsim/xsim.dir/tb_speed_avg_behav/webtalk/
 webtalk_register_client -client project
-webtalk_add_data -client project -key date_generated -value "Wed Apr 21 20:49:12 2021" -context "software_version_and_target_device"
+webtalk_add_data -client project -key date_generated -value "Tue Apr 27 17:59:20 2021" -context "software_version_and_target_device"
 webtalk_add_data -client project -key product_version -value "XSIM v2020.2 (64-bit)" -context "software_version_and_target_device"
 webtalk_add_data -client project -key build_version -value "3064766" -context "software_version_and_target_device"
 webtalk_add_data -client project -key os_platform -value "WIN64" -context "software_version_and_target_device"
@@ -14,7 +14,7 @@ webtalk_add_data -client project -key target_package -value "not_applicable" -co
 webtalk_add_data -client project -key target_speed -value "not_applicable" -context "software_version_and_target_device"
 webtalk_add_data -client project -key random_id -value "c67022f4-0e6e-46f7-bf93-3f3d990939f4" -context "software_version_and_target_device"
 webtalk_add_data -client project -key project_id -value "cdd92ebb60df4f9a8bf8a44da234916c" -context "software_version_and_target_device"
-webtalk_add_data -client project -key project_iteration -value "130" -context "software_version_and_target_device"
+webtalk_add_data -client project -key project_iteration -value "209" -context "software_version_and_target_device"
 webtalk_add_data -client project -key os_name -value "Windows Server 2016 or Windows 10" -context "user_environment"
 webtalk_add_data -client project -key os_release -value "major release  (build 9200)" -context "user_environment"
 webtalk_add_data -client project -key cpu_name -value "Intel(R) Core(TM) i5-3380M CPU @ 2.90GHz" -context "user_environment"
@@ -24,9 +24,9 @@ webtalk_add_data -client project -key system_ram -value "16.000 GB" -context "us
 webtalk_register_client -client xsim
 webtalk_add_data -client xsim -key Command -value "xsim" -context "xsim\\command_line_options"
 webtalk_add_data -client xsim -key trace_waveform -value "true" -context "xsim\\usage"
-webtalk_add_data -client xsim -key runtime -value "365 us" -context "xsim\\usage"
+webtalk_add_data -client xsim -key runtime -value "50 ms" -context "xsim\\usage"
 webtalk_add_data -client xsim -key iteration -value "2" -context "xsim\\usage"
-webtalk_add_data -client xsim -key Simulation_Time -value "0.03_sec" -context "xsim\\usage"
-webtalk_add_data -client xsim -key Simulation_Memory -value "6640_KB" -context "xsim\\usage"
-webtalk_transmit -clientid 2733128606 -regid "" -xml D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg/time_trip-speed_avg.sim/sim_1/behav/xsim/xsim.dir/tb_speed_avg_behav/webtalk/usage_statistics_ext_xsim.xml -html D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg/time_trip-speed_avg.sim/sim_1/behav/xsim/xsim.dir/tb_speed_avg_behav/webtalk/usage_statistics_ext_xsim.html -wdm D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg/time_trip-speed_avg.sim/sim_1/behav/xsim/xsim.dir/tb_speed_avg_behav/webtalk/usage_statistics_ext_xsim.wdm -intro "<H3>XSIM Usage Report</H3><BR>"
+webtalk_add_data -client xsim -key Simulation_Time -value "56.01_sec" -context "xsim\\usage"
+webtalk_add_data -client xsim -key Simulation_Memory -value "14480_KB" -context "xsim\\usage"
+webtalk_transmit -clientid 1330337618 -regid "" -xml D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg/time_trip-speed_avg.sim/sim_1/behav/xsim/xsim.dir/tb_speed_avg_behav/webtalk/usage_statistics_ext_xsim.xml -html D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg/time_trip-speed_avg.sim/sim_1/behav/xsim/xsim.dir/tb_speed_avg_behav/webtalk/usage_statistics_ext_xsim.html -wdm D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg/time_trip-speed_avg.sim/sim_1/behav/xsim/xsim.dir/tb_speed_avg_behav/webtalk/usage_statistics_ext_xsim.wdm -intro "<H3>XSIM Usage Report</H3><BR>"
 webtalk_terminate

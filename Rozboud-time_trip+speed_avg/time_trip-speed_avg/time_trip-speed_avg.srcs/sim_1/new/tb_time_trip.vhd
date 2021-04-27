@@ -44,7 +44,7 @@ architecture testbench of tb_time_trip is
     signal s_clk             : std_logic;
     signal s_enable          : std_logic;
     signal s_cnt_1sec        : std_logic;
-    signal s_reset            : std_logic;
+    signal s_reset           : std_logic;
     signal s_time_count      : std_logic_vector (19 - 1 downto 0);
     signal s_time_trip_dig1  : std_logic_vector (4 - 1 downto 0);
     signal s_time_trip_dig2  : std_logic_vector (4 - 1 downto 0);

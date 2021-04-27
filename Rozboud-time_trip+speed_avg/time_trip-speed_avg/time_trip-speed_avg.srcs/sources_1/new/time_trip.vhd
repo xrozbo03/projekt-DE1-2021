@@ -57,7 +57,7 @@ architecture Behavioral of time_trip is
     signal s_cntall : unsigned(19 - 1 downto 0); -- sum of all seconds
 
     -- local constants to compare specific values of counters
-    constant c_NINE      : unsigned(4 - 1 downto 0) := b"1001";  -- 
+    constant c_NINE      : unsigned(4 - 1 downto 0) := b"1001";
     constant c_FIVE      : unsigned(4 - 1 downto 0) := b"0101";
     constant c_FIVTYNINE : unsigned(6 - 1 downto 0) := b"11_1011";
 

@@ -35,14 +35,14 @@ end entity tb_cycle;
 architecture testbench of tb_cycle is
 
     -- Number of bits for testbench counter
-   -- constant c_CNT_WIDTH         : natural := 2;
+   --constant c_CNT_WIDTH         : natural := 1;
     constant c_CLK_100MHZ_PERIOD : time    := 10 ns;
 
     --Local signals
     signal s_clk_100MHz : std_logic;
     signal s_rst        : std_logic;
     signal s_en         : std_logic;
-    signal s_cycle      : std_logic_vector(2 - 1 downto 0);
+    signal s_cycle      : std_logic;
     signal s_hall_sens_i : std_logic
     
 
@@ -83,7 +83,7 @@ begin
         
         s_rst <= '1';
         wait for 80 ns;
-        assert s_cycle = "00"  --error report
+        assert s_cycle = "0"  --error report
         report "Stimulus process failed" severity error;  
 
         
@@ -93,7 +93,7 @@ begin
         
         s_rst <= '1';
         wait for 80 ns;
-        assert s_cycle = "00"
+        assert s_cycle = "0"
         report "Stimulus process failed" severity error;
 
         
@@ -120,7 +120,7 @@ begin
         end loop;
        
        s_rst <= '1';
-       wait for 1 ps;
+       wait for 1 ns;
        s_rst <= '0';
        
         while now < 10000 ns loop         

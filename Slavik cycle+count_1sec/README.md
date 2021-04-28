@@ -27,19 +27,18 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
+
 ------------------------------------------------------------------------
 -- Entity declaration for n-bit counter
 ------------------------------------------------------------------------
 entity count_1sec is
-    generic(
-        g_CNT_WIDTH : natural := 2      -- Number of bits for counter
-    );
+   
     port(
         clk      : in  std_logic;       -- Main clock
-        arst    : in  std_logic;       -- Asynchronous reset
-       en_i     : in  std_logic;       -- Enable input
+        rst    : in  std_logic;       -- Synchronous reset
+        en_i     : in  std_logic;       -- Enable input
         cnt_up_i : in  std_logic;       -- Direction of the counter
-        cnt_o    : out std_logic_vector(g_CNT_WIDTH - 1 downto 0)
+        cnt_o    : out std_logic
     );
 end entity count_1sec;
 
@@ -49,7 +48,7 @@ end entity count_1sec;
 architecture behavioral of count_1sec is
 
     -- Local counter
-    signal s_cnt_local : unsigned(g_CNT_WIDTH - 1 downto 0);
+  signal s_cnt_local : unsigned(26 downto 0);
 
 begin
     --------------------------------------------------------------------
@@ -57,28 +56,30 @@ begin
     -- Clocked process with synchronous reset which implements n-bit 
     -- up/down counter.
     --------------------------------------------------------------------
-  p_count_1sec : process(clk)
+    p_count_1sec : process(clk)
     begin
         if rising_edge(clk) then
         
             if (rst = '1') then               -- Synchronous reset
-                s_cnt_local <= (others => '0'); -- Clear all bits
+              s_cnt_local <= (others => '0');               -- Clear all bits
 
             elsif (en_i = '1') then       -- Test if counter is enabled
 
 
                 -- TEST COUNTER DIRECTION HERE
 
-               --  if (cnt_up_i = '1') then
+               
                 s_cnt_local <= s_cnt_local + 1;
+                if(s_cnt_local = "101111101011110000100000000") then
+                cnt_o <= '1';
            
-           
+           end if;
             end if;
         end if;
     end process p_count_1sec;
 
     -- Output must be retyped from "unsigned" to "std_logic_vector"
-    cnt_o <= std_logic_vector(s_cnt_local);
+  
 
 end architecture behavioral;
 

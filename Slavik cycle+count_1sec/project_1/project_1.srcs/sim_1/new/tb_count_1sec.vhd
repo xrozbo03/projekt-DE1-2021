@@ -21,6 +21,7 @@
 
 library ieee;
 use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
 ------------------------------------------------------------------------
 -- Entity declaration for testbench
@@ -35,7 +36,7 @@ end entity tb_count_1sec;
 architecture testbench of tb_count_1sec is
 
     -- Number of bits for testbench counter
-    constant c_CNT_WIDTH         : natural := 2;
+   constant c_CNT_WIDTH         : natural := 1;
     constant c_CLK_100MHZ_PERIOD : time    := 10 ns;
 
     --Local signals
@@ -43,7 +44,7 @@ architecture testbench of tb_count_1sec is
     signal s_rst        : std_logic;
     signal s_en         : std_logic;
     signal s_cnt_up     : std_logic;
-    signal s_cnt        : std_logic_vector(c_CNT_WIDTH - 1 downto 0);
+    signal s_cnt        : std_logic_vector(c_CNT_WIDTH - 1 downto 0)
 
 begin
     -- Connecting testbench signals with cnt_up_down entity
@@ -85,7 +86,7 @@ begin
         
         s_rst <= '1';
         wait for 80 ns;
-        assert s_cnt = "00"  --error report
+        assert s_cnt = "0"  --error report
         report "Stimulus process failed" severity error;  
 
         
@@ -95,7 +96,7 @@ begin
         
         s_rst <= '1';
         wait for 80 ns;
-        assert s_cnt = "00"
+        assert s_cnt = "0"
         report "Stimulus process failed" severity error;
 
         

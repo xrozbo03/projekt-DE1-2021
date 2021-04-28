@@ -35,14 +35,14 @@ use ieee.numeric_std.all;
 entity cycle is
          Port ( 
             hall_sens_i : in std_logic;
-            cycle_o     : out std_logic_vector(2 - 1 downto 0);
+            cycle_o     : out std_logic;
             clk         : in std_logic;
             rst         : in std_logic
           );
 end cycle;
 
 architecture Behavioral of cycle is
-  signal s_cycle_local : unsigned(2 - 1 downto 0);
+ -- signal s_cycle_local : unsigned(2 - 1 downto 0);
 begin
 
 p_cycle : process(clk)
@@ -51,13 +51,13 @@ begin
         
             if (rst = '1') then
              elsif hall_sens_i = '0' then     
-             s_cycle_local <= (others => '0');   
-             s_cycle_local <= s_cycle_local + 1;
+             --s_cycle_o <= (others => '0');   
+             cycle_o <= '1';
              end if;
              end if;
 
 end process p_cycle;
 
-cycle_o <= std_logic_vector(s_cycle_local);
+--cycle_o <= std_logic_vector(s_cycle_local);
 
 end architecture behavioral;

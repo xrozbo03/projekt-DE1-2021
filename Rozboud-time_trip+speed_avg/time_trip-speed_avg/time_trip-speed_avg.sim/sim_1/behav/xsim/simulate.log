@@ -1,6 +1,0 @@
-Vivado Simulator 2020.2
-Time resolution is 1 ps
-Note: Stimulus process started
-Time: 0 ps  Iteration: 0  Process: /tb_speed_avg/p_stimulus  File: D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg/time_trip-speed_avg.srcs/sim_1/new/tb_speed_avg.vhd
-Note: Stimulus process finished
-Time: 40 ms  Iteration: 0  Process: /tb_speed_avg/p_stimulus  File: D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg/time_trip-speed_avg.srcs/sim_1/new/tb_speed_avg.vhd

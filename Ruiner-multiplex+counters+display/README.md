@@ -6,4 +6,4 @@ The display type used in this project is **KW4-56NABA-P** with common anode ([da
 
 ## Diagram
 
-![Diagram](Images/projekt_schema.svg)
+![Diagram](Images/projekt_schema.PNG)

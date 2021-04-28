@@ -1,0 +1,115 @@
+/*
+
+Xilinx Vivado v2020.2 (64-bit) [Major: 2020, Minor: 2]
+SW Build: 3064766 on Wed Nov 18 09:12:45 MST 2020
+IP Build: 3064653 on Wed Nov 18 14:17:31 MST 2020
+
+Process ID (PID): 9356
+License: Customer
+Mode: GUI Mode
+
+Current time: 	Tue Apr 27 18:23:23 CEST 2021
+Time zone: 	Central European Standard Time (Europe/Prague)
+
+OS: Windows 10
+OS Version: 10.0
+OS Architecture: amd64
+Available processors (cores): 4
+
+Screen size: 3840x2160
+Screen resolution (DPI): 150
+Available screens: 2
+Default font: family=Segoe UI,name=Segoe UI,style=plain,size=18
+Scale size: 27
+
+Java version: 	11.0.2 64-bit
+Java home: 	D:/Programs/Xilinx/Vivado/2020.2/tps/win64/jre11.0.2
+Java executable location: 	D:/Programs/Xilinx/Vivado/2020.2/tps/win64/jre11.0.2/bin/java.exe
+Java initial memory (-Xms): 	128 MB
+Java maximum memory (-Xmx):	 3 GB
+
+
+User name: 	Jakub Rozboud
+User home directory: C:/Users/Admin
+User working directory: D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg
+User country: 	CZ
+User language: 	cs
+User locale: 	cs_CZ
+
+RDI_BASEROOT: D:/Programs/Xilinx/Vivado
+HDI_APPROOT: D:/Programs/Xilinx/Vivado/2020.2
+RDI_DATADIR: D:/Programs/Xilinx/Vivado/2020.2/data
+RDI_BINDIR: D:/Programs/Xilinx/Vivado/2020.2/bin
+
+Vivado preferences file location: C:/Users/Admin/AppData/Roaming/Xilinx/Vivado/2020.2/vivado.xml
+Vivado preferences directory: C:/Users/Admin/AppData/Roaming/Xilinx/Vivado/2020.2/
+Vivado layouts directory: C:/Users/Admin/AppData/Roaming/Xilinx/Vivado/2020.2/data/layouts
+PlanAhead jar file location: 	D:/Programs/Xilinx/Vivado/2020.2/lib/classes/planAhead.jar
+Vivado log file location: 	D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg/vivado.log
+Vivado journal file location: 	D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg/vivado.jou
+Engine tmp dir: 	D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg/.Xil/Vivado-9356-DESKTOP-X230
+
+Xilinx Environment Variables
+----------------------------
+XILINX: D:/Programs/Xilinx/Vivado/2020.2/ids_lite/ISE
+XILINX_DSP: D:/Programs/Xilinx/Vivado/2020.2/ids_lite/ISE
+XILINX_HLS: D:/Programs/Xilinx/Vitis_HLS/2020.2
+XILINX_PLANAHEAD: D:/Programs/Xilinx/Vivado/2020.2
+XILINX_VIVADO: D:/Programs/Xilinx/Vivado/2020.2
+XILINX_VIVADO_HLS: D:/Programs/Xilinx/Vivado/2020.2
+
+
+GUI allocated memory:	185 MB
+GUI max memory:		3,072 MB
+Engine allocated memory: 1,028 MB
+
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+*/
+
+// TclEventType: START_GUI
+// WARNING: HEventQueue.dispatchEvent() is taking  1187 ms.
+// Tcl Message: start_gui 
+// TclEventType: PROJECT_OPEN_DIALOG
+// bz (cr):  Open Project : addNotify
+// Opening Vivado Project: D:\VUT\2020-2021_Letni_semestr\BPC-DE1\projekt-DE1-2021\Rozboud-time_trip+speed_avg\time_trip-speed_avg\time_trip-speed_avg.xpr. Version: Vivado v2020.2 
+// TclEventType: DEBUG_PROBE_SET_CHANGE
+// Tcl Message: open_project D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg/time_trip-speed_avg.xpr 
+// Tcl Message: INFO: [ProjectBase 1-489] The host OS only allows 260 characters in a normal path. The project is stored in a path with more than 80 characters. If you experience issues with IP, Block Designs, or files not being found, please consider moving the project to a location with a shorter path. Alternately consider using the OS subst command to map part of the path to a drive letter. Current project path is 'D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg' 
+// TclEventType: MSGMGR_MOVEMSG
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: FILE_SET_NEW
+// TclEventType: RUN_CURRENT
+// TclEventType: PROJECT_DASHBOARD_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_NEW
+// HMemoryUtils.trashcanNow. Engine heap size: 1,028 MB. GUI used memory: 82 MB. Current time: 4/27/21, 6:23:24 PM CEST
+// Tcl Message: open_project D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg/time_trip-speed_avg.xpr 
+// Tcl Message: INFO: [ProjectBase 1-489] The host OS only allows 260 characters in a normal path. The project is stored in a path with more than 80 characters. If you experience issues with IP, Block Designs, or files not being found, please consider moving the project to a location with a shorter path. Alternately consider using the OS subst command to map part of the path to a drive letter. Current project path is 'D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg' 
+// Tcl Message: Scanning sources... Finished scanning sources 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1704] No user IP repositories specified 
+// TclEventType: PROJECT_NEW
+// [GUI Memory]: 89 MB (+91137kb) [00:00:17]
+// [Engine Memory]: 1,028 MB (+926218kb) [00:00:17]
+// [GUI Memory]: 107 MB (+14167kb) [00:00:17]
+// [GUI Memory]: 131 MB (+18988kb) [00:00:18]
+// WARNING: HEventQueue.dispatchEvent() is taking  6129 ms.
+// Tcl Message: INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'D:/Programs/Xilinx/Vivado/2020.2/data/ip'. 
+// Tcl Message: open_project: Time (s): cpu = 00:00:24 ; elapsed = 00:00:10 . Memory (MB): peak = 1019.016 ; gain = 0.000 
+// Project name: time_trip-speed_avg; location: D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg; part: xc7a100tcsg324-1
+dismissDialog("Open Project"); // bz
+// Tcl Command: 'rdi::info_commands {device::*}'
+// Tcl Command: 'rdi::info_commands {debug::*}'
+// Tcl Command: 'rdi::info_commands {*}'
+// Tcl Message: update_compile_order -fileset sources_1 

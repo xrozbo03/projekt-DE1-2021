@@ -1,0 +1,14 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Tue Apr 27 18:23:04 2021
+# Process ID: 9356
+# Current directory: D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent4716 D:\VUT\2020-2021_Letni_semestr\BPC-DE1\projekt-DE1-2021\Rozboud-time_trip+speed_avg\time_trip-speed_avg\time_trip-speed_avg.xpr
+# Log file: D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg/vivado.log
+# Journal file: D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project D:/VUT/2020-2021_Letni_semestr/BPC-DE1/projekt-DE1-2021/Rozboud-time_trip+speed_avg/time_trip-speed_avg/time_trip-speed_avg.xpr
+update_compile_order -fileset sources_1

@@ -41,9 +41,10 @@ architecture testbench of tb_time_trip is
     constant c_CLK_100MHZ_PERIOD : time    := 1 ns; -- 1 ns for faster simulation
     
     -- local signals
+    signal s_clk             : std_logic;
     signal s_enable          : std_logic;
     signal s_cnt_1sec        : std_logic;
-    signal s_arst            : std_logic;
+    signal s_reset           : std_logic;
     signal s_time_count      : std_logic_vector (19 - 1 downto 0);
     signal s_time_trip_dig1  : std_logic_vector (4 - 1 downto 0);
     signal s_time_trip_dig2  : std_logic_vector (4 - 1 downto 0);
@@ -54,9 +55,10 @@ begin
     -- Unit under test
     uut_time_trip : entity work.time_trip
         port map (
+            clk              => s_clk,
             enable_i         =>  s_enable,
             cnt_1sec_i       =>  s_cnt_1sec,      
-            arst_i           =>  s_arst,         
+            reset            =>  s_reset,         
             time_count_o     =>  s_time_count,    
             time_trip_dig1_o =>  s_time_trip_dig1,
             time_trip_dig2_o =>  s_time_trip_dig2,
@@ -70,9 +72,9 @@ begin
     p_clk_gen : process
     begin
         while now < 365000 ns loop         -- 36500 periods of 100MHz clock
-            s_cnt_1sec <= '0';
+            s_clk <= '0';
             wait for c_CLK_100MHZ_PERIOD / 2;
-            s_cnt_1sec <= '1';
+            s_clk <= '1';
             wait for c_CLK_100MHZ_PERIOD / 2;
         end loop;
         wait;
@@ -84,18 +86,32 @@ begin
     p_reset_gen : process
     begin
         -- Reset deactivated
-        s_arst <= '0'; wait for 10 ns;
+        s_reset <= '0'; wait for 10 ns;
         -- Reset activated
-        s_arst <= '1'; wait for 2 ns;
+        s_reset <= '1'; wait for 2 ns;
 
-        s_arst <= '0'; wait for 150 ns;
+        s_reset <= '0'; wait for 150 ns;
 
-        s_arst <= '1'; wait for 2 ns;
+        s_reset <= '1'; wait for 2 ns;
 
-        s_arst <= '0';
+        s_reset <= '0';
         wait;
     end process p_reset_gen;
 
+  --------------------------------------------------------------------
+  -- Generation process for 1 sec counter simulation
+  --------------------------------------------------------------------
+    p_clk_1sec_gen : process
+    begin
+        while now < 365000 ns loop         -- 73000 periods of 1 sec enambe signal
+            s_cnt_1sec <= '0';
+            wait for 5ns;
+            s_cnt_1sec <= '1';
+            wait for 5ns;
+        end loop;
+        wait;
+    end process p_clk_1sec_gen;
+    
   --------------------------------------------------------------------
   -- Data generation process
   --------------------------------------------------------------------

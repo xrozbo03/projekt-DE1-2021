@@ -35,8 +35,9 @@ begin
     p_output_derailleur : process(clk)
     begin
         if rising_edge(clk) then
-            if (reset = '1') then       -- Synchronous reset
-                s_state <= TWO ;        -- Set initial state
+            if (reset = '1') then           -- Synchronous reset
+                s_state     <= TWO ;        -- Set initial state
+                s_cnt_btn   <= '0';
             elsif (btn_i = '1' and s_cnt_btn = '0') then    -- if button is pushed after release
                 case s_state is
                     when ONE =>

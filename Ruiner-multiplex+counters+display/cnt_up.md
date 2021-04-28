@@ -20,10 +20,10 @@ entity cnt_up is
         g_CNT_WIDTH : natural := 2      -- Number of bits for counter
     );
     port(
-        clk      : in  std_logic;       -- Main clock
-        arst     : in  std_logic;       -- Asynchronous reset
-        en_i     : in  std_logic;       -- Enable input
-        cnt_o    : out std_logic_vector(g_CNT_WIDTH - 1 downto 0)
+        clk      : in  std_logic;                                   -- Main clock
+        reset    : in  std_logic;                                   -- Synchronous reset
+        en_i     : in  std_logic;                                   -- Enable input
+        cnt_o    : out std_logic_vector(g_CNT_WIDTH - 1 downto 0)   -- Output signal for selected digit
     );
 end entity cnt_up;
 
@@ -38,19 +38,17 @@ architecture behavioral of cnt_up is
 begin
     --------------------------------------------------------------------
     -- p_cnt_up:
-    -- Clocked process with asynchronous reset which implements n-bit
+    -- Clocked process with synchronous reset which implements 2-bit
     -- up counter.
     --------------------------------------------------------------------
-    p_cnt_up : process(clk, arst)
+    p_cnt_up : process(clk)
     begin
-         if (arst = '1') then               -- Synchronous reset
-                s_cnt_local <= (others => '0'); -- Clear all bits
 
-         elsif rising_edge(clk) then
-
-                if (en_i = '1') then       -- Test if counter is enabled
-                    s_cnt_local <= s_cnt_local + 1;
-
+        if rising_edge(clk) then
+            if (reset = '1') then                  -- Synchronous reset
+                s_cnt_local <= (others => '0');    -- Clear all bits
+            elsif (en_i = '1') then                -- Test if counter is enabled
+                s_cnt_local <= s_cnt_local + 1;    -- Increase local counter by 1
             end if;
         end if;
     end process p_cnt_up;
@@ -89,7 +87,7 @@ architecture testbench of tb_cnt_up is
 
     --Local signals
     signal s_clk_100MHz : std_logic;
-    signal s_arst       : std_logic;
+    signal s_reset      : std_logic;
     signal s_en         : std_logic;
     signal s_cnt        : std_logic_vector(c_CNT_WIDTH - 1 downto 0);
 
@@ -102,7 +100,7 @@ begin
         )
         port map(
             clk      => s_clk_100MHz,
-            arst     => s_arst,
+            reset    => s_reset,
             en_i     => s_en,
             cnt_o    => s_cnt
         );
@@ -126,27 +124,27 @@ begin
     --------------------------------------------------------------------
     p_reset_gen : process
     begin
-        s_arst <= '0';
+        s_reset <= '0';
         wait for 12 ns;
 
         -- Reset activated
-        s_arst <= '1';
+        s_reset <= '1';
         wait for 73 ns;
         assert(s_cnt = "00")
         report "Test failed for reset value 1" severity error;
 
         -- Reset deactivated
-        s_arst <= '0';
+        s_reset <= '0';
         wait for 257 ns;
 
         -- Reset activated
-        s_arst <= '1';
+        s_reset <= '1';
         wait for 73 ns;
         assert(s_cnt = "00")
         report "Test failed for reset value 1" severity error;
 
         -- Reset deactivated
-        s_arst <= '0';
+        s_reset <= '0';
         wait;
     end process p_reset_gen;
 

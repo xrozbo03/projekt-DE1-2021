@@ -17,12 +17,13 @@ use ieee.numeric_std.all;
 ------------------------------------------------------------------------
 entity cnt_up_mode is
     generic(
-        g_CNT_WIDTH : natural := 2      -- Number of bits for counter
+        g_CNT_WIDTH : natural := 2                                  -- Number of bits for counter
     );
     port(
-        arst     : in  std_logic;       -- Asynchronous reset
-        en_i     : in  std_logic;       -- Push button input
-        cnt_o    : out std_logic_vector(g_CNT_WIDTH - 1 downto 0)
+        clk      : in  std_logic;                                   -- Main clock
+        reset    : in  std_logic;                                   -- Synchronous reset
+        en_i     : in  std_logic;                                   -- Push button input
+        cnt_o    : out std_logic_vector(g_CNT_WIDTH - 1 downto 0)   -- Output to driver_7seg_4digits_mode
     );
 end cnt_up_mode;
 
@@ -37,20 +38,19 @@ architecture Behavioral of cnt_up_mode is
 begin
    --------------------------------------------------------------------
     -- p_cnt_up:
-    -- Clocked process with asynchronous reset which implements n-bit
+    -- Clocked process with synchronous reset which implements n-bit
     -- up counter.
     --------------------------------------------------------------------
-    p_cnt_up : process(en_i, arst)
+    p_cnt_up : process(clk, en_i)
     begin
-         if (arst = '1') then               -- Synchronous reset
-                s_cnt_local <= (others => '0'); -- Clear all bits
 
-         elsif rising_edge(en_i) then
-
-                if (en_i = '1') then       -- Test if counter is enabled
-                    s_cnt_local <= s_cnt_local + 1;
-
+        if rising_edge(clk) then
+            if (reset = '1') then                       -- Synchronous reset
+                s_cnt_local <= (others => '0');         -- Clear all bits
             end if;
+        end if;
+        if (rising_edge(en_i) and reset = '0') then     -- Test if counter is enabled
+            s_cnt_local <= s_cnt_local + 1;
         end if;
     end process p_cnt_up;
 
@@ -78,13 +78,15 @@ end tb_cnt_up_mode;
 ------------------------------------------------------------------------
 -- Architecture body for testbench
 ------------------------------------------------------------------------
-architecture Behavioral of tb_cnt_up_mode is
+architecture testbench of tb_cnt_up_mode is
 
     -- Number of bits for testbench counter
     constant c_CNT_WIDTH         : natural := 2;
+    constant c_CLK_100MHZ_PERIOD : time    := 10 ns;
 
     --Local signals
-    signal s_arst       : std_logic;
+    signal s_clk_100MHz : std_logic;
+    signal s_reset      : std_logic;
     signal s_en         : std_logic;
     signal s_cnt        : std_logic_vector(c_CNT_WIDTH - 1 downto 0);
 
@@ -96,27 +98,42 @@ begin
             g_CNT_WIDTH  => c_CNT_WIDTH
         )
         port map(
-            arst     => s_arst,
+            clk      => s_clk_100MHz,
+            reset    => s_reset,
             en_i     => s_en,
             cnt_o    => s_cnt
         );
+
+    --------------------------------------------------------------------
+    -- Clock generation process
+    --------------------------------------------------------------------
+    p_clk_gen : process
+    begin
+        while now < 750 ns loop         -- 75 periods of 100MHz clock
+            s_clk_100MHz <= '0';
+            wait for c_CLK_100MHZ_PERIOD / 2;
+            s_clk_100MHz <= '1';
+            wait for c_CLK_100MHZ_PERIOD / 2;
+        end loop;
+        wait;
+    end process p_clk_gen;
 
     --------------------------------------------------------------------
     -- Reset generation process
     --------------------------------------------------------------------
     p_reset_gen : process
     begin
-        s_arst <= '0';
-        wait for 135 ns;
+        s_reset <= '0';
+        wait for 128 ns;
 
         -- Reset activated
-        s_arst <= '1';
+        s_reset <= '1';
         wait for 73 ns;
         assert(s_cnt = "00")
         report "Test failed for reset value 1" severity error;
 
         -- Reset deactivated
-        s_arst <= '0';
+        s_reset <= '0';
         wait;
     end process p_reset_gen;
 
@@ -230,15 +247,14 @@ begin
 
         -- Release button
         s_en     <= '0';
-
         report "Stimulus process finished" severity note;
         wait;
     end process p_stimulus;
 
-end Behavioral;
+end architecture testbench;
 ```
 
-## Screenshot of the simulation
+## Screenshots of the simulation
 
 ![Time_waveforms](Images/cnt_up_mode/time_waveforms.PNG)
 

@@ -23,9 +23,9 @@ entity clock_enable is
     );
 
     port(
-        clk   : in  std_logic;      -- Main clock
-        arst  : in  std_logic;      -- Asynchronous reset
-        ce_o  : out std_logic       -- Clock enable pulse signal
+        clk   : in  std_logic;          -- Main clock
+        reset : in  std_logic;          -- Synchronous reset
+        ce_o  : out std_logic           -- Clock enable pulse signal
     );
 end entity clock_enable;
 
@@ -43,19 +43,17 @@ begin
     -- Generate clock enable signal. By default, enable signal is low
     -- and generated pulse is always one clock long.
     --------------------------------------------------------------------
-    p_clk_ena : process(clk, arst)
+    p_clk_ena : process(clk)
     begin
-        if (arst = '1') then            -- High active reset
-                s_cnt_local <= 0;       -- Clear local counter
-                ce_o        <= '0';     -- Set output to low
 
-        elsif rising_edge(clk) then     -- Synchronous process
-
+        if rising_edge(clk) then                    -- Synchronous process
+            if (reset = '1') then                   -- High active reset
+                s_cnt_local <= 0;                   -- Clear local counter
+                ce_o        <= '0';                 -- Set output to low
             -- Test number of clock periods
-            if (s_cnt_local >= (g_MAX - 1)) then
-                s_cnt_local <= 0;       -- Clear local counter
-                ce_o        <= '1';     -- Generate clock enable pulse
-
+            elsif (s_cnt_local >= (g_MAX - 1)) then
+                s_cnt_local <= 0;                   -- Clear local counter
+                ce_o        <= '1';                 -- Generate clock enable pulse
             else
                 s_cnt_local <= s_cnt_local + 1;
                 ce_o        <= '0';
@@ -94,7 +92,7 @@ architecture testbench of tb_clock_enable is
 
     --Local signals
     signal s_clk_100MHz : std_logic;    -- 100 MHz clock signal
-    signal s_arst       : std_logic;    -- Asynchronous reset
+    signal s_reset      : std_logic;    -- Synchronous reset
     signal s_ce         : std_logic;    -- Clock enable pulse signal
 
 begin
@@ -105,9 +103,9 @@ begin
             g_MAX => c_MAX
         )
         port map(
-            clk   => s_clk_100MHz,
-            arst  => s_arst,
-            ce_o  => s_ce
+            clk    => s_clk_100MHz,
+            reset  => s_reset,
+            ce_o   => s_ce
         );
 
     --------------------------------------------------------------------
@@ -129,27 +127,27 @@ begin
     --------------------------------------------------------------------
     p_reset_gen : process
     begin
-        s_arst <= '0';
+        s_reset <= '0';
         wait for 28 ns;
 
         -- Reset activated
-        s_arst <= '1';
+        s_reset <= '1';
         wait for 153 ns;
         assert(s_ce = '0')
         report "Test failed for reset value 1" severity error;
 
         -- Reset deactivated
-        s_arst <= '0';
+        s_reset <= '0';
         wait for 299 ns;
 
         -- Reset activated
-        s_arst <= '1';
+        s_reset <= '1';
         wait for 25 ns;
         assert(s_ce = '0')
         report "Test failed for reset value 1" severity error;
 
         -- Reset deactivated
-        s_arst <= '0';
+        s_reset <= '0';
 
         wait;
     end process p_reset_gen;

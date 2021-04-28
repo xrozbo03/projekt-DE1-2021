@@ -31,7 +31,7 @@ entity count_1sec is
     );
     port(
         clk      : in  std_logic;       -- Main clock
-        arst    : in  std_logic;       -- Asynchronous reset
+        rst    : in  std_logic;       -- Asynchronous reset
        en_i     : in  std_logic;       -- Enable input
         cnt_up_i : in  std_logic;       -- Direction of the counter
         cnt_o    : out std_logic_vector(g_CNT_WIDTH - 1 downto 0)
@@ -56,7 +56,7 @@ begin
     begin
         if rising_edge(clk) then
         
-            if (arst = '1') then               -- Asynchronous reset
+            if (rst = '1') then               -- Synchronous reset
                 s_cnt_local <= (others => '0'); -- Clear all bits
 
             elsif (en_i = '1') then       -- Test if counter is enabled
@@ -64,11 +64,10 @@ begin
 
                 -- TEST COUNTER DIRECTION HERE
 
-                 if (cnt_up_i = '1') then
+               --  if (cnt_up_i = '1') then
                 s_cnt_local <= s_cnt_local + 1;
-                else
-                s_cnt_local <= s_cnt_local - 1;
-            end if;
+           
+           
             end if;
         end if;
     end process p_count_1sec;

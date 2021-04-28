@@ -21,6 +21,7 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use ieee.numeric_std.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -32,12 +33,31 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity cycle is
---  Port ( );
+         Port ( 
+            hall_sens_i : in std_logic;
+            cycle_o     : out std_logic_vector(2 - 1 downto 0);
+            clk         : in std_logic;
+            rst         : in std_logic
+          );
 end cycle;
 
 architecture Behavioral of cycle is
-
+  signal s_cycle_local : unsigned(2 - 1 downto 0);
 begin
 
+p_cycle : process(clk)
+begin
+   if rising_edge(clk) then
+        
+            if (rst = '1') then
+             elsif hall_sens_i = '0' then     
+             s_cycle_local <= (others => '0');   
+             s_cycle_local <= s_cycle_local + 1;
+             end if;
+             end if;
 
-end Behavioral;
+end process p_cycle;
+
+cycle_o <= std_logic_vector(s_cycle_local);
+
+end architecture behavioral;

@@ -33,7 +33,8 @@ end cnt_up_mode;
 architecture Behavioral of cnt_up_mode is
 
     -- Local counter
-    signal s_cnt_local : unsigned(g_CNT_WIDTH - 1 downto 0) := (others => '0'); -- default value of "00"
+    signal s_cnt_local : unsigned(g_CNT_WIDTH - 1 downto 0) := (others => '0'); -- Default value of "00"
+    signal s_cnt_btn   : std_logic := '0';                                      -- Signal to proces button
 
 begin
    --------------------------------------------------------------------
@@ -41,16 +42,19 @@ begin
     -- Clocked process with synchronous reset which implements n-bit
     -- up counter.
     --------------------------------------------------------------------
-    p_cnt_up : process(clk, en_i)
+    p_cnt_up : process(clk)
     begin
 
         if rising_edge(clk) then
             if (reset = '1') then                       -- Synchronous reset
                 s_cnt_local <= (others => '0');         -- Clear all bits
+                s_cnt_btn   <= '0';
+            elsif (en_i = '1' and s_cnt_btn = '0') then -- if button is pushed after release
+                s_cnt_local <= s_cnt_local + 1;
+                s_cnt_btn   <= '1';
+            elsif (en_i = '0' and s_cnt_btn = '1') then -- if button was released
+                s_cnt_btn   <= '0';   
             end if;
-        end if;
-        if (rising_edge(en_i) and reset = '0') then     -- Test if counter is enabled
-            s_cnt_local <= s_cnt_local + 1;
         end if;
     end process p_cnt_up;
 
@@ -172,7 +176,7 @@ begin
         -- Push button
         s_en     <= '1';
         wait for 25 ns;
-        assert(s_cnt = "00")
+        assert(s_cnt = "01")
         report "Test failed for 3. button push" severity error;
 
         -- Release button
@@ -182,7 +186,7 @@ begin
         -- Push button
         s_en     <= '1';
         wait for 25 ns;
-        assert(s_cnt = "01")
+        assert(s_cnt = "10")
         report "Test failed for 4. button push" severity error;
 
         -- Release button
@@ -192,7 +196,7 @@ begin
         -- Push button
         s_en     <= '1';
         wait for 25 ns;
-        assert(s_cnt = "10")
+        assert(s_cnt = "11")
         report "Test failed for 5. button push" severity error;
 
         -- Release button
@@ -202,7 +206,7 @@ begin
         -- Push button
         s_en     <= '1';
         wait for 25 ns;
-        assert(s_cnt = "11")
+        assert(s_cnt = "00")
         report "Test failed for 6. button push" severity error;
 
         -- Release button
@@ -212,7 +216,7 @@ begin
         -- Push button
         s_en     <= '1';
         wait for 25 ns;
-        assert(s_cnt = "00")
+        assert(s_cnt = "01")
         report "Test failed for 7. button push" severity error;
 
         -- Release button
@@ -222,7 +226,7 @@ begin
         -- Push button
         s_en     <= '1';
         wait for 25 ns;
-        assert(s_cnt = "01")
+        assert(s_cnt = "10")
         report "Test failed for 8. button push" severity error;
 
         -- Release button
@@ -232,7 +236,7 @@ begin
         -- Push button
         s_en     <= '1';
         wait for 25 ns;
-        assert(s_cnt = "10")
+        assert(s_cnt = "11")
         report "Test failed for 9. button push" severity error;
 
         -- Release button
@@ -242,7 +246,7 @@ begin
         -- Push button
         s_en     <= '1';
         wait for 25 ns;
-        assert(s_cnt = "11")
+        assert(s_cnt = "00")
         report "Test failed for 10. button push" severity error;
 
         -- Release button

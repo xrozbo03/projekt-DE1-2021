@@ -27,18 +27,17 @@ architecture Behavioral of derailleur is
     type   t_state is (ONE, TWO, THREE);
 
     -- Define the signal that uses different states
-    signal s_state  : t_state   := TWO;         -- Default state is TWO
+    signal s_state     : t_state   := TWO;      -- Default state is TWO
+    signal s_cnt_btn   : std_logic := '0';      -- Signal to proces button
 
 begin
 
-    p_output_derailleur : process(clk, btn_i)
+    p_output_derailleur : process(clk)
     begin
         if rising_edge(clk) then
             if (reset = '1') then       -- Synchronous reset
                 s_state <= TWO ;        -- Set initial state
-            end if;
-        end if;   
-        if (rising_edge(btn_i) and reset = '0') then
+            elsif (btn_i = '1' and s_cnt_btn = '0') then    -- if button is pushed after release
                 case s_state is
                     when ONE =>
                           -- Move to the next state
@@ -56,7 +55,11 @@ begin
                         s_state <= TWO;  -- Default state if there is different output
 
                 end case;
-        end if;
+                s_cnt_btn   <= '1';
+            elsif (btn_i = '0' and s_cnt_btn = '1') then    -- if button was released
+                s_cnt_btn   <= '0';
+            end if;
+        end if;   
     end process p_output_derailleur;
 
     p_output_states : process(s_state)
@@ -161,7 +164,7 @@ begin
         wait for 58 ns;
 
         s_btn <= '1';
-        wait for 12 ns;
+        wait for 32 ns;
         assert(s_level_of_difficulty = "100")
         report "Test failed for 2nd push button" severity error;
 
@@ -170,7 +173,7 @@ begin
 
         s_btn <= '1';
         wait for 58 ns;
-        assert(s_level_of_difficulty = "010")
+        assert(s_level_of_difficulty = "001")
         report "Test failed for 3rd push button" severity error;
 
         s_btn <= '0';
@@ -178,7 +181,7 @@ begin
 
         s_btn <= '1';
         wait for 12 ns;
-        assert(s_level_of_difficulty = "001")
+        assert(s_level_of_difficulty = "100")
         report "Test failed for 4th push button" severity error;
 
         s_btn <= '0';

@@ -75,25 +75,25 @@ begin
     begin
         -- 5000 ns sequence
         s_cnt_1sec <= '0';
-        wait for 5000000ns;
+        wait for 500000ns;
         s_cnt_1sec <= '1';
-        wait for 5000000ns;
+        wait for 500000ns;
         s_cnt_1sec <= '0';
-        wait for 5000000ns;
+        wait for 500000ns;
         s_cnt_1sec <= '1';
-        wait for 5000000ns;
+        wait for 500000ns;
         s_cnt_1sec <= '0';
-        wait for 5000000ns;
+        wait for 500000ns;
         s_cnt_1sec <= '1';
-        wait for 5000000ns;
+        wait for 500000ns;
         s_cnt_1sec <= '0';
-        wait for 5000000ns;
+        wait for 500000ns;
         s_cnt_1sec <= '1';
-        wait for 5000000ns;
+        wait for 500000ns;
         s_cnt_1sec <= '0';
-        wait for 5000000ns;
+        wait for 500000ns;
         s_cnt_1sec <= '1';
-        wait for 5000000ns;
+        wait for 500000ns;
         -- end sequence
 
         
@@ -104,7 +104,7 @@ begin
   --------------------------------------------------------------------
     p_clk_gen : process
     begin
-        while now < 50000000 ns loop                -- 50000000 periods of 100MHz clock
+        while now < 5000000 ns loop                -- 50000000 periods of 100MHz clock
             s_clk <= '0';
             wait for c_CLK_100MHZ_PERIOD / 2;
             s_clk <= '1';
@@ -123,7 +123,7 @@ begin
         -- Reset activated
         s_reset <= '1'; wait for 2 ns;
 
-        s_reset <= '0'; wait for 16000000 ns;
+        s_reset <= '0'; wait for 1600000 ns;
 
         s_reset <= '1'; wait for 2 ns;
 
@@ -138,21 +138,25 @@ begin
     begin
         report "Stimulus process started" severity note;
         
+        
+        
         s_distance <= "0000000000000010100";   -- 20
         s_time_count <= "0000000000000000100"; -- 4
-        wait for 10000000ns;
+        wait for 1000000ns;
+        
+        wait for 250000ns;
         
         s_distance <= "0000000000000100000";   -- 32
         s_time_count <= "0000000000000001000"; -- 8
-        wait for 10000000ns;
+        wait for 1000000ns;
         
         s_distance <= "0000000000000010100";   -- 20
         s_time_count <= "0000000000000000010"; -- 2
-        wait for 10000000ns;
+        wait for 1000000ns;
         
         s_distance <= "0000000000110010000";   -- 400
         s_time_count <= "0000000000001000000"; -- 64
-        wait for 10000000ns;
+        wait for 1000000ns;
         
         report "Stimulus process finished" severity note;
         wait;

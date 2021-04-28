@@ -336,13 +336,13 @@ end speed_avg;
 ------------------------------------------------------------------------
 architecture Behavioral of speed_avg is
 
-    -- local sinals
-    signal s_time       : unsigned (19 - 1 downto 0);  -- signal with time value
-    signal s_distance   : unsigned (19 - 1 downto 0);  -- signal with distance value
-    signal s_cnt_result : unsigned (19 - 1 downto 0);  -- result in m/s
-    
+    -- local sinals  
     signal s_enable_conversion : std_logic; -- release conversion from m/s to km/h
     signal s_enable_new_value  : std_logic; -- release new value for distance and time
+    
+    signal s_time              : natural;  -- signal with time value
+    signal s_distance          : natural;  -- signal with distance value
+    signal s_cnt_result        : natural;  -- result in m/s
     signal s_final_result      : natural;   -- unit conversion to km/h
     signal s_result_in_natural : natural;   -- result in KM/H
     
@@ -361,22 +361,10 @@ p_speed_avg : process (clk)
     
         if rising_edge(clk) then
              
-             if (reset = '1') then
-                 s_cnt_result        <= (others => '0');
-                 s_distance          <= unsigned(distance_i);
-                 s_time              <= unsigned(time_count_i);
-                 s_final_result      <= 0;
-                 s_cnt1              <= (others => '0');
-                 s_cnt2              <= (others => '0');
-                 s_cnt3              <= (others => '0');
-                 s_cnt4              <= (others => '0');
-                 s_enable_conversion <= '0';
-                 s_enable_new_value  <= '0';
-                 
-             elsif (cnt_1sec_i = '1') and (s_enable_new_value = '1') then 
-                 s_cnt_result        <= (others => '0');
-                 s_distance          <= unsigned(distance_i);
-                 s_time              <= unsigned(time_count_i);
+             if (reset = '1') or ((s_enable_new_value = '1') and (cnt_1sec_i = '1')) then        -- reset counters value and set new distance and time.
+                 s_cnt_result        <= 0;
+                 s_distance          <= (TO_INTEGER(unsigned(distance_i))) * 100;                --  *100 to second decimal result
+                 s_time              <= (TO_INTEGER(unsigned(time_count_i)));
                  s_final_result      <= 0;
                  s_cnt1              <= (others => '0');
                  s_cnt2              <= (others => '0');
@@ -388,13 +376,13 @@ p_speed_avg : process (clk)
              elsif (cnt_1sec_i = '0') and (s_enable_new_value = '0') then 
                  s_enable_new_value  <= '1';
                  
-             elsif (s_time <= s_distance) then
+             elsif (s_distance >= s_time) then
                  s_distance   <= s_distance - s_time;
                  s_cnt_result <= s_cnt_result + 1;
                   
              elsif (s_enable_conversion = '0') then
-                 s_result_in_natural <= (TO_INTEGER (unsigned (s_cnt_result)));
-                 s_final_result <= s_result_in_natural * 1800;                   -- 3,6x m/s -> km/h *100 to second decimal
+                 s_result_in_natural <= s_cnt_result;
+                 s_final_result <= s_result_in_natural * 18;                   -- 3,6x m/s -> km/h *100 to second decimal
                  s_enable_conversion <= '1';
              
              elsif (s_final_result >= 5) then
@@ -419,15 +407,18 @@ p_speed_avg : process (clk)
                          end if;
                      end if;
                  end if;
+             else
+             
+             -- Outputs retype to std_logic_vector
+             speed_avg_dig1_o <= std_logic_vector(s_cnt4);
+             speed_avg_dig2_o <= std_logic_vector(s_cnt3);
+             speed_avg_dig3_o <= std_logic_vector(s_cnt2);
+             speed_avg_dig4_o <= std_logic_vector(s_cnt1); 
+             
              end if;
          end if; 
-       
-    end process p_speed_avg;
 
-    speed_avg_dig1_o <= std_logic_vector(s_cnt4);
-    speed_avg_dig2_o <= std_logic_vector(s_cnt3);
-    speed_avg_dig3_o <= std_logic_vector(s_cnt2);
-    speed_avg_dig4_o <= std_logic_vector(s_cnt1);
+    end process p_speed_avg;
 
 end Behavioral;
 
@@ -515,25 +506,25 @@ begin
     begin
         -- 5000 ns sequence
         s_cnt_1sec <= '0';
-        wait for 5000000ns;
+        wait for 500000ns;
         s_cnt_1sec <= '1';
-        wait for 5000000ns;
+        wait for 500000ns;
         s_cnt_1sec <= '0';
-        wait for 5000000ns;
+        wait for 500000ns;
         s_cnt_1sec <= '1';
-        wait for 5000000ns;
+        wait for 500000ns;
         s_cnt_1sec <= '0';
-        wait for 5000000ns;
+        wait for 500000ns;
         s_cnt_1sec <= '1';
-        wait for 5000000ns;
+        wait for 500000ns;
         s_cnt_1sec <= '0';
-        wait for 5000000ns;
+        wait for 500000ns;
         s_cnt_1sec <= '1';
-        wait for 5000000ns;
+        wait for 500000ns;
         s_cnt_1sec <= '0';
-        wait for 5000000ns;
+        wait for 500000ns;
         s_cnt_1sec <= '1';
-        wait for 5000000ns;
+        wait for 500000ns;
         -- end sequence
 
         
@@ -544,7 +535,7 @@ begin
   --------------------------------------------------------------------
     p_clk_gen : process
     begin
-        while now < 50000000 ns loop                -- 50000000 periods of 100MHz clock
+        while now < 5000000 ns loop                -- 50000000 periods of 100MHz clock
             s_clk <= '0';
             wait for c_CLK_100MHZ_PERIOD / 2;
             s_clk <= '1';
@@ -563,7 +554,7 @@ begin
         -- Reset activated
         s_reset <= '1'; wait for 2 ns;
 
-        s_reset <= '0'; wait for 16000000 ns;
+        s_reset <= '0'; wait for 1600000 ns;
 
         s_reset <= '1'; wait for 2 ns;
 
@@ -578,21 +569,25 @@ begin
     begin
         report "Stimulus process started" severity note;
         
+        
+        
         s_distance <= "0000000000000010100";   -- 20
         s_time_count <= "0000000000000000100"; -- 4
-        wait for 10000000ns;
+        wait for 1000000ns;
+        
+        wait for 250000ns;
         
         s_distance <= "0000000000000100000";   -- 32
         s_time_count <= "0000000000000001000"; -- 8
-        wait for 10000000ns;
+        wait for 1000000ns;
         
         s_distance <= "0000000000000010100";   -- 20
         s_time_count <= "0000000000000000010"; -- 2
-        wait for 10000000ns;
+        wait for 1000000ns;
         
         s_distance <= "0000000000110010000";   -- 400
         s_time_count <= "0000000000001000000"; -- 64
-        wait for 10000000ns;
+        wait for 1000000ns;
         
         report "Stimulus process finished" severity note;
         wait;
@@ -604,4 +599,4 @@ end Behavioral;
 
 ### full simulation
 
-![full test](Images/speed-tb.png)
+![full test](Images/speed-tb2.png)

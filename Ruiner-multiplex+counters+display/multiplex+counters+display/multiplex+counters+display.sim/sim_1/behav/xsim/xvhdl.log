@@ -1,0 +1,4 @@
+INFO: [VRFC 10-163] Analyzing VHDL file "H:/Vivado/DE1_PROJEKT/multiplex+counters+display/multiplex+counters+display.srcs/sources_1/new/speed_cur.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'speed_cur'
+INFO: [VRFC 10-163] Analyzing VHDL file "H:/Vivado/DE1_PROJEKT/multiplex+counters+display/multiplex+counters+display.srcs/sim_1/new/tb_speed_cur.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'tb_speed_cur'

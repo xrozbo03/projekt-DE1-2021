@@ -29,11 +29,7 @@ entity driver_7seg_4digits_speed_cur is
         -- Common anode signals to individual displays
         dig_o            : out std_logic_vector(4 - 1 downto 0);
         -- Decimal point for specific digit
-        dp_o             : out std_logic_vector(4 - 1 downto 0);
-        -- Signal to colon anode
-        colon_o          : out std_logic;
-        -- Signal to colon cathode
-        colon_cathode_o  : out std_logic
+        dp_o             : out std_logic_vector(4 - 1 downto 0)
     );
 end entity driver_7seg_4digits_speed_cur;
 
@@ -95,8 +91,6 @@ begin
     p_mux : process(s_cnt, speed_cur_dig1_i, speed_cur_dig2_i, speed_cur_dig3_i, speed_cur_dig4_i)
     begin
         dp_o            <= "0100";
-        colon_o         <= '0';
-        colon_cathode_o <= '0';
         case s_cnt is
             when "11" =>
                 s_hex <= speed_cur_dig4_i;

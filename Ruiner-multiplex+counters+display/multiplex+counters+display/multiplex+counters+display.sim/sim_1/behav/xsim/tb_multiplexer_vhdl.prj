@@ -1,0 +1,11 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../multiplex+counters+display.srcs/sources_1/new/clock_enable.vhd" \
+"../../../../multiplex+counters+display.srcs/sources_1/new/cnt_up.vhd" \
+"../../../../multiplex+counters+display.srcs/sources_1/new/cnt_up_mode.vhd" \
+"../../../../multiplex+counters+display.srcs/sources_1/new/hex_7seg.vhd" \
+"../../../../multiplex+counters+display.srcs/sources_1/new/multiplexer.vhd" \
+"../../../../multiplex+counters+display.srcs/sim_1/new/tb_multiplexer.vhd" \
+
+# Do not sort compile order
+nosort

@@ -42,7 +42,7 @@ architecture testbench of tb_time_trip is
     
     -- local signals
     signal s_clk             : std_logic;
-    signal s_enable          : std_logic;
+    signal s_cycle          : std_logic;
     signal s_cnt_1sec        : std_logic;
     signal s_reset           : std_logic;
     signal s_time_count      : std_logic_vector (19 - 1 downto 0);
@@ -55,8 +55,8 @@ begin
     -- Unit under test
     uut_time_trip : entity work.time_trip
         port map (
-            clk              => s_clk,
-            enable_i         =>  s_enable,
+            clk              =>  s_clk,
+            cycle_i          =>  s_cycle,
             cnt_1sec_i       =>  s_cnt_1sec,      
             reset            =>  s_reset,         
             time_count_o     =>  s_time_count,    
@@ -119,13 +119,24 @@ begin
     begin
         report "Stimulus process started" severity note;
         
-        s_enable <= '1';
-        wait for 300 ns;
+         while now < 6000 ns loop         -- 1000 periods of cycle
+            s_cycle <= '0';
+            wait for 5ns;
+            s_cycle <= '1';
+            wait for 1ns;
+        end loop;
         
-        s_enable <= '0';
-        wait for 50 ns;
+        s_cycle <= '0';
+        wait for 1000 ns;
         
-        s_enable <= '1';
+        while now < 360000 ns loop         -- 60000  periods of cycle
+            s_cycle <= '0';
+            wait for 5ns;
+            s_cycle <= '1';
+            wait for 1ns;
+        end loop;
+        
+        s_cycle <= '0';
 
         report "Stimulus process finished" severity note;
         wait;

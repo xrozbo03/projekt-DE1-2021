@@ -18,7 +18,7 @@ entity cnt_up_mode is
         clk      : in  std_logic;                                   -- Main clock
         reset    : in  std_logic;                                   -- Synchronous reset
         en_i     : in  std_logic;                                   -- Push button input
-        cnt_o    : out std_logic_vector(g_CNT_WIDTH - 1 downto 0)   -- Output to driver_7seg_4digits_mode
+        cnt_o    : out std_logic_vector(g_CNT_WIDTH - 1 downto 0)   -- Output to internal signal
     );
 end cnt_up_mode;
 

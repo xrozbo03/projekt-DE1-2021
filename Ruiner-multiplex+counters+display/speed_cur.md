@@ -19,7 +19,7 @@ entity speed_cur is
         reset              : in  std_logic;                             -- Synchronous reset
         cycle_i            : in  std_logic;                             -- Distance input in kilometers
         cnt_1sec_i         : in  std_logic;                             -- Impulse to update speed on the 7 segment display
-        tire_diameter_i    : in  std_logic_vector(5 - 1 downto 0);      -- Diameter in mm
+        tire_diameter_i    : in  std_logic_vector(5 - 1 downto 0);      -- Diameter in inches
         speed_cur_dig1_o   : out std_logic_vector(4 - 1 downto 0);      -- Tens of kilometers
         speed_cur_dig2_o   : out std_logic_vector(4 - 1 downto 0);      -- Kilometers
         speed_cur_dig3_o   : out std_logic_vector(4 - 1 downto 0);      -- Hundreds of meters
@@ -32,7 +32,7 @@ architecture Behavioral of speed_cur is
     signal s_cnt_cycles         : unsigned(12 - 1 downto 0) := (others => '0');  -- Counter of cycles before 1 sec
     signal first2displays       : std_logic := '0';                              -- Signal to count values for first 2 digits
     signal last2displays        : std_logic := '0';                              -- Signal to count values for last 2 digits
-    signal cycle_temp           : std_logic := '0';
+    signal cycle_temp           : std_logic := '0';                              -- Control value for cycles
     signal tire_diameter_mm     : natural := 0;                                  -- Signal to hold tire diameter in milimeters
     signal calculation          : natural;                                       -- Signal for counting of first 2 digits
     signal remainder            : natural;                                       -- Signal for counting of last 2 digits

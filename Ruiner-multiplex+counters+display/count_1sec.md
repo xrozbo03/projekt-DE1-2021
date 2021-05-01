@@ -21,8 +21,8 @@ end count_1sec;
 
 architecture Behavioral of count_1sec is
 
-    signal cnt_1sec : unsigned(27 - 1 downto 0) := (others => '0');
-    constant second : unsigned(27 - 1 downto 0) := "101111101011110000100000000";
+    signal cnt_1sec : unsigned(27 - 1 downto 0) := (others => '0');               -- Local counter
+    constant second : unsigned(27 - 1 downto 0) := "101111101011110000100000000"; -- 100000000 clock pulses to 1 sec
 
 begin
 

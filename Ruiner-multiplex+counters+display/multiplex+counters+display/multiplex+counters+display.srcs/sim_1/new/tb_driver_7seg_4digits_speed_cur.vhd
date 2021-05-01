@@ -33,8 +33,6 @@ architecture testbench of tb_driver_7seg_4digits_speed_cur is
     signal s_dp              : std_logic_vector(4 - 1 downto 0);  
     signal s_seg             : std_logic_vector(7 - 1 downto 0);   
     signal s_dig             : std_logic_vector(4 - 1 downto 0);
-    signal s_colon           : std_logic;
-    signal s_colon_cathode   : std_logic;
 
 begin
     -- Connecting testbench signals with driver_7seg_4digits_speed_cur entity
@@ -49,9 +47,7 @@ begin
         speed_cur_dig3_i   => s_speed_cur_dig3,
         speed_cur_dig4_i   => s_speed_cur_dig4,
         dp_o               => s_dp,
-        seg_o              => s_seg,
-        colon_o            => s_colon,
-        colon_cathode_o    => s_colon_cathode, 
+        seg_o              => s_seg, 
         dig_o              => s_dig
     );
 

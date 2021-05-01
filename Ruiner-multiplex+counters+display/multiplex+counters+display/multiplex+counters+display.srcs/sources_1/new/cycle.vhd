@@ -9,8 +9,8 @@ use ieee.numeric_std.all;
 
 entity cycle is
     Port ( 
-        hall_sens_i           : in STD_LOGIC;
-        cycle_o               : out STD_LOGIC
+        hall_sens_i           : in STD_LOGIC;   -- Hall sensor input
+        cycle_o               : out STD_LOGIC   -- Reverse logic output
     );
 end cycle;
 

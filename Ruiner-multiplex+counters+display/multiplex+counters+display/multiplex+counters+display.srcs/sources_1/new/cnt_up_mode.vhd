@@ -29,7 +29,7 @@ architecture Behavioral of cnt_up_mode is
 
     -- Local counter
     signal s_cnt_local : unsigned(g_CNT_WIDTH - 1 downto 0) := (others => '0'); -- default value of "00"
-    signal s_cnt_btn   : std_logic := '0';                                      -- signal to proces button
+    signal s_cnt_btn   : std_logic := '0';                                      -- signal to process button
 
 begin
    --------------------------------------------------------------------

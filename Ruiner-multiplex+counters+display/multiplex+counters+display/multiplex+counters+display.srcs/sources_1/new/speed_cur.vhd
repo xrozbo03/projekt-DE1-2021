@@ -65,7 +65,7 @@ begin
         
         if(cycle_i = '1' and cycle_temp = '0') then
            s_cnt_cycles <= s_cnt_cycles+1;
-             cycle_temp   <= '1';
+           cycle_temp   <= '1';
         elsif(cycle_i = '0' and cycle_temp = '1') then
             cycle_temp   <= '0';
         end if;

@@ -37,7 +37,7 @@ entity time_trip is
 
     Port ( 
           clk               : in std_logic;                            -- 100HMz clock
-          enable_i          : in std_logic;                            -- input for driving verification
+          cycle_i           : in std_logic;                            -- input for driving verification
           cnt_1sec_i        : in std_logic;                            -- 1 second counter
           reset             : in std_logic;                            -- reset trip button
           time_count_o      : out std_logic_vector (19 - 1 downto 0);  -- sumary number of minutes on trip
@@ -60,18 +60,35 @@ architecture Behavioral of time_trip is
     signal s_cnt1   : unsigned(4 - 1 downto 0);  -- minutes counter
     signal s_cnt0   : unsigned(6 - 1 downto 0);  -- seconds to determine the minute
     signal s_cntall : unsigned(19 - 1 downto 0); -- sum of all seconds
+    
+    signal s_enable      : std_logic;               -- enable counting process
+    signal s_cnt_enable  : unsigned (4-1 downto 0); -- counter 10s to control s_enable
 
     -- local constants to compare specific values of counters
-    constant c_NINE      : unsigned(4 - 1 downto 0) := b"1001";  -- 
+    constant c_NINE      : unsigned(4 - 1 downto 0) := b"1001";
     constant c_FIVE      : unsigned(4 - 1 downto 0) := b"0101";
     constant c_FIVTYNINE : unsigned(6 - 1 downto 0) := b"11_1011";
 
 begin
 
-p_time_trip : process(clk)
+p_time_trip : process(clk, cycle_i)
     begin
-
+        -- wheel rotation verification
+        if (cnt_1sec_i = '1') then
+            s_cnt_enable <= s_cnt_enable + 1;
+            
+            if (cycle_i = '1') then
+                s_cnt_enable <= (others => '0');
+                s_enable <= '1';
+            elsif (s_cnt_enable = 10) then
+                s_enable <= '0';
+            end if;
+        
+        end if;
+        
         if rising_edge(clk) then
+
+            -- counting process
             if(reset = '1') then
                 -- reset counter
                 s_cnt0   <= (others => '0');
@@ -81,7 +98,7 @@ p_time_trip : process(clk)
                 s_cnt4   <= (others => '0');
                 s_cntall <= (others => '0');
                 
-            elsif (enable_i = '1') then             -- turn on the counter while moving
+            elsif (s_enable = '1') then             -- turn on the counter while moving
                 if (cnt_1sec_i = '1') then
                     s_cntall <= s_cntall + 1;          -- counting all seconds
                     s_cnt0   <= s_cnt0 + 1;            -- counting seconds to minutes
@@ -134,9 +151,9 @@ end Behavioral;
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date: 17.04.2021 11:30:12
+-- Create Date: 15.04.2021 21:02:09
 -- Design Name: 
--- Module Name: tb_speed_avg - Behavioral
+-- Module Name: tb_time_trip - Behavioral
 -- Project Name: 
 -- Target Devices: 
 -- Tool Versions: 
@@ -163,71 +180,47 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity tb_speed_avg is
+entity tb_time_trip is
 --  Port ( );
-end tb_speed_avg;
+end tb_time_trip;
 
-architecture Behavioral of tb_speed_avg is
+architecture testbench of tb_time_trip is
     
     -- Local constants
-    constant c_CLK_100MHZ_PERIOD   : time    := 1 ns; -- 1ns for faster simulation
-
-    -- local signals
-    signal s_clk           : std_logic;
-    signal s_cnt_1sec      : std_logic;
-    signal s_time_count    : std_logic_vector(19 - 1 downto 0);
-    signal s_distance      : std_logic_vector (19 - 1 downto 0);
+    constant c_CLK_100MHZ_PERIOD : time    := 1 ns; -- 1 ns for faster simulation
     
-    signal s_test : std_logic_vector(19 - 1 downto 0);          
-
+    -- local signals
+    signal s_clk             : std_logic;
+    signal s_cycle          : std_logic;
+    signal s_cnt_1sec        : std_logic;
+    signal s_reset           : std_logic;
+    signal s_time_count      : std_logic_vector (19 - 1 downto 0);
+    signal s_time_trip_dig1  : std_logic_vector (4 - 1 downto 0);
+    signal s_time_trip_dig2  : std_logic_vector (4 - 1 downto 0);
+    signal s_time_trip_dig3  : std_logic_vector (4 - 1 downto 0);
+    signal s_time_trip_dig4  : std_logic_vector (4 - 1 downto 0);
+    
 begin
     -- Unit under test
-    uut_speed_avg : entity work.speed_avg
+    uut_time_trip : entity work.time_trip
         port map (
-            clk_i        => s_clk,
-            cnt_1sec_i   => s_cnt_1sec,
-            time_count_i => s_time_count,
-            distance_i   => s_distance,
-            test_o       => s_test
+            clk              =>  s_clk,
+            cycle_i          =>  s_cycle,
+            cnt_1sec_i       =>  s_cnt_1sec,      
+            reset            =>  s_reset,         
+            time_count_o     =>  s_time_count,    
+            time_trip_dig1_o =>  s_time_trip_dig1,
+            time_trip_dig2_o =>  s_time_trip_dig2,
+            time_trip_dig3_o =>  s_time_trip_dig3,
+            time_trip_dig4_o =>  s_time_trip_dig4
         );
-        
-  --------------------------------------------------------------------
-  -- Generation process for 1 sec counter simulation
-  --------------------------------------------------------------------
-    p_clk_1sec_gen : process
-    begin
-        -- 1000 ns sequence
-        s_cnt_1sec <= '0';
-        wait for 100ns;
-        s_cnt_1sec <= '1';
-        wait for 100ns;
-        s_cnt_1sec <= '0';
-        wait for 100ns;
-        s_cnt_1sec <= '1';
-        wait for 100ns;
-        s_cnt_1sec <= '0';
-        wait for 100ns;
-        s_cnt_1sec <= '1';
-        wait for 100ns;
-        s_cnt_1sec <= '0';
-        wait for 100ns;
-        s_cnt_1sec <= '1';
-        wait for 100ns;
-        s_cnt_1sec <= '0';
-        wait for 100ns;
-        s_cnt_1sec <= '1';
-        wait for 100ns;
-        -- end sequence
 
-        
-    end process p_clk_1sec_gen;
-    
-  --------------------------------------------------------------------
-  -- Clock generation process
-  --------------------------------------------------------------------
+ --------------------------------------------------------------------
+ -- Clock generation process
+ --------------------------------------------------------------------
     p_clk_gen : process
     begin
-        while now < 1000 ns loop
+        while now < 365000 ns loop         -- 36500 periods of 100MHz clock
             s_clk <= '0';
             wait for c_CLK_100MHZ_PERIOD / 2;
             s_clk <= '1';
@@ -236,51 +229,79 @@ begin
         wait;
     end process p_clk_gen;
     
+ --------------------------------------------------------------------
+ -- Reset generation process
+ --------------------------------------------------------------------
+    p_reset_gen : process
+    begin
+        -- Reset deactivated
+        s_reset <= '0'; wait for 10 ns;
+        -- Reset activated
+        s_reset <= '1'; wait for 2 ns;
+
+        s_reset <= '0'; wait for 150 ns;
+
+        s_reset <= '1'; wait for 2 ns;
+
+        s_reset <= '0';
+        wait;
+    end process p_reset_gen;
+
+  --------------------------------------------------------------------
+  -- Generation process for 1 sec counter simulation
+  --------------------------------------------------------------------
+    p_clk_1sec_gen : process
+    begin
+        while now < 365000 ns loop         -- 73000 periods of 1 sec enambe signal
+            s_cnt_1sec <= '0';
+            wait for 5ns;
+            s_cnt_1sec <= '1';
+            wait for 5ns;
+        end loop;
+        wait;
+    end process p_clk_1sec_gen;
+    
   --------------------------------------------------------------------
   -- Data generation process
   --------------------------------------------------------------------
     p_stimulus : process
     begin
         report "Stimulus process started" severity note;
+        
+         while now < 6000 ns loop         -- 1000 periods of cycle
+            s_cycle <= '0';
+            wait for 5ns;
+            s_cycle <= '1';
+            wait for 1ns;
+        end loop;
+        
+        s_cycle <= '0';
+        wait for 1000 ns;
+        
+        while now < 360000 ns loop         -- 60000  periods of cycle
+            s_cycle <= '0';
+            wait for 5ns;
+            s_cycle <= '1';
+            wait for 1ns;
+        end loop;
+        
+        s_cycle <= '0';
 
-        s_distance <= "0000000000001100100";   -- 100
-        s_time_count <= "0000000000000001000"; -- 8
-        wait for 200ns;
-        
-        s_distance <= "0000000000000110010";   -- 50
-        s_time_count <= "0000000000000000010"; -- 2
-        wait for 200ns;
-
-        s_distance <= "0000000110001001110";   -- 3150
-        s_time_count <= "0000000000000110010"; -- 50
-        wait for 200ns;
-        
-        s_distance <= "0000000000000110010";   -- 50
-        s_time_count <= "0000000000000000010"; -- 2
-        wait for 400ns;
-        
-        s_distance <= "0000000110001001110";   -- 3150
-        s_time_count <= "0000000000000001000"; -- 8
-        wait for 200ns;
-        
         report "Stimulus process finished" severity note;
         wait;
     end process p_stimulus;
 
-end Behavioral;
+
+end testbench;
 
 ```
-### full simulation
+### full simulation with enable
 
-![full test](Images/time-full.png)
+![full test](Images/time-enable-final.png)
 
-### enable and reset function 
+### closeup to reset function 
 
-![reset test](Images/time-enableReset.png)
-
-### next digit function 
-
-![digit test](Images/time-digit.png)
+![reset test](Images/time-reset-final.png)
 
 # speed_avg
 

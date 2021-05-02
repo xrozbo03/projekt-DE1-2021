@@ -36,9 +36,7 @@ entity driver_7seg_4digits_mode is
            seg_o              : out std_logic_vector (7 - 1 downto 0);     -- Cathode values for individual segments
            LED_o              : out STD_LOGIC_VECTOR (4 - 1 downto 0);     -- LEDs on board to display which mode is selected
            dig_o              : out STD_LOGIC_VECTOR (4 - 1 downto 0);     -- Choose which digit will be active (enable anode)
-           dp_o               : out STD_LOGIC_VECTOR (4 - 1 downto 0);     -- Choose decimal point of the digit
-           colon_o            : out STD_LOGIC;                             -- Anode of colon
-           colon_cathode_o    : out STD_LOGIC                              -- Connect cathode of colon
+           dp_o               : out STD_LOGIC_VECTOR (4 - 1 downto 0)      -- Choose decimal point of the digit
     );
 end driver_7seg_4digits_mode;
 
@@ -119,8 +117,6 @@ begin
     begin
         case s_cnt_mode is
             when "00" =>                            -- Average speed is assigned to the mode combination "00"
-                colon_o <= '0';                     -- Disabled colon for average speed
-                colon_cathode_o <= '0';             -- Logic 0 on the colon cathode
                 dp_o    <= "0100";                  -- Enabled decimal point for average speed (second digit - kilometers)
                 LED_o   <= "1000";                  -- Turn on LED 4
                 if (s_cnt = "00") then
@@ -138,8 +134,6 @@ begin
                 end if;
 
             when "01" =>                            -- Trip distance is assigned to the mode combination "01"
-                colon_o <= '0';                     -- Disabled colon for trip distance
-                colon_cathode_o <= '0';             -- Logic 0 on the colon cathode
                 dp_o    <= "0010";                  -- Enabled decimal point for trip distance (third digit - kilometers)
                 LED_o   <= "0100";                  -- Turn on LED 5
                 if (s_cnt = "00") then
@@ -157,8 +151,6 @@ begin
                 end if;
 
             when "10" =>                            -- Total distance is assigned to the mode combination "10"
-                colon_o <= '0';                     -- Disabled colon for total distance
-                colon_cathode_o <= '0';             -- Logic 0 on the colon cathode
                 dp_o    <= "0000";                  -- Disabled decimal point for total distance
                 LED_o   <= "0010";                  -- Turn on LED 6
                 if (s_cnt = "00") then
@@ -176,9 +168,7 @@ begin
                 end if;
 
             when others =>                          -- Time trip is assigned to the mode combination "11"
-                colon_o <= '1';                     -- Enabled colon for time trip
-                colon_cathode_o <= '0';             -- Logic 0 on the colon cathode
-                dp_o    <= "0000";                  -- Disabled decimal point for time trip
+                dp_o    <= "0010";                  -- Disabled decimal point for time trip
                 LED_o   <= "0001";                  -- Turn on LED 7
                 if (s_cnt = "00") then
                     s_hex <= time_trip_dig1_i;      -- Display tens of hours if counter combination is "00"
@@ -241,9 +231,7 @@ architecture testbench of tb_driver_7seg_4digits_mode is
     signal s_seg                : std_logic_vector  (7 - 1 downto 0);
     signal s_LED                : STD_LOGIC_VECTOR  (4 - 1 downto 0);
     signal s_dig                : STD_LOGIC_VECTOR  (4 - 1 downto 0);
-    signal s_dp                 : STD_LOGIC_VECTOR  (4 - 1 downto 0);
-    signal s_colon              : STD_LOGIC;
-    signal s_colon_cathode      : STD_LOGIC;                                  
+    signal s_dp                 : STD_LOGIC_VECTOR  (4 - 1 downto 0);                                  
 
 begin
     -- Connecting testbench signals with multiplexer entity
@@ -271,9 +259,7 @@ begin
             seg_o                   => s_seg,
             LED_o                   => s_LED,
             dig_o                   => s_dig,   
-            dp_o                    => s_dp,    
-            colon_o                 => s_colon,
-            colon_cathode_o         => s_colon_cathode     
+            dp_o                    => s_dp        
         );
 
     --------------------------------------------------------------------

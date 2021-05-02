@@ -1,6 +1,6 @@
 Vivado Simulator 2020.2
 Copyright 1986-1999, 2001-2020 Xilinx, Inc. All Rights Reserved.
-Running: D:/Programs/Xilinx/Vivado/2020.2/bin/unwrapped/win64.o/xelab.exe -wto cdd92ebb60df4f9a8bf8a44da234916c --incr --debug typical --relax --mt 2 -L xil_defaultlib -L secureip --snapshot tb_speed_avg_behav xil_defaultlib.tb_speed_avg -log elaborate.log 
+Running: D:/Programs/Xilinx/Vivado/2020.2/bin/unwrapped/win64.o/xelab.exe -wto cdd92ebb60df4f9a8bf8a44da234916c --incr --debug typical --relax --mt 2 -L xil_defaultlib -L secureip --snapshot tb_time_trip_behav xil_defaultlib.tb_time_trip -log elaborate.log 
 Using 2 slave threads.
 Starting static elaboration
 Completed static elaboration
@@ -11,6 +11,6 @@ Compiling package std.standard
 Compiling package std.textio
 Compiling package ieee.std_logic_1164
 Compiling package ieee.numeric_std
-Compiling architecture behavioral of entity xil_defaultlib.speed_avg [speed_avg_default]
-Compiling architecture behavioral of entity xil_defaultlib.tb_speed_avg
-Built simulation snapshot tb_speed_avg_behav
+Compiling architecture behavioral of entity xil_defaultlib.time_trip [time_trip_default]
+Compiling architecture testbench of entity xil_defaultlib.tb_time_trip
+Built simulation snapshot tb_time_trip_behav

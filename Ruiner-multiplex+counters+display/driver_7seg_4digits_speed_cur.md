@@ -29,11 +29,7 @@ entity driver_7seg_4digits_speed_cur is
         -- Common anode signals to individual displays
         dig_o            : out std_logic_vector(4 - 1 downto 0);
         -- Decimal point for specific digit
-        dp_o             : out std_logic_vector(4 - 1 downto 0);
-        -- Signal to colon anode
-        colon_o          : out std_logic;
-        -- Signal to colon cathode
-        colon_cathode_o  : out std_logic
+        dp_o             : out std_logic_vector(4 - 1 downto 0)
     );
 end entity driver_7seg_4digits_speed_cur;
 
@@ -95,8 +91,6 @@ begin
     p_mux : process(s_cnt, speed_cur_dig1_i, speed_cur_dig2_i, speed_cur_dig3_i, speed_cur_dig4_i)
     begin
         dp_o            <= "0100";
-        colon_o         <= '0';
-        colon_cathode_o <= '0';
         case s_cnt is
             when "11" =>
                 s_hex <= speed_cur_dig4_i;
@@ -157,8 +151,6 @@ architecture testbench of tb_driver_7seg_4digits_speed_cur is
     signal s_dp              : std_logic_vector(4 - 1 downto 0);  
     signal s_seg             : std_logic_vector(7 - 1 downto 0);   
     signal s_dig             : std_logic_vector(4 - 1 downto 0);
-    signal s_colon           : std_logic;
-    signal s_colon_cathode   : std_logic;
 
 begin
     -- Connecting testbench signals with driver_7seg_4digits_speed_cur entity
@@ -174,8 +166,6 @@ begin
         speed_cur_dig4_i   => s_speed_cur_dig4,
         dp_o               => s_dp,
         seg_o              => s_seg,
-        colon_o            => s_colon,
-        colon_cathode_o    => s_colon_cathode,
         dig_o              => s_dig
     );
 

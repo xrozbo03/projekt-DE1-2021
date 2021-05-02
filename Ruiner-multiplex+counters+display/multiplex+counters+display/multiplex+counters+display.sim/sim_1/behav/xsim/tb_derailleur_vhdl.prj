@@ -1,0 +1,7 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../multiplex+counters+display.srcs/sources_1/new/derailleur.vhd" \
+"../../../../multiplex+counters+display.srcs/sim_1/new/tb_derailleur.vhd" \
+
+# Do not sort compile order
+nosort

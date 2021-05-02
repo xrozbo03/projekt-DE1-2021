@@ -32,7 +32,7 @@ entity time_trip is
 
     Port ( 
           clk               : in std_logic;                            -- 100HMz clock
-          enable_i          : in std_logic;                            -- input for driving verification
+          cycle_i           : in std_logic;                            -- input for driving verification
           cnt_1sec_i        : in std_logic;                            -- 1 second counter
           reset             : in std_logic;                            -- reset trip button
           time_count_o      : out std_logic_vector (19 - 1 downto 0);  -- sumary number of minutes on trip
@@ -55,6 +55,9 @@ architecture Behavioral of time_trip is
     signal s_cnt1   : unsigned(4 - 1 downto 0);  -- minutes counter
     signal s_cnt0   : unsigned(6 - 1 downto 0);  -- seconds to determine the minute
     signal s_cntall : unsigned(19 - 1 downto 0); -- sum of all seconds
+    
+    signal s_enable      : std_logic;               -- enable counting process
+    signal s_cnt_enable  : unsigned (4-1 downto 0); -- counter 10s to control s_enable
 
     -- local constants to compare specific values of counters
     constant c_NINE      : unsigned(4 - 1 downto 0) := b"1001";
@@ -63,10 +66,24 @@ architecture Behavioral of time_trip is
 
 begin
 
-p_time_trip : process(clk)
+p_time_trip : process(clk, cycle_i)
     begin
-
+        -- wheel rotation verification
+        if (cnt_1sec_i = '1') then
+            s_cnt_enable <= s_cnt_enable + 1;
+            
+            if (cycle_i = '1') then
+                s_cnt_enable <= (others => '0');
+                s_enable <= '1';
+            elsif (s_cnt_enable = 10) then
+                s_enable <= '0';
+            end if;
+        
+        end if;
+        
         if rising_edge(clk) then
+
+            -- counting process
             if(reset = '1') then
                 -- reset counter
                 s_cnt0   <= (others => '0');
@@ -76,7 +93,7 @@ p_time_trip : process(clk)
                 s_cnt4   <= (others => '0');
                 s_cntall <= (others => '0');
                 
-            elsif (enable_i = '1') then             -- turn on the counter while moving
+            elsif (s_enable = '1') then             -- turn on the counter while moving
                 if (cnt_1sec_i = '1') then
                     s_cntall <= s_cntall + 1;          -- counting all seconds
                     s_cnt0   <= s_cnt0 + 1;            -- counting seconds to minutes

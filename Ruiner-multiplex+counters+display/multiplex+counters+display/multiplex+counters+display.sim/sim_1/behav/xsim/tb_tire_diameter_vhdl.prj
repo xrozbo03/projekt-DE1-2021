@@ -1,0 +1,7 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../multiplex+counters+display.srcs/sources_1/new/tire_diameter.vhd" \
+"../../../../multiplex+counters+display.srcs/sim_1/new/tb_tire_diameter.vhd" \
+
+# Do not sort compile order
+nosort

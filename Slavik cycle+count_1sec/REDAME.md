@@ -844,7 +844,7 @@ A four bit value arrives to the display. According to its value, the number in d
     end process p_7seg_decoder;
 ```
 Simulation:
-![driver_7seg_4digits_speed_cur](images/driver_7seg_4digits_speed_cur.png)
+![driver_7seg_4digits_speed_cur](images/driver_7seg_4digits_speed_cur.PNG)
 
 ## Module: driver_7seg_4digits_mode
 In this module, multiplexer is used so the user can alternated, what data is displayed on the 7- segment display. It consists of several submodules listed below.

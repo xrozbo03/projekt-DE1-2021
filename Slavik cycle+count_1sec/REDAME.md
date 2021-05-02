@@ -36,7 +36,7 @@ begin
     end process p_diameter;
 ```
 Simulation:
-![tire_diameter](images/tire_diameter.png)
+![tire_diameter](images/tire_diameter.PNG)
 
 Module: cycle
 This module uses a hall sensor a its input. If the hall sensor detects a pulse , here described as ‘0’ , it sends a signal to the output cycle_o. 
@@ -59,7 +59,7 @@ begin
 end Behavioral;
 ```
 Simulation:
-![cycle](images/cycle.png)
+![cycle](images/cycle.PNG)
 
 Module: count_1sec (up counter):
 On the input of the module we use a clock signal with a frequency of 100 MHz. There is a local counter signal cnt_1sec which is at the beginning set to zero and a constant which is set to 100 000 000 pulses. 
@@ -89,7 +89,7 @@ begin
 
 ```
 Simulation:
-![count_1sec](images/count_1sec.png)
+![count_1sec](images/count_1sec.PNG)
 
 Module: derailleur
 In this module, the user selects the difficulty of the derailleur. It uses a clock signal of 100 MHz and a synchrounous reset. The user selects the difficulty using a button (btn_i) which is one of the inputs of this module. 
@@ -155,7 +155,7 @@ begin
     end process p_output_states;
 ```
 Simulation:
-![cderailleur](images/derailleur.png)
+![cderailleur](images/derailleur.PNG)
 
 ##Part 2 (speed_cur, speed_avg, distance, time_trip):
 Module: speed_cur
@@ -316,8 +316,8 @@ Displaying results at the outputs:
 
 ```
 Simulation:
-![speed_cur1](images/speed_cur1.png)
-![speed_cur2](images/speed_cur2.png)
+![speed_cur1](images/speed_cur1.PNG)
+![speed_cur2](images/speed_cur2.PNG)
 
 
 
@@ -607,9 +607,9 @@ dis_trip_o <= std_logic_vector(s_dis_trip_local);
 
 ```
 Simulation:
-![distance_sim1](images/distance_sim_1.png)
-![distance_sim_2 (arst)](images/distance_sim_2 (arst).png)
-![distance_sim_3 (overflow)](images/distance_sim_3 (overflow).png)
+![distance_sim1](images/distance_sim_1.PNG)
+![distance_sim_2 (arst)](images/distance_sim_2 (arst).PNG)
+![distance_sim_3 (overflow)](images/distance_sim_3 (overflow).PNG)
 
 
 Module: time_trip
@@ -1044,4 +1044,4 @@ p_cnt_up : process(clk)
 ```
 
 Simulation:
-![driver_7seg_4digits_mode](images/driver_7seg_4digits_mode.png)
+![driver_7seg_4digits_mode](images/driver_7seg_4digits_mode.PNG)

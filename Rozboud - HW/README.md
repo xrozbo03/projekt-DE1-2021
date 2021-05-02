@@ -14,6 +14,8 @@ schematic ( https://reference.digilentinc.com/_media/reference/programmable-logi
 
 - 4-místný sedmisegmentový 0.56" displej HS410561K-32, společná anoda ( https://www.laskarduino.cz/4-mistny--sedmisegmentovy--0-56--displej-hs410561k-32--spolecna-anoda--cerveny/?gclid=Cj0KCQjw-LOEBhDCARIsABrC0TkHNEw1GL7z6yQH_oacR9Hl1ZPOSFJ3biUOZr_8lQqI0rBIFiMJ1xUaAt8FEALw_wcB )
 - Hallův senzor 44E ( https://dratek.cz/arduino/7735-halluv-senzor-44e.html )
+- 330 Ohm resistor ( https://dratek.cz/arduino/7655-rezistor-330r-0.25-w-1.html )
+- 10kOhm resistor ( https://dratek.cz/arduino/7650-rezistor-10k-0.25-w-1.html )
 
 ## inspirace zapojení součástek
 
@@ -29,6 +31,6 @@ Hallův senzor
 
 ## zapojeni
 
-diody u 7seg jsou ošetřené pomocí 200 Ohm rezistorů které jsou zabudované ve standartních Pmod konektorech
+diody u 7seg jsou ošetřené pomocí 200 Ohm rezistorů které jsou zabudované ve standartních Pmod konektorech na desce
 
 ![zapojení](Images/zapojeni.png)

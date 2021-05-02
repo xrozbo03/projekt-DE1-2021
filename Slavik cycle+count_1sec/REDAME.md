@@ -1,11 +1,11 @@
-#Bike console
+# Bike console
 
 With this bike console, the user can view stats such as: current speed of the bike, average speed of the bike, cycled distance, cycled distance together,  time cycled. It is equipped with two 7-segment displays. The first one shows the users current speed.
 On the second one, the user can manually switch between the desired parametres such as average speed of the bike, cycled distance, time cycled.
 
-##Part 1 (tire_diameter, cycle, count_1sec , derailleur) 
+## Part 1 (tire_diameter, cycle, count_1sec , derailleur) 
 
-Module: tire_diameter
+## Module: tire_diameter
 This is a simple module made for the user to set the bikes wheel diameter before the trip. The user selects the diamter using 3 switches, which are at the same time, the inputs of this module. 
 There are 8 possible combinations to choose from : (737 mm) (711 mm) (699 mm) (660 mm) (610 mm)  (508 mm) (406 mm) (305 mm). The output is a vector of a size of 5 which represents the literal size of the diameter in binary. 
 ```vhdl
@@ -38,7 +38,7 @@ begin
 Simulation:
 ![tire_diameter](images/tire_diameter.PNG)
 
-Module: cycle
+## Module: cycle
 This module uses a hall sensor a its input. If the hall sensor detects a pulse , here described as ‘0’ , it sends a signal to the output cycle_o. 
 The purpose of the module is to signal other modules that the bike is moving.
 ```vhdl
@@ -61,7 +61,7 @@ end Behavioral;
 Simulation:
 ![cycle](images/cycle.PNG)
 
-Module: count_1sec (up counter):
+## Module: count_1sec (up counter):
 On the input of the module we use a clock signal with a frequency of 100 MHz. There is a local counter signal cnt_1sec which is at the beginning set to zero and a constant which is set to 100 000 000 pulses. 
 This means that there are 100 000 000 clock pulses under 1 second in this frequency. 
 On the clock signal the process begins. When the local signal is set to 0 (by subtracting 1 from the constant „second“, which is binary) the output cnt_o is set to 1. 
@@ -91,7 +91,7 @@ begin
 Simulation:
 ![count_1sec](images/count_1sec.PNG)
 
-Module: derailleur
+## Module: derailleur
 In this module, the user selects the difficulty of the derailleur. It uses a clock signal of 100 MHz and a synchrounous reset. The user selects the difficulty using a button (btn_i) which is one of the inputs of this module. 
 There are 3 state of difficulty.  The module uses 2 internal signals to process the alternation of difficulties: s_state – set to TWO as default; s_cnt_btn which signals if the button was released.
  On the clock signal and the reset, these 2 signals are set default. When a user pushes the button and releases it, he cycles among the given difficulties. 
@@ -157,7 +157,7 @@ begin
 Simulation:
 ![derailleur](images/derailleur.PNG)
 
-##Part 2 (speed_cur, speed_avg, distance, time_trip):
+## Part 2 (speed_cur, speed_avg, distance, time_trip):
 Module: speed_cur
 
 The purpose of this module is to calculate the speed of the bike.  It consists of 5 inputs (clk, reset, cycle_i, cnt_1sec, tire_diameter_i). The outputs will be dependent on these values. 
@@ -321,7 +321,7 @@ Simulation:
 
 
 
-Module: speed_avg
+## Module: speed_avg
 This module calculates the average speed during one trip.
 Inputs, outputs and signals:
 
@@ -437,7 +437,7 @@ Simulation:
 ![speed_avg](images/speed_avg.png)
 
 
-Module: distance
+## Module: distance
 This module measures the time during one trip and all trips together
 Inputs, outputs and signals:
 
@@ -612,7 +612,7 @@ Simulation:
 ![distance_sim_3 overflow)](images/distance_sim_3.PNG)
 
 
-Module: time_trip
+## Module: time_trip
 This module calculates the time during one trip. 
 Inputs, outputs and signals:
 
@@ -724,9 +724,9 @@ Simulation:
 ![time-enable-final](images/time-enable-final.png)
 
 
-##Part 3 (driver_7seg_4digits_speed_cur, driver_7seg_4digits_mode)
+## Part 3 (driver_7seg_4digits_speed_cur, driver_7seg_4digits_mode)
 
-Module: driver_7seg_4digits_speed_cur
+## Module: driver_7seg_4digits_speed_cur
 
 Submodule (clock_enable):
 Generates 400 000 clk pulses.
@@ -846,7 +846,7 @@ A four bit value arrives to the display. According to its value, the number in d
 Simulation:
 ![driver_7seg_4digits_speed_cur](images/driver_7seg_4digits_speed_cur.png)
 
-Module: driver_7seg_4digits_mode
+## Module: driver_7seg_4digits_mode
 In this module, multiplexer is used so the user can alternated, what data is displayed on the 7- segment display. It consists of several submodules listed below.
 
 Submodule (clock_enable):

@@ -155,7 +155,7 @@ begin
     end process p_output_states;
 ```
 Simulation:
-![cderailleur](images/derailleur.PNG)
+![derailleur](images/derailleur.PNG)
 
 ##Part 2 (speed_cur, speed_avg, distance, time_trip):
 Module: speed_cur
@@ -608,8 +608,8 @@ dis_trip_o <= std_logic_vector(s_dis_trip_local);
 ```
 Simulation:
 ![distance_sim1](images/distance_sim_1.PNG)
-![distance_sim_2 (arst)](images/distance_sim_2 (arst).PNG)
-![distance_sim_3 (overflow)](images/distance_sim_3 (overflow).PNG)
+![distance_sim_2(arst)](images/distance_sim_2.PNG)
+![distance_sim_3 overflow)](images/distance_sim_3.PNG)
 
 
 Module: time_trip

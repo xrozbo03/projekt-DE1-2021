@@ -15,11 +15,11 @@ use ieee.std_logic_unsigned.all;
 
 entity speed_cur is
     port(
-        clk                : in  std_logic;
+        clk                : in  std_logic;                             -- Main clock
         reset              : in  std_logic;                             -- Synchronous reset
         cycle_i            : in  std_logic;                             -- Distance input in kilometers
         cnt_1sec_i         : in  std_logic;                             -- Impulse to update speed on the 7 segment display
-        tire_diameter_i    : in  std_logic_vector(5 - 1 downto 0);     -- Diameter in mm
+        tire_diameter_i    : in  std_logic_vector(5 - 1 downto 0);      -- Diameter in inches
         speed_cur_dig1_o   : out std_logic_vector(4 - 1 downto 0);      -- Tens of kilometers
         speed_cur_dig2_o   : out std_logic_vector(4 - 1 downto 0);      -- Kilometers
         speed_cur_dig3_o   : out std_logic_vector(4 - 1 downto 0);      -- Hundreds of meters
@@ -32,6 +32,7 @@ architecture Behavioral of speed_cur is
     signal s_cnt_cycles         : unsigned(12 - 1 downto 0) := (others => '0');  -- Counter of cycles before 1 sec
     signal first2displays       : std_logic := '0';                              -- Signal to count values for first 2 digits
     signal last2displays        : std_logic := '0';                              -- Signal to count values for last 2 digits
+    signal cycle_temp           : std_logic := '0';                              -- Control value for cycles
     signal tire_diameter_mm     : natural := 0;                                  -- Signal to hold tire diameter in milimeters
     signal calculation          : natural;                                       -- Signal for counting of first 2 digits
     signal remainder            : natural;                                       -- Signal for counting of last 2 digits
@@ -41,11 +42,11 @@ architecture Behavioral of speed_cur is
     signal tens_of_kilometers   : unsigned(4 - 1 downto 0) := (others => '0');
     signal kilometers           : unsigned(4 - 1 downto 0) := (others => '0');
     signal hundreds_of_meters   : unsigned(4 - 1 downto 0) := (others => '0');
-    signal tens_of_meters       : unsigned(4 - 1 downto 0) := (others => '0');
+    signal tens_of_meters       : unsigned(4 - 1 downto 0) := (others => '0');    
 
 begin
 
-    p_speed_cur : process(clk, cycle_i, cnt_1sec_i)
+    p_speed_cur : process(clk, cycle_i)
     begin
 
         case tire_diameter_i is
@@ -67,8 +68,11 @@ begin
                 tire_diameter_mm <= 305;
         end case;
 
-        if(rising_edge(cycle_i)) then
-             s_cnt_cycles <= s_cnt_cycles+1;
+        if(cycle_i = '1' and cycle_temp = '0') then
+           s_cnt_cycles <= s_cnt_cycles+1;
+           cycle_temp   <= '1';
+        elsif(cycle_i = '0' and cycle_temp = '1') then
+            cycle_temp   <= '0';
         end if;
 
         if rising_edge(clk) then                            -- Increase local coutner of cycles if there is a cycle
@@ -83,7 +87,7 @@ begin
                 hundreds_of_meters  <= (others => '0');     -- Reset hundrerds of meters
                 tens_of_meters      <= (others => '0');     -- Reset tens of meters
 
-            elsif (rising_edge(cnt_1sec_i)) then
+            elsif (cnt_1sec_i = '1') then
                 if (s_cnt_cycles = 0) then
                     s_cnt_seconds       <= s_cnt_seconds+1;
                     calculation         <= 0;
@@ -194,7 +198,7 @@ begin
         --------------------------------------------------------------------
         p_clk_gen : process
         begin
-            while now < 3000 ns loop         -- 75 periods of 100MHz clock
+            while now < 1500 ns loop
                 s_clk <= '0';
                 wait for c_CLK_100MHZ_PERIOD / 2;
                 s_clk <= '1';

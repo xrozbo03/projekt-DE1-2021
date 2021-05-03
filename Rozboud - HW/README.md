@@ -34,3 +34,27 @@ Hallův senzor
 diody u 7seg jsou ošetřené pomocí 200 Ohm rezistorů které jsou zabudované ve standartních Pmod konektorech na desce
 
 ![zapojení](Images/zapojeni.png)
+
+## tabulka zapojení
+
+### 7Segment
+
+|Pmod JA (standard)|Connection|Cathodes | Pmod  JD (standard) | Connection |Cathodes| Pmod JB (High-Speed) | Connection | Anodes |
+| :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
+| Pin 1 | G13 | CA | Pin 1 | D4 | CA | Pin 1 | E15 | AN7 |
+| Pin 2 | B11 | CB | Pin 2 | D3 | CB | Pin 2 | E16 | AN6 |
+| Pin 3 | A11 | CC | Pin 3 | F4 | CC | Pin 3 | D15 | AN5 |
+| Pin 4 | D12 | CD | Pin 4 | F3 | CD | Pin 4 | C15 | AN4 |
+| Pin 7 | D13 | CE | Pin 7 | E2 | CE | Pin 7 | J17 | AN3 |
+| Pin 8 | B18 | CF | Pin 8 | D2 | CF | Pin 8 | J18 | AN2 |
+| Pin 9 | A18 | CG | Pin 9 | H2 | CG | Pin 9 | K15 | AN1 |
+| Pin 10 | K16 | Cdot | Pin 10 | G2 | Cdot | Pin 10 | J15 | AN0 |
+
+### Hall sensor
+
+| Hall sensor | Connection |
+| :---------: | :--------: |
+|   Supply    |    5V0     |
+|   Ground    |    GND     |
+|   Output    |   I/O 0    |
+

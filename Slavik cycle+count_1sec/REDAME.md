@@ -449,21 +449,23 @@ Inputs, outputs and signals:
 
 ```vhdl
 entity distance is
-    Port ( size_i : in STD_LOGIC_VECTOR (5 - 1 downto 0);           -- size of the bike 
-           cycle_i : in STD_LOGIC;                                  -- 1 when theres signal from sond, 0 others
-           rst_i : in STD_LOGIC;                                   -- to reset trip
-           dis_trip_o : out STD_LOGIC_VECTOR (14 - 1 downto 0);     -- distance in km trip
-           dis_all_o : out STD_LOGIC_VECTOR (14 - 1 downto 0);     -- total distance in km
+    Port ( 
+           clk              : in STD_LOGIC;
+           size_i           : in STD_LOGIC_VECTOR (5 - 1 downto 0);           -- size of the bike 
+           cycle_i          : in STD_LOGIC;                                  -- 1 when theres signal from sond, 0 others
+           reset            : in STD_LOGIC;                                   -- to reset trip
+           dis_trip_o       : out STD_LOGIC_VECTOR (19 - 1 downto 0);     -- distance in km trip
+      --   dis_all_o        : out STD_LOGIC_VECTOR (14 - 1 downto 0);     -- total distance in km   -- only for testing
            
-           trip_dig1_o        : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- 1 trip distance value for 1. digit 
-           trip_dig2_o        : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- 1 trip distance value for 2. digit 
-           trip_dig3_o        : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- 1 trip distance value for 3. digit 
-           trip_dig4_o        : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- 1 trip distance value for 4. digit 
+           trip_dig1_o        : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- 1 trip distance value for 1. digit (100)
+           trip_dig2_o        : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- 1 trip distance value for 2. digit (10)
+           trip_dig3_o        : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- 1 trip distance value for 3. digit (1)
+           trip_dig4_o        : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- 1 trip distance value for 4. digit (.1)
            
-           all_dig1_o         : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- Total distance value for 1. digit 
-           all_dig2_o         : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- Total distance value for 2. digit 
-           all_dig3_o         : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- Total distance value for 3. digit 
-           all_dig4_o         : out STD_LOGIC_VECTOR  (4 - 1 downto 0)      -- Total distance value for 4. digit 
+           all_dig1_o         : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- Total distance value for 1. digit (1000)
+           all_dig2_o         : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- Total distance value for 2. digit (100)
+           all_dig3_o         : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- Total distance value for 3. digit (10)
+           all_dig4_o         : out STD_LOGIC_VECTOR  (4 - 1 downto 0)      -- Total distance value for 4. digit (1)
           
           );
            
@@ -473,12 +475,14 @@ end distance;
 architecture Behavioral of distance is
 
       
-        signal s_size_local     : unsigned (11 - 1 downto 0);                           -- local number, how many cycles are needed to one km distance
-        signal s_count          : unsigned (11 - 1 downto 0) := "00000000000";          -- counting cycles
+        signal s_size_local             : unsigned (11 - 1 downto 0);   
+        signal s_size_local_trip        : unsigned (11 - 1 downto 0);                        -- local number, how many cycles are needed to one km distance
+        signal s_count                  : unsigned (11 - 1 downto 0) := "00000000000";          -- counting cycles
+        signal s_count_trip             : unsigned (11 - 1 downto 0) := "00000000000"; 
 
 
-        signal s_dis_trip_local   : unsigned (14 - 1 downto 0) := "00000000000000";     -- local signal for trip dist (output to avg speed) and for local testing and other use)
-        signal s_dis_all_local     : unsigned (14 - 1 downto 0) := "00000000000000";    -- local signal for all dist    (-||-)
+        signal s_dis_trip_local    : unsigned (19 - 1 downto 0) := "0000000000000000000";     -- local signal for trip dist (output to avg speed) and for local testing and other use)
+     -- signal s_dis_all_local     : unsigned (14 - 1 downto 0) := "00000000000000";    -- local signal for all dist    (-||-)
         
         signal s_trip_dig1_o        : unsigned (4 - 1 downto 0) := "0000";              -- local outputs fot digits on 7-seg
         signal s_trip_dig2_o        : unsigned (4 - 1 downto 0) := "0000";
@@ -597,8 +601,8 @@ if rising_edge(rst_i) then                     -- when rst singal from user rese
 Setting local signals to logic vector outputs:
 
 ```vhdl
-dis_trip_o <= std_logic_vector(s_dis_trip_local);
-        dis_all_o <= std_logic_vector(s_dis_all_local);
+          dis_trip_o <= std_logic_vector(s_dis_trip_local);
+         -- dis_all_o <= std_logic_vector(s_dis_all_local);  -- only for testing
         
         
         trip_dig1_o   <= std_logic_vector(s_trip_dig1_o);
@@ -610,7 +614,6 @@ dis_trip_o <= std_logic_vector(s_dis_trip_local);
         all_dig2_o    <= std_logic_vector(s_all_dig2_o);
         all_dig3_o    <= std_logic_vector(s_all_dig3_o);
         all_dig4_o    <= std_logic_vector(s_all_dig4_o); 
-
 ```
 Simulation:
 ![distance_sim1](images/distance_sim_1.PNG)

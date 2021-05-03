@@ -4,9 +4,13 @@
 
 ### Team members
 
-Names of all project team members.
+Přádka Nikodém
+Rozboud Jakub
+Rubínek Tomáš
+Ruiner Michal
+Slávik Mark
 
-[Link to your GitHub project folder]( http://github.com/xxx)
+Link to our GitHub project folder -  https://github.com/xrozbo03/projekt-DE1-2021 http://github.com/xxx)
 
 ### Project objectives
 

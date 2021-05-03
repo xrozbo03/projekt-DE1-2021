@@ -4,12 +4,12 @@ use ieee.numeric_std.all;
 
 entity distance is
     Port ( 
-           clk_i            : in STD_LOGIC;
+           clk            : in STD_LOGIC;
            size_i           : in STD_LOGIC_VECTOR (5 - 1 downto 0);           -- size of the bike 
            cycle_i          : in STD_LOGIC;                                  -- 1 when theres signal from sond, 0 others
-           arst_i           : in STD_LOGIC;                                   -- to reset trip
-           dis_trip_o       : out STD_LOGIC_VECTOR (14 - 1 downto 0);     -- distance in km trip
-           dis_all_o        : out STD_LOGIC_VECTOR (14 - 1 downto 0);     -- total distance in km
+           rst           : in STD_LOGIC;                                   -- to reset trip
+           dis_trip_o       : out STD_LOGIC_VECTOR (19 - 1 downto 0);     -- distance in km trip
+      --   dis_all_o        : out STD_LOGIC_VECTOR (14 - 1 downto 0);     -- total distance in km   -- only for testing
            
            trip_dig1_o        : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- 1 trip distance value for 1. digit 
            trip_dig2_o        : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- 1 trip distance value for 2. digit 
@@ -35,8 +35,8 @@ architecture Behavioral of distance is
         signal s_count_trip             : unsigned (11 - 1 downto 0) := "00000000000"; 
 
 
-        signal s_dis_trip_local    : unsigned (14 - 1 downto 0) := "00000000000000";     -- local signal for trip dist (output to avg speed) and for local testing and other use)
-        signal s_dis_all_local     : unsigned (14 - 1 downto 0) := "00000000000000";    -- local signal for all dist    (-||-)
+        signal s_dis_trip_local    : unsigned (19 - 1 downto 0) := "0000000000000000000";     -- local signal for trip dist (output to avg speed) and for local testing and other use)
+     -- signal s_dis_all_local     : unsigned (14 - 1 downto 0) := "00000000000000";    -- local signal for all dist    (-||-)
         
         signal s_trip_dig1_o        : unsigned (4 - 1 downto 0) := "0000";              -- local outputs fot digits on 7-seg
         signal s_trip_dig2_o        : unsigned (4 - 1 downto 0) := "0000";
@@ -55,7 +55,7 @@ begin
     
 
 
-    p_distance : process(cycle_i, size_i, clk_i)  
+    p_distance : process(cycle_i, size_i, clk)  
     begin
     
 
@@ -96,33 +96,33 @@ begin
         
         if rising_edge(cycle_i) then
             
-            if (s_count < s_size_local) then                        -- add one to count, when cycle_i -- ALL counter
+            if (s_count < s_size_local) then                        -- add one to count, when cycle_i
                 s_count <= s_count + 1;
                 
             else                                                    -- when counter is full, resets counter and increase the local distance signals
                 s_count <= (others => '0');
         
-                s_dis_all_local   <= s_dis_all_local   + 1;                 
+             -- s_dis_all_local   <= s_dis_all_local   + 1;                 
                 
                 
-                if (s_all_dig1_o < "1001") then             -- the same for the digits output, counts from "0000" to "9999" and solves overflow for  decimal system
-                    s_all_dig1_o <= s_all_dig1_o +1;
+                if (s_all_dig4_o < "1001") then             -- the same only for all trip
+                    s_all_dig4_o <= s_all_dig4_o +1;
                 else
-                    s_all_dig1_o <= "0000";
+                    s_all_dig4_o <= "0000";
                     
-                    if (s_all_dig2_o < "1001") then
-                        s_all_dig2_o <= s_all_dig2_o +1;
+                    if (s_all_dig3_o < "1001") then
+                        s_all_dig3_o <= s_all_dig3_o +1;
                     else
-                        s_all_dig2_o <= "0000";
+                        s_all_dig3_o <= "0000";
                         
-                        if (s_all_dig3_o < "1001") then
-                            s_all_dig3_o <= s_all_dig3_o +1;
+                        if (s_all_dig2_o < "1001") then
+                            s_all_dig2_o <= s_all_dig2_o +1;
                         else
-                            s_all_dig3_o <= "0000";
-                            if (s_all_dig4_o < "1001") then
-                                s_all_dig4_o <= s_all_dig4_o +1;
+                            s_all_dig2_o <= "0000";
+                            if (s_all_dig1_o < "1001") then
+                                s_all_dig1_o <= s_all_dig1_o +1;
                             else
-                                s_all_dig4_o <= "0000";
+                                s_all_dig1_o <= "0000";
                                 
                             end if;
                         end if;
@@ -131,35 +131,35 @@ begin
                 
         end if;
             
-                                        
-        if (s_count_trip < s_size_local_trip) then                        -- add one to count, when cycle_i   TRIP counter
+            
+        if (s_count_trip < s_size_local_trip) then                        -- add one to count, when cycle_i
                 s_count_trip <= s_count_trip + 1;
                 
             else       
-                                                                    -- when counter is full, resets counter and increase the local distance signals
+                
                 s_dis_trip_local  <= s_dis_trip_local  + 1;
                 s_count_trip <= (others => '0');
             
                 
                 
-                if (s_trip_dig1_o < "1001") then                    -- digits output
-                    s_trip_dig1_o <= s_trip_dig1_o +1;              
+                if (s_trip_dig4_o < "1001") then                    -- twice the same (ones for "trip" and ones for "all"), counting for 7-seg displays, 
+                    s_trip_dig4_o <= s_trip_dig4_o +1;              -- counts from "0000" to "9999" and solves overflow for  decimal system
                 else
-                    s_trip_dig1_o <= "0000";
+                    s_trip_dig4_o <= "0000";
                     
-                    if (s_trip_dig2_o < "1001") then
-                        s_trip_dig2_o <= s_trip_dig2_o +1;
+                    if (s_trip_dig3_o < "1001") then
+                        s_trip_dig3_o <= s_trip_dig3_o +1;
                     else
-                        s_trip_dig2_o <= "0000";
+                        s_trip_dig3_o <= "0000";
                         
-                        if (s_trip_dig3_o < "1001") then
-                            s_trip_dig3_o <= s_trip_dig3_o +1;
+                        if (s_trip_dig2_o < "1001") then
+                            s_trip_dig2_o <= s_trip_dig2_o +1;
                         else
-                            s_trip_dig3_o <= "0000";
-                            if (s_trip_dig4_o < "1001") then
-                                s_trip_dig4_o <= s_trip_dig4_o +1;
+                            s_trip_dig2_o <= "0000";
+                            if (s_trip_dig1_o < "1001") then
+                                s_trip_dig1_o <= s_trip_dig1_o +1;
                             else
-                                s_trip_dig4_o <= "0000";
+                                s_trip_dig1_o <= "0000";
                                 
                             end if;
                         end if;
@@ -176,8 +176,8 @@ begin
 
         end if;
         
-        if rising_edge(clk_i) then
-            if (arst_i = '1') then                     -- when arst singla from user resets trip singal and digits (all signal and digits can not be reset
+        if rising_edge(clk) then
+            if (rst = '1') then                     -- when arst singla from user resets trip singal and digits (all signal and digits can not be reset
 
             s_dis_trip_local  <=  (others => '0');
             
@@ -197,7 +197,7 @@ begin
     end process;                                    -- sets local signals to logic vector outputs
 
         dis_trip_o <= std_logic_vector(s_dis_trip_local);
-        dis_all_o <= std_logic_vector(s_dis_all_local);
+     -- dis_all_o <= std_logic_vector(s_dis_all_local);  -- only for testing
         
         
         trip_dig1_o   <= std_logic_vector(s_trip_dig1_o);

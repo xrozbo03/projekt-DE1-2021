@@ -57,10 +57,10 @@ architecture Behavioral of speed_avg is
     signal s_final_result      : natural;   -- unit conversion to km/h
     signal s_result_in_natural : natural;   -- result in KM/H
     
-    signal s_cnt4   : unsigned(4 - 1 downto 0);  -- average speed tens of km/h
-    signal s_cnt3   : unsigned(4 - 1 downto 0);  -- average speed km/h
-    signal s_cnt2   : unsigned(4 - 1 downto 0);  -- average speed first decimal place
-    signal s_cnt1   : unsigned(4 - 1 downto 0);  -- average speed second decimal place
+    signal s_cnt4   : unsigned(4 - 1 downto 0) := (others => '0');  -- average speed tens of km/h
+    signal s_cnt3   : unsigned(4 - 1 downto 0) := (others => '0');  -- average speed km/h
+    signal s_cnt2   : unsigned(4 - 1 downto 0) := (others => '0');  -- average speed first decimal place
+    signal s_cnt1   : unsigned(4 - 1 downto 0) := (others => '0');  -- average speed second decimal place
     
     -- local constants to compare specific values of counters
     constant c_NINE      : unsigned(4 - 1 downto 0) := b"1001";

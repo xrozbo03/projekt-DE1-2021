@@ -49,12 +49,12 @@ end time_trip;
 architecture Behavioral of time_trip is
 
     -- local counter
-    signal s_cnt4   : unsigned(4 - 1 downto 0);  -- tens of hours counter
-    signal s_cnt3   : unsigned(4 - 1 downto 0);  -- hours counter
-    signal s_cnt2   : unsigned(4 - 1 downto 0);  -- tens of minutes counter
-    signal s_cnt1   : unsigned(4 - 1 downto 0);  -- minutes counter
-    signal s_cnt0   : unsigned(6 - 1 downto 0);  -- seconds to determine the minute
-    signal s_cntall : unsigned(19 - 1 downto 0); -- sum of all seconds
+    signal s_cnt4   : unsigned(4 - 1 downto 0)  := (others => '0');  -- tens of hours counter
+    signal s_cnt3   : unsigned(4 - 1 downto 0)  := (others => '0');  -- hours counter
+    signal s_cnt2   : unsigned(4 - 1 downto 0)  := (others => '0');  -- tens of minutes counter
+    signal s_cnt1   : unsigned(4 - 1 downto 0)  := (others => '0');  -- minutes counter
+    signal s_cnt0   : unsigned(6 - 1 downto 0)  := (others => '0');  -- seconds to determine the minute
+    signal s_cntall : unsigned(19 - 1 downto 0) := (others => '0'); -- sum of all seconds
     
     signal s_enable      : std_logic;               -- enable counting process
     signal s_cnt_enable  : unsigned (4-1 downto 0); -- counter 10s to control s_enable
@@ -66,7 +66,7 @@ architecture Behavioral of time_trip is
 
 begin
 
-p_time_trip : process(clk, cycle_i)
+p_time_trip : process(clk, cycle_i, cnt_1sec_i)
     begin
         -- wheel rotation verification
         if (cnt_1sec_i = '1') then

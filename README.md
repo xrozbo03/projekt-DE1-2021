@@ -25,9 +25,9 @@ Arty A7 ( https://store.digilentinc.com/arty-a7-artix-7-fpga-development-board/ 
 
 schematic ( https://reference.digilentinc.com/_media/reference/programmable-logic/arty-a7/arty_a7_sch.pdf )
 
-![7seg pins](Rozboud - HW/Images/arty-a7-callout.png)
+![7seg pins](images/arty-a7-callout.png)
 
-![7seg pins](Rozboud - HW/Images/PmodPins.png)
+![7seg pins](images/PmodPins.png)
 
 ### Components
 
@@ -40,20 +40,20 @@ schematic ( https://reference.digilentinc.com/_media/reference/programmable-logi
 
 7 - seg display
 
-![7seg pins](Rozboud - HW/Images/7seg.png)
+![7seg pins](images/7seg.png)
 
-![7seg zapojení](Rozboud - HW/Images/7seg-inspirace.png)
+![7seg zapojení](images/7seg-inspirace.png)
 
 Hall sensor
 
-![Hall zapojení](Rozboud - HW/Images/hall.png)
+![Hall zapojení](images/hall.png)
 
 ### Interconnection
 
 
 Diodes near the 7 - seg display are connected through 200 Ohm resistors which are built-in in the standart Pmod connectors on the board.
 
-![zapojení](Rozboud - HW/Images/zapojeni.png)
+![zapojení](images/zapojeni.png)
 
 ### Table of connections
 
@@ -119,7 +119,7 @@ begin
     end process p_diameter;
 ```
 Simulation:
-![tire_diameter](Slavik cycle+count_1sec/images/tire_diameter.PNG)
+![tire_diameter](images/tire_diameter.PNG)
 
 ## Module: cycle
 This module uses a hall sensor a its input. If the hall sensor detects a pulse , here described as ‘0’ , it sends a signal to the output cycle_o. 
@@ -142,7 +142,7 @@ begin
 end Behavioral;
 ```
 Simulation:
-![cycle](Slavik cycle+count_1sec/images/cycle.PNG)
+![cycle](images/cycle.PNG)
 
 ## Module: count_1sec (up counter):
 On the input of the module we use a clock signal with a frequency of 100 MHz. There is a local counter signal cnt_1sec which is at the beginning set to zero and a constant which is set to 100 000 000 pulses. 
@@ -172,7 +172,7 @@ begin
 
 ```
 Simulation:
-![count_1sec](Slavik cycle+count_1sec/images/count_1sec.PNG)
+![count_1sec](images/count_1sec.PNG)
 
 ## Module: derailleur
 In this module, the user selects the difficulty of the derailleur. It uses a clock signal of 100 MHz and a synchrounous reset. The user selects the difficulty using a button (btn_i) which is one of the inputs of this module. 
@@ -238,7 +238,7 @@ begin
     end process p_output_states;
 ```
 Simulation:
-![derailleur](Slavik cycle+count_1sec/images/derailleur.PNG)
+![derailleur](images/derailleur.PNG)
 
 ## Part 2 (speed_cur, speed_avg, distance, time_trip):
 Module: speed_cur
@@ -405,8 +405,8 @@ Displaying results at the outputs:
 
 ```
 Simulation:
-![speed_cur1](Slavik cycle+count_1sec/images/speed_cur1.PNG)
-![speed_cur2](Slavik cycle+count_1sec/images/speed_cur2.PNG)
+![speed_cur1](images/speed_cur1.PNG)
+![speed_cur2](images/speed_cur2.PNG)
 
 
 
@@ -523,7 +523,7 @@ Setting the outputs:
 
 ```
 Simulation:
-![speed_avg](Slavik cycle+count_1sec/images/speed_avg.png)
+![speed_avg](images/speed_avg.png)
 
 
 ## Module: distance
@@ -699,9 +699,9 @@ Setting local signals to logic vector outputs:
         all_dig4_o    <= std_logic_vector(s_all_dig4_o); 
 ```
 Simulation:
-![distance_sim1](Slavik cycle+count_1sec/images/distance_sim_1.PNG)
-![distance_sim_2(arst)](Slavik cycle+count_1sec/images/distance_sim_2.PNG)
-![distance_sim_3 overflow)](Slavik cycle+count_1sec/images/distance_sim_3.PNG)
+![distance_sim1](images/distance_sim_1.PNG)
+![distance_sim_2(arst)](images/distance_sim_2.PNG)
+![distance_sim_3 overflow)](images/distance_sim_3.PNG)
 
 
 ## Module: time_trip
@@ -812,8 +812,8 @@ Outputs retype to std_logic_vector
 
 ```
 Simulation:
-![time-reset-final](Slavik cycle+count_1sec/images/time-enableandreset.png)
-![time-enable-final](Slavik cycle+count_1sec/images/time-full.png)
+![time-reset-final](images/time-enableandreset.png)
+![time-enable-final](images/time-full.png)
 
 
 ## Part 3 (driver_7seg_4digits_speed_cur, driver_7seg_4digits_mode)
@@ -936,7 +936,7 @@ A four bit value arrives to the display. According to its value, the number in d
     end process p_7seg_decoder;
 ```
 Simulation:
-![driver_7seg_4digits_speed_cur](Slavik cycle+count_1sec/images/driver_7seg_4digits_speed_cur.PNG)
+![driver_7seg_4digits_speed_cur](images/driver_7seg_4digits_speed_cur.PNG)
 
 ## Module: driver_7seg_4digits_mode
 In this module, multiplexer is used so the user can alternated, what data is displayed on the 7- segment display. It consists of several submodules listed below.
@@ -1136,7 +1136,7 @@ p_cnt_up : process(clk)
 ```
 
 Simulation:
-![driver_7seg_4digits_mode](Slavik cycle+count_1sec/images/driver_7seg_4digits_mode.PNG)
+![driver_7seg_4digits_mode](images/driver_7seg_4digits_mode.PNG)
 
 
 ## TOP module description and simulations

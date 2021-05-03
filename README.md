@@ -14,7 +14,9 @@ Link to our GitHub project folder -  https://github.com/xrozbo03/projekt-DE1-202
 
 ### Project objectives
 
-Write your text here.
+Console for exercise bike/bike, hall sensor, measuring and displaying speed, distance traveled, etc.
+ - features like derailleur, average speed, distance during one trip, distance overall, time during one trip were added
+
 
 
 ## Hardware description

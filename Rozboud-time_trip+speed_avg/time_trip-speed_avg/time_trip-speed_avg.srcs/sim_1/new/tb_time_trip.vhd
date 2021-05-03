@@ -42,7 +42,7 @@ architecture testbench of tb_time_trip is
     
     -- local signals
     signal s_clk             : std_logic;
-    signal s_cycle          : std_logic;
+    signal s_cycle           : std_logic;
     signal s_cnt_1sec        : std_logic;
     signal s_reset           : std_logic;
     signal s_time_count      : std_logic_vector (19 - 1 downto 0);

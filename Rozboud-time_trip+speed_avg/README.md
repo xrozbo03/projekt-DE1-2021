@@ -295,13 +295,13 @@ begin
 end testbench;
 
 ```
-### full simulation with enable
+### full simulation
 
-![full test](Images/time-enable-final.png)
+![full test](Images/time-full.png)
 
-### closeup to reset function 
+### closeup to reset and enable function 
 
-![reset test](Images/time-reset-final.png)
+![reset test](Images/time-enableandreset.png)
 
 # speed_avg
 

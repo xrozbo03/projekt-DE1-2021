@@ -4,15 +4,11 @@
 
 ### Team members
 
-Přádka Nikodém
-
-Rozboud Jakub
-
-Rubínek Tomáš
-
-Ruiner Michal
-
-Slávik Mark
+- Přádka Nikodém 
+- Rozboud Jakub
+- Rubínek Tomáš
+- Ruiner Michal
+- Slávik Mark
 
 Link to our GitHub project folder -  https://github.com/xrozbo03/projekt-DE1-2021 http://github.com/xxx)
 

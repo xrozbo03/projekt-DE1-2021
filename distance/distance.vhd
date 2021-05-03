@@ -96,7 +96,7 @@ begin
         
         if rising_edge(cycle_i) then
             
-            if (s_count < s_size_local) then                        -- add one to count, when cycle_i
+            if (s_count < s_size_local) then                        -- add one to count, when cycle_i -- ALL counter
                 s_count <= s_count + 1;
                 
             else                                                    -- when counter is full, resets counter and increase the local distance signals
@@ -105,7 +105,7 @@ begin
                 s_dis_all_local   <= s_dis_all_local   + 1;                 
                 
                 
-                if (s_all_dig1_o < "1001") then             -- the same only for all trip
+                if (s_all_dig1_o < "1001") then             -- the same for the digits output, counts from "0000" to "9999" and solves overflow for  decimal system
                     s_all_dig1_o <= s_all_dig1_o +1;
                 else
                     s_all_dig1_o <= "0000";
@@ -131,19 +131,19 @@ begin
                 
         end if;
             
-            
-        if (s_count_trip < s_size_local_trip) then                        -- add one to count, when cycle_i
+                                        
+        if (s_count_trip < s_size_local_trip) then                        -- add one to count, when cycle_i   TRIP counter
                 s_count_trip <= s_count_trip + 1;
                 
             else       
-                
+                                                                    -- when counter is full, resets counter and increase the local distance signals
                 s_dis_trip_local  <= s_dis_trip_local  + 1;
                 s_count_trip <= (others => '0');
             
                 
                 
-                if (s_trip_dig1_o < "1001") then                    -- twice the same (ones for "trip" and ones for "all"), counting for 7-seg displays, 
-                    s_trip_dig1_o <= s_trip_dig1_o +1;              -- counts from "0000" to "9999" and solves overflow for  decimal system
+                if (s_trip_dig1_o < "1001") then                    -- digits output
+                    s_trip_dig1_o <= s_trip_dig1_o +1;              
                 else
                     s_trip_dig1_o <= "0000";
                     

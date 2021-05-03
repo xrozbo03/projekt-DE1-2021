@@ -24,7 +24,7 @@ uut_distance : entity work.distance
             clk => s_clk_i,        
             size_i => s_size_i,
             cycle_i => s_cycle,
-            rst => s_arst,
+            reset => s_arst,
             dis_trip_o => s_dis_trip_o
             
     );

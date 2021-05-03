@@ -23,7 +23,6 @@ architecture testbench of tb_driver_7seg_4digits_speed_cur is
 
     --Local signals
     signal s_clk_100MHz      : std_logic;
-    --- WRITE YOUR CODE HERE
     signal s_reset           : std_logic;
 
     signal s_speed_cur_dig1  : std_logic_vector(4 - 1 downto 0);
@@ -37,7 +36,6 @@ architecture testbench of tb_driver_7seg_4digits_speed_cur is
 begin
     -- Connecting testbench signals with driver_7seg_4digits_speed_cur entity
     -- (Unit Under Test)
-    --- WRITE YOUR CODE HERE
     uut_driver_7seg : entity work.driver_7seg_4digits_speed_cur
     port map(
         clk                => s_clk_100MHz,
@@ -68,7 +66,6 @@ begin
     --------------------------------------------------------------------
     -- Reset generation process
     --------------------------------------------------------------------
-    --- WRITE YOUR CODE HERE
     p_reset_gen : process
     begin
         s_reset <= '0';

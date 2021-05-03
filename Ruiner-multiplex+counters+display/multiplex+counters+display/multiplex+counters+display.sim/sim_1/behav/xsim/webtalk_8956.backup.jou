@@ -2,11 +2,11 @@
 # Webtalk v2020.2 (64-bit)
 # SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
 # IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
-# Start of session at: Sat May  1 16:17:32 2021
-# Process ID: 8144
+# Start of session at: Sat May  1 17:50:56 2021
+# Process ID: 8956
 # Current directory: H:/Vivado/DE1_PROJEKT/multiplex+counters+display/multiplex+counters+display.sim/sim_1/behav/xsim
-# Command line: wbtcv.exe -mode batch -source H:/Vivado/DE1_PROJEKT/multiplex+counters+display/multiplex+counters+display.sim/sim_1/behav/xsim/xsim.dir/tb_count_1sec_behav/webtalk/xsim_webtalk.tcl -notrace
+# Command line: wbtcv.exe -mode batch -source H:/Vivado/DE1_PROJEKT/multiplex+counters+display/multiplex+counters+display.sim/sim_1/behav/xsim/xsim.dir/tb_driver_7seg_4digits_speed_cur_behav/webtalk/xsim_webtalk.tcl -notrace
 # Log file: H:/Vivado/DE1_PROJEKT/multiplex+counters+display/multiplex+counters+display.sim/sim_1/behav/xsim/webtalk.log
 # Journal file: H:/Vivado/DE1_PROJEKT/multiplex+counters+display/multiplex+counters+display.sim/sim_1/behav/xsim\webtalk.jou
 #-----------------------------------------------------------
-source H:/Vivado/DE1_PROJEKT/multiplex+counters+display/multiplex+counters+display.sim/sim_1/behav/xsim/xsim.dir/tb_count_1sec_behav/webtalk/xsim_webtalk.tcl -notrace
+source H:/Vivado/DE1_PROJEKT/multiplex+counters+display/multiplex+counters+display.sim/sim_1/behav/xsim/xsim.dir/tb_driver_7seg_4digits_speed_cur_behav/webtalk/xsim_webtalk.tcl -notrace

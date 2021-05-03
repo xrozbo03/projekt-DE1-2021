@@ -20,10 +20,10 @@ entity driver_7seg_4digits_speed_cur is
         clk     : in  std_logic;        -- Main clock
         reset   : in  std_logic;        -- Synchronous reset
         -- 4-bit input values for individual digits
-        speed_cur_dig1_i : in  std_logic_vector(4 - 1 downto 0);
-        speed_cur_dig2_i : in  std_logic_vector(4 - 1 downto 0);
-        speed_cur_dig3_i : in  std_logic_vector(4 - 1 downto 0);
-        speed_cur_dig4_i : in  std_logic_vector(4 - 1 downto 0);
+        speed_cur_dig1_i : in  std_logic_vector(4 - 1 downto 0);    -- Current speed value for 1. digit (tens of kilometers)
+        speed_cur_dig2_i : in  std_logic_vector(4 - 1 downto 0);    -- Current speed value for 2. digit (kilometers)
+        speed_cur_dig3_i : in  std_logic_vector(4 - 1 downto 0);    -- Current speed value for 3. digit (hundreds of meters)
+        speed_cur_dig4_i : in  std_logic_vector(4 - 1 downto 0);    -- Current speed value for 4. digit (tens of meters)
         -- Cathode values for individual segments
         seg_o            : out std_logic_vector(7 - 1 downto 0);
         -- Common anode signals to individual displays
@@ -85,7 +85,7 @@ begin
     --------------------------------------------------------------------
     -- p_mux:
     -- A combinational process that implements a multiplexer for
-    -- selecting data for a single digit, a decimal point signal, colon and
+    -- selecting data for a single digit, a decimal point signal and
     -- switches the common anodes of each display.
     --------------------------------------------------------------------
     p_mux : process(s_cnt, speed_cur_dig1_i, speed_cur_dig2_i, speed_cur_dig3_i, speed_cur_dig4_i)
@@ -141,7 +141,6 @@ architecture testbench of tb_driver_7seg_4digits_speed_cur is
 
     --Local signals
     signal s_clk_100MHz      : std_logic;
-    --- WRITE YOUR CODE HERE
     signal s_reset           : std_logic;
 
     signal s_speed_cur_dig1  : std_logic_vector(4 - 1 downto 0);
@@ -155,7 +154,6 @@ architecture testbench of tb_driver_7seg_4digits_speed_cur is
 begin
     -- Connecting testbench signals with driver_7seg_4digits_speed_cur entity
     -- (Unit Under Test)
-    --- WRITE YOUR CODE HERE
     uut_driver_7seg : entity work.driver_7seg_4digits_speed_cur
     port map(
         clk                => s_clk_100MHz,
@@ -186,7 +184,6 @@ begin
     --------------------------------------------------------------------
     -- Reset generation process
     --------------------------------------------------------------------
-    --- WRITE YOUR CODE HERE
     p_reset_gen : process
     begin
         s_reset <= '0';

@@ -18,13 +18,13 @@ architecture Behavioral of cycle is
 
 begin
 
-    p_clk_ena : process(hall_sens_i)
+    p_hall_sens : process(hall_sens_i)
     begin
-        if(hall_sens_i = '0') then
-            cycle_o <= '1';
+        if(hall_sens_i = '0') then  -- If magnet gets near the sensor, logic low value is generated
+            cycle_o <= '1';         -- Generetes high output
         else
-            cycle_o <= '0';
+            cycle_o <= '0';         -- Hall sensor generates logic high value if the magnet is not near the sensor
         end if;
-    end process p_clk_ena;
+    end process p_hall_sens;
 
 end Behavioral;

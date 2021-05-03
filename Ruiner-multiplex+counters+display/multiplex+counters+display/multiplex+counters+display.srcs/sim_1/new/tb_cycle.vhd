@@ -21,7 +21,7 @@ architecture testbench of tb_cycle is
     signal s_cycle      : std_logic;
 
 begin
-    -- Connecting testbench signals with cnt_up entity
+    -- Connecting testbench signals with cycle entity
     -- (Unit Under Test)
     uut_cnt : entity work.cycle
         port map(
@@ -43,10 +43,14 @@ begin
         -- 1 cycle
         s_hall_sens <= '0';
         wait for 10 ns;
+        assert(s_cycle = '1')
+        report "Test failed for low value of Hall sensor" severity error;
 
         -- Return to default state
         s_hall_sens <= '1';
         wait for 100 ns;
+        assert(s_cycle = '0')
+        report "Test failed for high value of Hall sensor" severity error;
         
         -- 1 cycle
         s_hall_sens <= '0';

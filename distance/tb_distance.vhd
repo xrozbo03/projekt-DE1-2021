@@ -42,12 +42,15 @@ architecture Behavioral of tb_distance is
            signal s_arst : STD_LOGIC;
            signal s_dis_trip_o : STD_LOGIC_VECTOR (14 - 1 downto 0);
            signal s_dis_all_o : STD_LOGIC_VECTOR (14 - 1 downto 0);
+           signal s_clk_i : STD_LOGIC;
+           
 
 begin
 
 uut_distance : entity work.distance
     port map(
     
+            clk_i => s_clk_i,        
             size_i => s_size_i,
             cycle_i => s_cycle,
             arst_i => s_arst,
@@ -55,6 +58,21 @@ uut_distance : entity work.distance
             dis_all_o => s_dis_all_o
             
     );
+    
+    
+        p_clk_gen : process
+    begin
+        while now < 10000 ns loop         
+            s_clk_i <= '0';
+            wait for 5 ps;
+            s_clk_i <= '1';
+            wait for 5 ps;
+        end loop;
+        wait;                          
+    end process p_clk_gen;
+    
+    
+    
 
     p_stimulus : process
     begin
@@ -72,14 +90,14 @@ uut_distance : entity work.distance
         
         
         while now < 1000 ns loop         
-             wait for 10 ps;
+             wait for 30 ps;
             s_cycle <= '1';
             wait for 10 ps;
             s_cycle <= '0';
         end loop;
        
        s_arst <= '1';
-       wait for 1 ps;
+       wait for 100 ps;
        s_arst <= '0';
        
         while now < 10000 ns loop         

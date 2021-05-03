@@ -101,7 +101,7 @@ begin
     --------------------------------------------------------------------
     -- p_mux:
     -- A combinational process that implements a multiplexer for
-    -- selecting data for a single digit, a decimal point signal, colon and 
+    -- selecting data for a single digit, a decimal point signal and 
     -- switches the common anodes of each display.
     --------------------------------------------------------------------       
     p_mux : process(s_cnt, s_cnt_mode,
@@ -132,16 +132,16 @@ begin
                 dp_o    <= "0010";                  -- Enabled decimal point for trip distance (third digit - kilometers)
                 LED_o   <= "0100";                  -- Turn on LED 5
                 if (s_cnt = "00") then
-                    s_hex <= trip_dig1_i;           -- Display tens of kilometers if counter combination is "00"
+                    s_hex <= trip_dig1_i;           -- Display hundreds of kilometers if counter combination is "00"
                     dig_o <= "1000";                -- Enable 1. digit from the left
                 elsif (s_cnt = "01") then
-                    s_hex <= trip_dig2_i;           -- Display kilometers if counter combination is "01"
+                    s_hex <= trip_dig2_i;           -- Display tens of kilometers if counter combination is "01"
                     dig_o <= "0100";                -- Enable 2. digit from the left
                 elsif (s_cnt = "10") then
-                    s_hex <= trip_dig3_i;           -- Display hundreds of meters if counter combination is "10"
+                    s_hex <= trip_dig3_i;           -- Display kilometers if counter combination is "10"
                     dig_o <= "0010";                -- Enable 3. digit from the left
                 else
-                    s_hex <= trip_dig4_i;           -- Display tens of meters if counter combination is "11"
+                    s_hex <= trip_dig4_i;           -- Display hundreds of meters if counter combination is "11"
                     dig_o <= "0001";                -- Enable 4. digit from the left
                 end if;
                 
@@ -149,21 +149,21 @@ begin
                 dp_o    <= "0000";                  -- Disabled decimal point for total distance
                 LED_o   <= "0010";                  -- Turn on LED 6
                 if (s_cnt = "00") then
-                    s_hex <= all_dig1_i;            -- Display tens of kilometers if counter combination is "00"
+                    s_hex <= all_dig1_i;            -- Display thousands of kilometers if counter combination is "00"
                     dig_o <= "1000";                -- Enable 1. digit from the left
                 elsif (s_cnt = "01") then
-                    s_hex <= all_dig2_i;            -- Display kilometers if counter combination is "01"
+                    s_hex <= all_dig2_i;            -- Display hundreds of kilometers if counter combination is "01"
                     dig_o <= "0100";                -- Enable 2. digit from the left
                 elsif (s_cnt = "10") then
-                    s_hex <= all_dig3_i;            -- Display hundreds of meters if counter combination is "10"
+                    s_hex <= all_dig3_i;            -- Display tens of kilometers if counter combination is "10"
                     dig_o <= "0010";                -- Enable 3. digit from the left
                 else
-                    s_hex <= all_dig4_i;            -- Display tens of meters if counter combination is "11"
+                    s_hex <= all_dig4_i;            -- Display kilometers if counter combination is "11"
                     dig_o <= "0001";                -- Enable 4. digit from the left
                 end if;
                 
             when others =>                          -- Time trip is assigned to the mode combination "11"
-                dp_o    <= "0010";                  -- Disabled decimal point for time trip
+                dp_o    <= "0010";                  -- Enabled decimal point for time trip (hours)
                 LED_o   <= "0001";                  -- Turn on LED 7
                 if (s_cnt = "00") then
                     s_hex <= time_trip_dig1_i;      -- Display tens of hours if counter combination is "00"
@@ -175,7 +175,7 @@ begin
                     s_hex <= time_trip_dig3_i;      -- Display tens of minutes if counter combination is "10"
                     dig_o <= "0010";                -- Enable 3. digit from the left
                 else
-                    s_hex <= time_trip_dig4_i;      -- Display tens of hours if counter combination is "11"
+                    s_hex <= time_trip_dig4_i;      -- Display minutes if counter combination is "11"
                     dig_o <= "0001";                -- Enable 4. digit from the left
                 end if;
         end case;

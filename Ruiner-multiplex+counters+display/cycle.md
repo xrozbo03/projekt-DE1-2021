@@ -23,14 +23,14 @@ architecture Behavioral of cycle is
 
 begin
 
-    p_clk_ena : process(hall_sens_i)
+    p_hall_sens : process(hall_sens_i)
     begin
-        if(hall_sens_i = '0') then
-            cycle_o <= '1';
+        if(hall_sens_i = '0') then  -- If magnet gets near the sensor, logic low value is generated
+            cycle_o <= '1';         -- Generetes high output
         else
-            cycle_o <= '0';
+            cycle_o <= '0';         -- Hall sensor generates logic high value if the magnet is not near the sensor
         end if;
-    end process p_clk_ena;
+    end process p_hall_sens;
 
 end Behavioral;
 ```
@@ -61,7 +61,7 @@ architecture testbench of tb_cycle is
     signal s_cycle      : std_logic;
 
 begin
-    -- Connecting testbench signals with cnt_up entity
+    -- Connecting testbench signals with cycle entity
     -- (Unit Under Test)
     uut_cnt : entity work.cycle
         port map(
@@ -83,10 +83,14 @@ begin
         -- 1 cycle
         s_hall_sens <= '0';
         wait for 10 ns;
+        assert(s_cycle = '1')
+        report "Test failed for low value of Hall sensor" severity error;
 
         -- Return to default state
         s_hall_sens <= '1';
         wait for 100 ns;
+        assert(s_cycle = '0')
+        report "Test failed for high value of Hall sensor" severity error;
 
         -- 1 cycle
         s_hall_sens <= '0';

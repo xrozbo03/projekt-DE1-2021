@@ -77,12 +77,12 @@ begin
     p_clk_ena : process(clk)
     begin
         if(rising_edge(clk)) then
-            if (cnt_1sec >= (second-1)) then
-                cnt_o    <= '1';
-                cnt_1sec <= (others => '0');
+            if (cnt_1sec >= (second-1)) then    -- If local counter value is equal to 100000000
+                cnt_o    <= '1';                -- Set output to high
+                cnt_1sec <= (others => '0');    -- Reset local counter value
             else
-                cnt_o    <= '0';
-                cnt_1sec <= cnt_1sec+1;
+                cnt_o    <= '0';                -- Set output to low
+                cnt_1sec <= cnt_1sec+1;         -- Increase local counter by 1
             end if;
         end if;
     end process p_clk_ena;
@@ -216,8 +216,11 @@ Set diameter:
 Increase local coutner of cycles if there is a cycle
 
 ```vhdl
-if(rising_edge(cycle_i)) then
-             s_cnt_cycles <= s_cnt_cycles+1;
+if(cycle_i = '1' and cycle_temp = '0') then     -- If the new cycle value is generated
+           s_cnt_cycles <= s_cnt_cycles+1;
+           cycle_temp   <= '1';
+        elsif(cycle_i = '0' and cycle_temp = '1') then
+            cycle_temp   <= '0';
         end if;
 
 ```
@@ -241,9 +244,9 @@ Reset values:
 Signal from the cnt_1sec input:
 
 ```vhdl
-elsif (rising_edge(cnt_1sec_i)) then
-                if (s_cnt_cycles = 0) then
-                    s_cnt_seconds       <= s_cnt_seconds+1;   --add 1 to the counter when theres a signal from the input of cnt_1sec and s_cnt_cycles = 0
+          elsif (cnt_1sec_i = '1') then                   -- If 1 second pulse is generared
+                if (s_cnt_cycles = 0) then                  -- If there was no cycle during the 1 sec time
+                    s_cnt_seconds       <= s_cnt_seconds+1; -- Increase seconds counter by 1
                     calculation         <= 0;
                     remainder           <= 0;
                     tens_of_kilometers  <= (others => '0');
@@ -251,10 +254,11 @@ elsif (rising_edge(cnt_1sec_i)) then
                     hundreds_of_meters  <= (others => '0');
                     tens_of_meters      <= (others => '0');
                 else
-                    tens_of_kilometers  <= (others => '0');     -- Reset tens of kilometers every 1 sec time
-                    kilometers          <= (others => '0');     -- Reset kilometers every 1 sec time
-                    hundreds_of_meters  <= (others => '0');     -- Reset hundrerds of meters every 1 sec time
-                    tens_of_meters      <= (others => '0');     -- Reset tens of meters every 1 sec time
+                    tens_of_kilometers  <= (others => '0');     -- Reset tens of kilometers every 1 sec time (if there were cycles)
+                    kilometers          <= (others => '0');     -- Reset kilometers every 1 sec time (if there were cycles)
+                    hundreds_of_meters  <= (others => '0');     -- Reset hundrerds of meters every 1 sec time (if there were cycles)
+                    tens_of_meters      <= (others => '0');     -- Reset tens of meters every 1 sec time (if there were cycles)
+
 
 ```
 Calculating the signal for counting the first 2 digits:
@@ -273,37 +277,39 @@ Calculating the signal for counting the first 2 digits:
 ```
 Enabling the first display:
 ```vhdl
-             elsif (first2displays = '1') then
-                if(calculation >= (2000000*s_cnt_seconds)) then                       -- Calculations to replace dividing operations
-                   kilometers <= kilometers+1;
-                   calculation <= calculation - (2000000*s_cnt_seconds);
-                   if(kilometers = "1001") then
-                        tens_of_kilometers <= tens_of_kilometers+1;
-                        kilometers <= (others => '0');
+                   elsif (first2displays = '1') then                                         -- Calculations to replace dividing operations
+                if(calculation >= (2000000*s_cnt_seconds)) then                       -- 2000 * 1000 * (number of seconds before cycle was generated)  
+                   kilometers <= kilometers+1;                                        -- Increase kilometers value by 1
+                   calculation <= calculation - (2000000*s_cnt_seconds);              -- Subtract the divisor
+                   if(kilometers = "1001") then                                        
+                        tens_of_kilometers <= tens_of_kilometers+1;                   -- Increase tens of kilometers by 1 if kilometers get to 10
+                        kilometers <= (others => '0');                                -- Reset kilometers
                    end if;               
                 else
-                   remainder <= calculation*100;                                       -- Next counting will be for last 2 digits with 2 decimal places
-                   first2displays <= '0';                                              --disabling first display
-                   last2displays <= '1';                                               --enabling second dispaly
+                   remainder <= calculation*100;                                       -- Next counting will be for the last 2 digits (2 decimal places)
+                   first2displays <= '0';
+                   last2displays <= '1';
                 end if;
 
 ```
 Second diplay enabled:
 
 ```vhdl
-            elsif (last2displays = '1') then
-               if(remainder >= (2000000*s_cnt_seconds)) then
-                   tens_of_meters <= tens_of_meters+1;
-                   remainder <= remainder - (2000000*s_cnt_seconds);
+            elsif (last2displays = '1') then                                           -- Calculations to replace dividing operations
+               if(remainder >= (2000000*s_cnt_seconds)) then                           -- 2000 * 1000 * (number of seconds before cycle was generated)
+                   tens_of_meters <= tens_of_meters+1;                                 -- Increase tens of meters value by 1
+                   remainder <= remainder - (2000000*s_cnt_seconds);                   -- Subtract the divisor
                    if(tens_of_meters = "1001") then
-                       hundreds_of_meters <= hundreds_of_meters+1;
-                       tens_of_meters <= (others => '0');
+                       hundreds_of_meters <= hundreds_of_meters+1;                     -- Increase hundreds of meters by 1 if tens of meters get to 10
+                       tens_of_meters <= (others => '0');                              -- Reset tens of meters
                    end if;         
                else
                    s_cnt_seconds <= 1;                                                 -- Reset seconds counter
                    last2displays <= '0';                                               -- End counting operations
                end if;
-
+            end if;
+        end if;
+    end process p_speed_cur;
 ```
 
 Displaying results at the outputs:

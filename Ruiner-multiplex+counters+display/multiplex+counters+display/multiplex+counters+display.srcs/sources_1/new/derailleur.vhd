@@ -48,7 +48,7 @@ begin
                         s_state <= ONE;
                        
                     when others =>
-                        s_state <= TWO;  -- Default state if there is different output
+                        s_state <= TWO;  -- Default state
 
                 end case;
                 s_cnt_btn   <= '1';

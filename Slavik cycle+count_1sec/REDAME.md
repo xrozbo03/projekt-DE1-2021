@@ -1,6 +1,6 @@
 # Bike console
 
-With this bike console, the user can view stats such as: current speed of the bike, average speed of the bike, cycled distance, cycled distance together,  time cycled. It is equipped with two 7-segment displays. The first one shows the users current speed.
+With this bike console, the user can view stats such as: current speed of the bike, average speed of the bike, cycled distance, cycled distance together,  time cycled. It is equipped with two 7-segment displays with 4 digits. The first one shows the users current speed.
 On the second one, the user can manually switch between the desired parametres such as average speed of the bike, cycled distance, time cycled.
 
 ## Part 1 (tire_diameter, cycle, count_1sec , derailleur) 

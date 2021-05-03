@@ -86,9 +86,9 @@ begin
     p_reset_gen : process
     begin
         -- Reset deactivated
-        s_reset <= '0'; wait for 10 ns;
+        s_reset <= '0'; wait for 100 ns;
         -- Reset activated
-        s_reset <= '1'; wait for 2 ns;
+        s_reset <= '1'; wait for 30 ns;
 
         s_reset <= '0'; wait for 150 ns;
 
@@ -103,6 +103,10 @@ begin
   --------------------------------------------------------------------
     p_clk_1sec_gen : process
     begin
+    
+        s_cnt_1sec <= '0';
+        wait for 500 ns;
+        
         while now < 365000 ns loop         -- 73000 periods of 1 sec enambe signal
             s_cnt_1sec <= '0';
             wait for 5ns;

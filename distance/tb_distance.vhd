@@ -62,13 +62,13 @@ uut_distance : entity work.distance
     
         p_clk_gen : process
     begin
-        while now < 10000 ns loop         -- 75 periods of 100MHz clock
+        while now < 10000 ns loop         
             s_clk_i <= '0';
             wait for 5 ps;
             s_clk_i <= '1';
             wait for 5 ps;
         end loop;
-        wait;                           -- Process is suspended forever
+        wait;                          
     end process p_clk_gen;
     
     

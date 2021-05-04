@@ -519,7 +519,17 @@ Setting the final result:
                                
                              if(s_cnt4 = c_NINE) then
                                  s_cnt4 <= (others => '0'); -- back to 0 in tens of hours
-
+                     
+                                        end if;
+                                end if;
+                            end if;
+                        end if;
+                    end if;
+                end if;          
+            end if;
+        end if;
+          end process p_time_trip;
+        
 ```
 Setting the outputs:
 
@@ -529,6 +539,8 @@ Setting the outputs:
              speed_avg_dig2_o <= std_logic_vector(s_cnt3);
              speed_avg_dig3_o <= std_logic_vector(s_cnt2);
              speed_avg_dig4_o <= std_logic_vector(s_cnt1);
+    
+            end Behavioral;
 
 ```
 Simulation:
@@ -673,13 +685,21 @@ Setting the segments:
                                 s_all_dig4_o <= s_all_dig4_o +1;
                             else
                                 s_all_dig4_o <= "0000";
+  
+                           end if;
+                        end if;
+                    end if;
+                end if;
+                
+        end if;
+            
 
 ```
 
 Reseting the cycled distance. The cycled distance together cannot be reset by the user.
 
 ```vhdl
-if rising_edge(rst_i) then                     -- when rst singal from user resets trip singal and digits (all signal and digits can not be reset)
+       if rising_edge(rst_i) then                     -- when rst singal from user resets trip singal and digits (all signal and digits can not be reset)
 
             s_dis_trip_local  <=  (others => '0');
             
@@ -687,6 +707,11 @@ if rising_edge(rst_i) then                     -- when rst singal from user rese
             s_trip_dig2_o   <=  (others => '0');
             s_trip_dig3_o   <=  (others => '0');
             s_trip_dig4_o   <=  (others => '0');
+
+           end if;
+            
+        end if;
+      end process;
 
 ```
 
@@ -706,6 +731,8 @@ Setting local signals to logic vector outputs:
         all_dig2_o    <= std_logic_vector(s_all_dig2_o);
         all_dig3_o    <= std_logic_vector(s_all_dig3_o);
         all_dig4_o    <= std_logic_vector(s_all_dig4_o); 
+         
+           end Behavioral;
 ```
 Simulation:
 ![distance_sim1](images/distance_sim_1.PNG)
@@ -809,6 +836,17 @@ Rising edge and reset
                                     if(s_cnt4 = c_NINE) then
                                        s_cnt4 <= (others => '0'); -- back to 0 in tens of hours
 
+      
+                                    end if;
+                                end if;
+                            end if;
+                        end if;
+                    end if;
+                end if;          
+            end if;
+        end if;
+      
+           end process p_time_trip;
 ```
 
 Outputs retype to std_logic_vector

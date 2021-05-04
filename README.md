@@ -4,7 +4,7 @@
 
 ### Team members
 
-- Přádka Nikodém 
+- Přádka Nikodém
 - Rozboud Jakub
 - Rubínek Tomáš
 - Ruiner Michal
@@ -23,9 +23,7 @@ Console for exercise bike/bike, hall sensor, measuring and displaying speed, dis
 
 ### Board
 
-Arty A7 ( https://store.digilentinc.com/arty-a7-artix-7-fpga-development-board/ )
-
-schematic ( https://reference.digilentinc.com/_media/reference/programmable-logic/arty-a7/arty_a7_sch.pdf )
+**Arty A7-100T**
 
 ![7seg pins](images/arty-a7-callout.png)
 
@@ -33,10 +31,10 @@ schematic ( https://reference.digilentinc.com/_media/reference/programmable-logi
 
 ### Components
 
-- 4-digit 7 - segment 0.56" display HS410561K-32, common anode ( https://www.laskarduino.cz/4-mistny--sedmisegmentovy--0-56--displej-hs410561k-32--spolecna-anoda--cerveny/?gclid=Cj0KCQjw-LOEBhDCARIsABrC0TkHNEw1GL7z6yQH_oacR9Hl1ZPOSFJ3biUOZr_8lQqI0rBIFiMJ1xUaAt8FEALw_wcB )
-- Hall sensor 44E ( https://dratek.cz/arduino/7735-halluv-senzor-44e.html )
-- 330 Ohm resistor ( https://dratek.cz/arduino/7655-rezistor-330r-0.25-w-1.html )
-- 10kOhm resistor ( https://dratek.cz/arduino/7650-rezistor-10k-0.25-w-1.html )
+- 4-digit 7 - segment 0.56" display HS410561K-32, common anode
+- Hall sensor 44E
+- 330 Ohm resistor
+- 10kOhm resistor
 
 ### Inspiration for interconnecting componets
 
@@ -87,11 +85,11 @@ Diodes near the 7 - seg display are connected through 200 Ohm resistors which ar
 With this bike console, the user can view stats such as: current speed of the bike, average speed of the bike, cycled distance, cycled distance together,  time cycled. It is equipped with two 7-segment displays with 4 digits. The first one shows the users current speed.
 On the second one, the user can manually switch between the desired parametres such as average speed of the bike, cycled distance, time cycled.
 
-## Part 1 (tire_diameter, cycle, count_1sec , derailleur) 
+## Part 1 (tire_diameter, cycle, count_1sec , derailleur)
 
 ## Module: tire_diameter
-This is a simple module made for the user to set the bikes wheel diameter before the trip. The user selects the diamter using 3 switches, which are at the same time, the inputs of this module. 
-There are 8 possible combinations to choose from : (737 mm) (711 mm) (699 mm) (660 mm) (610 mm)  (508 mm) (406 mm) (305 mm). The output is a vector of a size of 5 which represents the literal size of the diameter in binary. 
+This is a simple module made for the user to set the bikes wheel diameter before the trip. The user selects the diamter using 3 switches, which are at the same time, the inputs of this module.
+There are 8 possible combinations to choose from : (737 mm) (711 mm) (699 mm) (660 mm) (610 mm)  (508 mm) (406 mm) (305 mm). The output is a vector of a size of 5 which represents the literal size of the diameter in binary.
 ```vhdl
 architecture testbench of tire_diameter is
 
@@ -123,7 +121,7 @@ Simulation:
 ![tire_diameter](images/tire_diameter.PNG)
 
 ## Module: cycle
-This module uses a hall sensor a its input. If the hall sensor detects a pulse , here described as ‘0’ , it sends a signal to the output cycle_o. 
+This module uses a hall sensor a its input. If the hall sensor detects a pulse , here described as ‘0’ , it sends a signal to the output cycle_o.
 The purpose of the module is to signal other modules that the bike is moving.
 ```vhdl
 architecture Behavioral of cycle is
@@ -146,9 +144,9 @@ Simulation:
 ![cycle](images/cycle.PNG)
 
 ## Module: count_1sec (up counter):
-On the input of the module we use a clock signal with a frequency of 100 MHz. There is a local counter signal cnt_1sec which is at the beginning set to zero and a constant which is set to 100 000 000 pulses. 
-This means that there are 100 000 000 clock pulses under 1 second in this frequency. 
-On the clock signal the process begins. When the local signal is set to 0 (by subtracting 1 from the constant „second“, which is binary) the output cnt_o is set to 1. 
+On the input of the module we use a clock signal with a frequency of 100 MHz. There is a local counter signal cnt_1sec which is at the beginning set to zero and a constant which is set to 100 000 000 pulses.
+This means that there are 100 000 000 clock pulses under 1 second in this frequency.
+On the clock signal the process begins. When the local signal is set to 0 (by subtracting 1 from the constant „second“, which is binary) the output cnt_o is set to 1.
 If the output cnt_o is set to 0, we add 1 to the local counter.
 ```vhdl
 architecture Behavioral of count_1sec is
@@ -176,11 +174,11 @@ Simulation:
 ![count_1sec](images/count_1sec.PNG)
 
 ## Module: derailleur
-In this module, the user selects the difficulty of the derailleur. It uses a clock signal of 100 MHz and a synchrounous reset. The user selects the difficulty using a button (btn_i) which is one of the inputs of this module. 
+In this module, the user selects the difficulty of the derailleur. It uses a clock signal of 100 MHz and a synchrounous reset. The user selects the difficulty using a button (btn_i) which is one of the inputs of this module.
 There are 3 state of difficulty.  The module uses 2 internal signals to process the alternation of difficulties: s_state – set to TWO as default; s_cnt_btn which signals if the button was released.
- On the clock signal and the reset, these 2 signals are set default. When a user pushes the button and releases it, he cycles among the given difficulties. 
+ On the clock signal and the reset, these 2 signals are set default. When a user pushes the button and releases it, he cycles among the given difficulties.
 At the end of the cycle, the signal s_cnt_btn, which signals that the button was released, is set to 1. When the button btn_i is released and at the same time s_cnt_button is set to 1, the process ends.
-The difficulty is displayed at the output of the module using RGB LEDs. The output is vector of a size of 3 and the lights are alternated with 3 different binary combinations. 
+The difficulty is displayed at the output of the module using RGB LEDs. The output is vector of a size of 3 and the lights are alternated with 3 different binary combinations.
 ```vhdl
 architecture Behavioral of derailleur is
 
@@ -244,8 +242,8 @@ Simulation:
 ## Part 2 (speed_cur, speed_avg, distance, time_trip):
 Module: speed_cur
 
-The purpose of this module is to calculate the speed of the bike.  It consists of 5 inputs (clk, reset, cycle_i, cnt_1sec, tire_diameter_i). The outputs will be dependent on these values. 
-The output consists of 4 vector outputs of the size of 4 (speed_cur_dig1_o , speed_cur_dig2_o, speed_cur_dig3_o, speed_cur_dig4_o). 
+The purpose of this module is to calculate the speed of the bike.  It consists of 5 inputs (clk, reset, cycle_i, cnt_1sec, tire_diameter_i). The outputs will be dependent on these values.
+The output consists of 4 vector outputs of the size of 4 (speed_cur_dig1_o , speed_cur_dig2_o, speed_cur_dig3_o, speed_cur_dig4_o).
 
 speed_cur_dig1_o : represents tens of kilometers
 speed_cur_dig2_o : represents kilometers
@@ -440,18 +438,18 @@ architecture Behavioral of speed_avg is
     -- local sinals  
     signal s_enable_conversion : std_logic; -- release conversion from m/s to km/h
     signal s_enable_new_value  : std_logic; -- release new value for distance and time
-    
+
     signal s_time              : natural;  -- signal with time value
     signal s_distance          : natural;  -- signal with distance value
     signal s_cnt_result        : natural;  -- result in m/s
     signal s_final_result      : natural;   -- unit conversion to km/h
     signal s_result_in_natural : natural;   -- result in KM/H
-    
+
     signal s_cnt4   : unsigned(4 - 1 downto 0);  -- average speed tens of km/h
     signal s_cnt3   : unsigned(4 - 1 downto 0);  -- average speed km/h
     signal s_cnt2   : unsigned(4 - 1 downto 0);  -- average speed first decimal place
     signal s_cnt1   : unsigned(4 - 1 downto 0);  -- average speed second decimal place
-    
+
     -- local constants to compare specific values of counters
     constant c_NINE      : unsigned(4 - 1 downto 0) := b"1001";
 
@@ -460,7 +458,7 @@ Reset when the counter is counting and if the release of new value for distance 
 
 ```vhdl
        if rising_edge(clk) then
-             
+
              if (reset = '1') or ((s_enable_new_value = '1') and (cnt_1sec_i = '1')) then        -- reset counters value and set new distance and time.
                  s_cnt_result        <= 0;
                  s_distance          <= (TO_INTEGER(unsigned(distance_i))) * 100;                --  *100 to second decimal result
@@ -476,7 +474,7 @@ Reset when the counter is counting and if the release of new value for distance 
 ```
 When there's no signal from the counter and the release of the values for distance and time are disabled, we enable the values:
 ```vhdl
-          elsif (cnt_1sec_i = '0') and (s_enable_new_value = '0') then 
+          elsif (cnt_1sec_i = '0') and (s_enable_new_value = '0') then
                  s_enable_new_value  <= '1';
 
 ```
@@ -491,7 +489,7 @@ When the value of the distance is larger than the time after conversion, a new v
 Enablig conversion:
 
 ```vhdl
-     
+
              elsif (s_enable_conversion = '0') then
                  s_result_in_natural <= s_cnt_result;
                  s_final_result <= s_result_in_natural * 18;                   -- 3,6x m/s -> km/h *100 to second decimal
@@ -508,15 +506,15 @@ Setting the final result:
                  if (s_cnt1 = c_NINE) then         -- move to tens of minute
                      s_cnt1 <= (others => '0');    -- back to 0 in minutes
                      s_cnt2 <= s_cnt2 + 1;
-                       
+
                      if (s_cnt2 = c_NINE) then          -- move from minutes to hours
                          s_cnt2 <= (others => '0');    -- back to 0 in tens of minutes
                          s_cnt3 <= s_cnt3 + 1;
-                           
+
                          if (s_cnt3 = c_NINE) then         -- move to tens of hours
                              s_cnt3 <= (others => '0');    -- back to 0 in hours
                              s_cnt4 <= s_cnt4 + 1;
-                               
+
                              if(s_cnt4 = c_NINE) then
                                  s_cnt4 <= (others => '0'); -- back to 0 in tens of hours
                      
@@ -553,41 +551,41 @@ Inputs, outputs and signals:
 
 ```vhdl
 entity distance is
-    Port ( 
+    Port (
            clk              : in STD_LOGIC;
-           size_i           : in STD_LOGIC_VECTOR (5 - 1 downto 0);           -- size of the bike 
+           size_i           : in STD_LOGIC_VECTOR (5 - 1 downto 0);           -- size of the bike
            cycle_i          : in STD_LOGIC;                                  -- 1 when theres signal from sond, 0 others
            reset            : in STD_LOGIC;                                   -- to reset trip
            dis_trip_o       : out STD_LOGIC_VECTOR (19 - 1 downto 0);     -- distance in km trip
       --   dis_all_o        : out STD_LOGIC_VECTOR (14 - 1 downto 0);     -- total distance in km   -- only for testing
-           
+
            trip_dig1_o        : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- 1 trip distance value for 1. digit (100)
            trip_dig2_o        : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- 1 trip distance value for 2. digit (10)
            trip_dig3_o        : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- 1 trip distance value for 3. digit (1)
            trip_dig4_o        : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- 1 trip distance value for 4. digit (.1)
-           
+
            all_dig1_o         : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- Total distance value for 1. digit (1000)
            all_dig2_o         : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- Total distance value for 2. digit (100)
            all_dig3_o         : out STD_LOGIC_VECTOR  (4 - 1 downto 0);     -- Total distance value for 3. digit (10)
            all_dig4_o         : out STD_LOGIC_VECTOR  (4 - 1 downto 0)      -- Total distance value for 4. digit (1)
-          
+
           );
-           
-       
+
+
 end distance;
 
 architecture Behavioral of distance is
 
-      
+
         signal s_size_local             : unsigned (11 - 1 downto 0);   
         signal s_size_local_trip        : unsigned (11 - 1 downto 0);                        -- local number, how many cycles are needed to one km distance
         signal s_count                  : unsigned (11 - 1 downto 0) := "00000000000";          -- counting cycles
-        signal s_count_trip             : unsigned (11 - 1 downto 0) := "00000000000"; 
+        signal s_count_trip             : unsigned (11 - 1 downto 0) := "00000000000";
 
 
         signal s_dis_trip_local    : unsigned (19 - 1 downto 0) := "0000000000000000000";     -- local signal for trip dist (output to avg speed) and for local testing and other use)
      -- signal s_dis_all_local     : unsigned (14 - 1 downto 0) := "00000000000000";    -- local signal for all dist    (-||-)
-        
+
         signal s_trip_dig1_o        : unsigned (4 - 1 downto 0) := "0000";              -- local outputs fot digits on 7-seg
         signal s_trip_dig2_o        : unsigned (4 - 1 downto 0) := "0000";
         signal s_trip_dig3_o        : unsigned (4 - 1 downto 0) := "0000";
@@ -629,28 +627,28 @@ p_distance : process(cycle_i, size_i)
 
 Setting the segments:
 
-```vhdl 
+```vhdl
  if rising_edge(cycle_i) then
-            
+
             if (s_count < s_size_local) then                        -- add one to count, when cycle_i
                 s_count <= s_count + 1;
-                
+
             else                                                    -- when counter is full, resets counter and increase the local distance signals
                 s_count <= (others => '0');
-        
+
                 s_dis_all_local   <= s_dis_all_local   + 1;                 
                 s_dis_trip_local  <= s_dis_trip_local  + 1;
-                
-                if (s_trip_dig1_o < "1001") then                    -- twice the same (ones for "trip" and ones for "all"), counting for 7-seg displays, 
+
+                if (s_trip_dig1_o < "1001") then                    -- twice the same (ones for "trip" and ones for "all"), counting for 7-seg displays,
                     s_trip_dig1_o <= s_trip_dig1_o +1;              -- counts from "0000" to "9999" and solves overflow for  decimal system
                 else
                     s_trip_dig1_o <= "0000";                        -- when a digit is more than 9 it goes back to 0
-                    
+
                     if (s_trip_dig2_o < "1001") then
                         s_trip_dig2_o <= s_trip_dig2_o +1;
                     else
                         s_trip_dig2_o <= "0000";
-                        
+
                         if (s_trip_dig3_o < "1001") then
                             s_trip_dig3_o <= s_trip_dig3_o +1;
                         else
@@ -659,24 +657,24 @@ Setting the segments:
                                 s_trip_dig4_o <= s_trip_dig4_o +1;
                             else
                                 s_trip_dig4_o <= "0000";
-                                
+
                             end if;
                         end if;
                     end if;
                 end if;
-           
-            
-            
+
+
+
                 if (s_all_dig1_o < "1001") then             -- the same only for all trip
                     s_all_dig1_o <= s_all_dig1_o +1;
                 else
                     s_all_dig1_o <= "0000";
-                    
+
                     if (s_all_dig2_o < "1001") then
                         s_all_dig2_o <= s_all_dig2_o +1;
                     else
                         s_all_dig2_o <= "0000";
-                        
+
                         if (s_all_dig3_o < "1001") then
                             s_all_dig3_o <= s_all_dig3_o +1;
                         else
@@ -702,7 +700,7 @@ Reseting the cycled distance. The cycled distance together cannot be reset by th
        if rising_edge(rst_i) then                     -- when rst singal from user resets trip singal and digits (all signal and digits can not be reset)
 
             s_dis_trip_local  <=  (others => '0');
-            
+
             s_trip_dig1_o   <=  (others => '0');
             s_trip_dig2_o   <=  (others => '0');
             s_trip_dig3_o   <=  (others => '0');
@@ -720,19 +718,23 @@ Setting local signals to logic vector outputs:
 ```vhdl
           dis_trip_o <= std_logic_vector(s_dis_trip_local);
          -- dis_all_o <= std_logic_vector(s_dis_all_local);  -- only for testing
-        
-        
+
+
         trip_dig1_o   <= std_logic_vector(s_trip_dig1_o);
         trip_dig2_o   <= std_logic_vector(s_trip_dig2_o);
         trip_dig3_o   <= std_logic_vector(s_trip_dig3_o);
         trip_dig4_o   <= std_logic_vector(s_trip_dig4_o);
-   
+
         all_dig1_o    <= std_logic_vector(s_all_dig1_o);
         all_dig2_o    <= std_logic_vector(s_all_dig2_o);
         all_dig3_o    <= std_logic_vector(s_all_dig3_o);
+<<<<<<< HEAD
         all_dig4_o    <= std_logic_vector(s_all_dig4_o); 
          
            end Behavioral;
+=======
+        all_dig4_o    <= std_logic_vector(s_all_dig4_o);
+>>>>>>> 9ef725e197b08588aaa6f4e49d0c5801fe016063
 ```
 Simulation:
 ![distance_sim1](images/distance_sim_1.PNG)
@@ -741,13 +743,13 @@ Simulation:
 
 
 ## Module: time_trip
-This module calculates the time during one trip. 
+This module calculates the time during one trip.
 Inputs, outputs and signals:
 
 ```vhdl
 entity time_trip is
 
-    Port ( 
+    Port (
           clk               : in std_logic;                            -- 100HMz clock
           cycle_i           : in std_logic;                            -- input for driving verification
           cnt_1sec_i        : in std_logic;                            -- 1 second counter
@@ -772,7 +774,7 @@ architecture Behavioral of time_trip is
     signal s_cnt1   : unsigned(4 - 1 downto 0);  -- minutes counter
     signal s_cnt0   : unsigned(6 - 1 downto 0);  -- seconds to determine the minute
     signal s_cntall : unsigned(19 - 1 downto 0); -- sum of all seconds
-    
+
     signal s_enable      : std_logic;               -- enable counting process
     signal s_cnt_enable  : unsigned (4-1 downto 0); -- counter 10s to control s_enable
 
@@ -787,14 +789,14 @@ Wheel rotation verification:
 ```vhdl
  if (cnt_1sec_i = '1') then                             -- when the module of count_1sec is counting, we enable the s_cnt_enable signal
             s_cnt_enable <= s_cnt_enable + 1;
-            
+
             if (cycle_i = '1') then                     -- at the same time if there is a signal from the hall sensor, we disable the bits at s_cnt_enable and at the same time enable the counting process
                 s_cnt_enable <= (others => '0');
                 s_enable <= '1';
             elsif (s_cnt_enable = 10) then              -- when s_cnt_enable has reached 10 we disable the counting process
                 s_enable <= '0';
             end if;
-        
+
         end if;
 
 ```
@@ -811,28 +813,28 @@ Rising edge and reset
                 s_cnt3   <= (others => '0');
                 s_cnt4   <= (others => '0');
                 s_cntall <= (others => '0');
-                
+
             elsif (s_enable = '1') then             -- turn on the counter while moving
                 if (cnt_1sec_i = '1') then
                     s_cntall <= s_cntall + 1;          -- counting all seconds
                     s_cnt0   <= s_cnt0 + 1;            -- counting seconds to minutes
-                    
+
                     if (s_cnt0 = c_FIVTYNINE) then         -- move to minutes
                         s_cnt1 <= s_cnt1 + 1;
                         s_cnt0 <= (others => '0');     -- clean seconds
-                        
+
                         if (s_cnt1 = c_NINE) then         -- move to tens of minute
                             s_cnt1 <= (others => '0');    -- back to 0 in minutes
                             s_cnt2 <= s_cnt2 + 1;
-                            
+
                             if (s_cnt2 = c_FIVE) then          -- move from minutes to hours
                                 s_cnt2 <= (others => '0');    -- back to 0 in tens of minutes
                                 s_cnt3 <= s_cnt3 + 1;
-                                
+
                                 if (s_cnt3 = c_NINE) then         -- move to tens of hours
                                     s_cnt3 <= (others => '0');    -- back to 0 in hours
                                     s_cnt4 <= s_cnt4 + 1;
-                                    
+
                                     if(s_cnt4 = c_NINE) then
                                        s_cnt4 <= (others => '0'); -- back to 0 in tens of hours
 
@@ -1294,7 +1296,7 @@ Top module shows how are signals connected to top module and interconnected betw
 
 ```vhdl
 entity top is
-    Port 
+    Port
     (
      -- Inputs
      SW             : in STD_LOGIC_VECTOR(3 - 1 downto 0);
@@ -1322,7 +1324,7 @@ entity top is
      CF_mode        : out STD_LOGIC;                       
      CG_mode        : out STD_LOGIC;                       
      dig_mode_o     : out STD_LOGIC_VECTOR(4 - 1 downto 0);
-     dp_mode_o      : out STD_LOGIC; 
+     dp_mode_o      : out STD_LOGIC;
      LED_o          : out STD_LOGIC_VECTOR(4 - 1 downto 0);
      -- difficult LED display
      Tri_color_LED  : out STD_LOGIC_VECTOR(3 - 1 downto 0)
@@ -1332,22 +1334,22 @@ end top;
 architecture Behavioral of top is
 
     signal s_diameter         : STD_LOGIC_VECTOR(5 - 1 downto 0);
-    
+
     signal s_cycle            : STD_LOGIC;
-    
+
     signal s_count            : STD_LOGIC;
-    
+
     signal s_speed_cur_dig1   : STD_LOGIC_VECTOR(4 - 1 downto 0);
     signal s_speed_cur_dig2   : STD_LOGIC_VECTOR(4 - 1 downto 0);
     signal s_speed_cur_dig3   : STD_LOGIC_VECTOR(4 - 1 downto 0);
     signal s_speed_cur_dig4   : STD_LOGIC_VECTOR(4 - 1 downto 0);
-    
+
     signal s_time_count       : STD_LOGIC_VECTOR(19 - 1 downto 0);
     signal s_time_trip_dig1   : STD_LOGIC_VECTOR(4 - 1 downto 0);
     signal s_time_trip_dig2   : STD_LOGIC_VECTOR(4 - 1 downto 0);
     signal s_time_trip_dig3   : STD_LOGIC_VECTOR(4 - 1 downto 0);
     signal s_time_trip_dig4   : STD_LOGIC_VECTOR(4 - 1 downto 0);
-    
+
     signal s_trip_dig1        : STD_LOGIC_VECTOR(4 - 1 downto 0);   
     signal s_trip_dig2        : STD_LOGIC_VECTOR(4 - 1 downto 0);  
     signal s_trip_dig3        : STD_LOGIC_VECTOR(4 - 1 downto 0);   
@@ -1362,7 +1364,7 @@ architecture Behavioral of top is
     signal s_speed_avg_dig2   : STD_LOGIC_VECTOR(4 - 1 downto 0);
     signal s_speed_avg_dig3   : STD_LOGIC_VECTOR(4 - 1 downto 0);
     signal s_speed_avg_dig4   : STD_LOGIC_VECTOR(4 - 1 downto 0);
-    
+
 
 begin
     -----------------------------------------------------------------------------------
@@ -1445,22 +1447,22 @@ begin
      distance : entity work.distance
         port map
         (
-            clk                    =>  clk, 
+            clk                    =>  clk,
             size_i                 =>  s_diameter,
             cycle_i                =>  s_cycle,    
             reset                  =>  reset,
             dis_trip_o             =>  s_distance,         
 
-                                     
+
             trip_dig1_o            =>  s_trip_dig1,
             trip_dig2_o            =>  s_trip_dig2,
             trip_dig3_o            =>  s_trip_dig3,
             trip_dig4_o            =>  s_trip_dig4,
-                                   
+
             all_dig1_o             =>  s_all_dig1,
             all_dig2_o             =>  s_all_dig2,
             all_dig3_o             =>  s_all_dig3,
-            all_dig4_o             =>  s_all_dig4 
+            all_dig4_o             =>  s_all_dig4
 
 
 
@@ -1474,7 +1476,7 @@ begin
             reset                  =>  reset,
             cnt_1sec_i             =>  s_count,
             time_count_i           =>  s_time_count,
-            distance_i             =>  s_distance, 
+            distance_i             =>  s_distance,
             speed_avg_dig1_o       =>  s_speed_avg_dig1,
             speed_avg_dig2_o       =>  s_speed_avg_dig2,
             speed_avg_dig3_o       =>  s_speed_avg_dig3,
@@ -1488,27 +1490,27 @@ begin
             clk                    =>  clk,
             reset                  =>  reset,
             en_i                   =>  button_mode_i,
-            
+
             speed_avg_dig1_i       =>  s_speed_avg_dig1,
             speed_avg_dig2_i       =>  s_speed_avg_dig2,
             speed_avg_dig3_i       =>  s_speed_avg_dig3,
             speed_avg_dig4_i       =>  s_speed_avg_dig4,
-             
+
             trip_dig1_i            =>  s_trip_dig1,
             trip_dig2_i            =>  s_trip_dig2,
             trip_dig3_i            =>  s_trip_dig3,
             trip_dig4_i            =>  s_trip_dig4,
-            
+
             all_dig1_i             =>  s_all_dig1,  
             all_dig2_i             =>  s_all_dig2,  
             all_dig3_i             =>  s_all_dig3,  
             all_dig4_i             =>  s_all_dig4,  
-             
+
             time_trip_dig1_i       =>  s_time_trip_dig1,
             time_trip_dig2_i       =>  s_time_trip_dig2,
             time_trip_dig3_i       =>  s_time_trip_dig3,
-            time_trip_dig4_i       =>  s_time_trip_dig4, 
-            
+            time_trip_dig4_i       =>  s_time_trip_dig4,
+
             seg_o(6)               =>  CA_mode,
             seg_o(5)               =>  CB_mode,
             seg_o(4)               =>  CC_mode,
@@ -1531,7 +1533,7 @@ begin
             level_of_difficulty_o  =>  Tri_color_LED
         );
      ----------------------------------------------------------------------------------
-                              
+
 end Behavioral;
 ```
 ![top module schema](images/projekt_schema.png)
@@ -1551,7 +1553,7 @@ Below are test input signals mostly in loop, which generates data for counters
         end loop;
         wait;
     end process p_clk_gen;
-    
+
     --------------------------------------------------------------------
     -- Data generation process
     --------------------------------------------------------------------
@@ -1596,7 +1598,7 @@ Below are test input signals mostly in loop, which generates data for counters
         wait;
         report "tire_diameter process finished" severity note;
     end process p_diameter;
-    
+
     --------------------------------------------------------------------
     -- Data generation process for cycle inputs
     --------------------------------------------------------------------
@@ -1610,12 +1612,12 @@ Below are test input signals mostly in loop, which generates data for counters
 
         s_hall_sens_i <= '0';
         wait for 1 ms;
-               
+
         end loop;
         wait;
         report "Cycle process finished" severity note;
     end process p_cycle;
-    
+
     --------------------------------------------------------------------
     -- Data generation process for reset inputs
     --------------------------------------------------------------------
@@ -1634,20 +1636,20 @@ Below are test input signals mostly in loop, which generates data for counters
 
 --        s_reset <= '1';
 --        wait for 100 ms;
-        
+
 --        s_reset <= '0';
 --        wait for 100 ms;
-        
+
         s_reset <= '1';
         wait for 100 ms;
-        
+
         s_reset <= '0';
 --        wait for 100 ms;
-        
+
 --        report "Reset process finished" severity note;
         wait;
     end process p_reset;
-    
+
     -------------------------------------------------------------------
     -- Data generation process for mode buttons
     --------------------------------------------------------------------
@@ -1662,7 +1664,7 @@ Below are test input signals mostly in loop, which generates data for counters
         end loop;
         wait;
     end process p_button_mode;
-    
+
     --------------------------------------------------------------------
     -- Data generation process for button_difficulty input
     --------------------------------------------------------------------
@@ -1713,4 +1715,11 @@ Link to our presentation video - https://drive.google.com/file/d/15UwFpiUVmaMd5I
 
 ## References
 
-   1. Write your text here.
+- Arty A7 Board - https://store.digilentinc.com/arty-a7-artix-7-fpga-development-board/
+- Arty A7 Board reference manual - https://reference.digilentinc.com/reference/programmable-logic/arty-a7/reference-manual
+- Arty A7 Board schematic - https://reference.digilentinc.com/_media/reference/programmable-logic/arty-a7/arty_a7_sch.pdf
+- RPM to KMPH calculation - https://www.electrical4u.net/calculator/rpm-to-kmph-kmps-conversion-calculator/
+- 4-digit 7 - segment 0.56" display HS410561K-32, common anode - https://www.laskarduino.cz/4-mistny--sedmisegmentovy--0-56--displej-hs410561k-32--spolecna-anoda--cerveny/?gclid=Cj0KCQjw-LOEBhDCARIsABrC0TkHNEw1GL7z6yQH_oacR9Hl1ZPOSFJ3biUOZr_8lQqI0rBIFiMJ1xUaAt8FEALw_wcB
+- Hall sensor 44E - https://dratek.cz/arduino/7735-halluv-senzor-44e.html )
+- 330 Ohm resistor - https://dratek.cz/arduino/7655-rezistor-330r-0.25-w-1.html
+- 10kOhm resistor - https://dratek.cz/arduino/7650-rezistor-10k-0.25-w-1.html

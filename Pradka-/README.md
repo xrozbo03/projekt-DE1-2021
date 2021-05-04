@@ -23,7 +23,7 @@ entity top is
      CF             : out STD_LOGIC;
      CG             : out STD_LOGIC;
      dig_o          : out STD_LOGIC_VECTOR(4 - 1 downto 0);
-     dp_o           : out STD_LOGIC_VECTOR(4 - 1 downto 0);
+     dp_o           : out STD_LOGIC;
      -- mode display
      CA_mode        : out STD_LOGIC;                       
      CB_mode        : out STD_LOGIC;                       
@@ -33,7 +33,7 @@ entity top is
      CF_mode        : out STD_LOGIC;                       
      CG_mode        : out STD_LOGIC;                       
      dig_mode_o     : out STD_LOGIC_VECTOR(4 - 1 downto 0);
-     dp_mode_o      : out STD_LOGIC_VECTOR(4 - 1 downto 0); 
+     dp_mode_o      : out STD_LOGIC; 
      LED_o          : out STD_LOGIC_VECTOR(4 - 1 downto 0);
      -- difficult LED display
      Tri_color_LED  : out STD_LOGIC_VECTOR(3 - 1 downto 0)
@@ -243,8 +243,7 @@ begin
         );
      ----------------------------------------------------------------------------------
                               
-end Behavioral;                          
-
+end Behavioral;               
 ```
 
 

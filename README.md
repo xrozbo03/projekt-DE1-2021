@@ -1711,7 +1711,7 @@ Closer view on reset after 14s
 ## Final discussion
 
 All the planned modules and their functions were successfuly constructed and simulated including the ones not in the task. There were problems 
-with the simulation of the TOP module which has been solved after a while. Problem also occured with serveral outputs. Mainy because of the inversion from
+with the simulation of the TOP module which has been solved after a while. Problem also occured with several outputs. Mainly because of the inversion from
 vector output to logic output. Asynchronous reset has been replaced by synchrounous.
 
 ## Video

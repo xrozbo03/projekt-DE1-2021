@@ -23,7 +23,7 @@ Console for exercise bike/bike, hall sensor, measuring and displaying speed, dis
 
 ### Board
 
-Arty A7-100T
+**Arty A7-100T**
 
 ![7seg pins](images/arty-a7-callout.png)
 
@@ -1673,7 +1673,7 @@ Link to our presentation video - https://drive.google.com/file/d/15UwFpiUVmaMd5I
 
 ## References
 
-- Arty A7 Board ( https://store.digilentinc.com/arty-a7-artix-7-fpga-development-board/ )
+- Arty A7 Board - https://store.digilentinc.com/arty-a7-artix-7-fpga-development-board/
 - Arty A7 Board reference manual - https://reference.digilentinc.com/reference/programmable-logic/arty-a7/reference-manual
 - Arty A7 Board schematic - https://reference.digilentinc.com/_media/reference/programmable-logic/arty-a7/arty_a7_sch.pdf
 - RPM to KMPH calculation - https://www.electrical4u.net/calculator/rpm-to-kmph-kmps-conversion-calculator/

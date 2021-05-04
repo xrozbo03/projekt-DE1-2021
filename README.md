@@ -33,7 +33,7 @@ schematic ( https://reference.digilentinc.com/_media/reference/programmable-logi
 
 ### Components
 
-- 4-digit 7 - segment 0.56" display HS410561K-32, společná anoda ( https://www.laskarduino.cz/4-mistny--sedmisegmentovy--0-56--displej-hs410561k-32--spolecna-anoda--cerveny/?gclid=Cj0KCQjw-LOEBhDCARIsABrC0TkHNEw1GL7z6yQH_oacR9Hl1ZPOSFJ3biUOZr_8lQqI0rBIFiMJ1xUaAt8FEALw_wcB )
+- 4-digit 7 - segment 0.56" display HS410561K-32, common anode ( https://www.laskarduino.cz/4-mistny--sedmisegmentovy--0-56--displej-hs410561k-32--spolecna-anoda--cerveny/?gclid=Cj0KCQjw-LOEBhDCARIsABrC0TkHNEw1GL7z6yQH_oacR9Hl1ZPOSFJ3biUOZr_8lQqI0rBIFiMJ1xUaAt8FEALw_wcB )
 - Hall sensor 44E ( https://dratek.cz/arduino/7735-halluv-senzor-44e.html )
 - 330 Ohm resistor ( https://dratek.cz/arduino/7655-rezistor-330r-0.25-w-1.html )
 - 10kOhm resistor ( https://dratek.cz/arduino/7650-rezistor-10k-0.25-w-1.html )
@@ -254,7 +254,7 @@ speed_cur_dig4_o : represents tens of meters
 signals set in the architecture:
 
 ```vhdl
- signal s_cnt_cycles         : unsigned(12 - 1 downto 0) := (others => '0');  -- Counter of cycles before 1 sec
+ signal s_cnt_cycles            : unsigned(12 - 1 downto 0) := (others => '0');  -- Counter of cycles before 1 sec
     signal first2displays       : std_logic := '0';                              -- Signal to count values for first 2 digits
     signal last2displays        : std_logic := '0';                              -- Signal to count values for last 2 digits
     signal tire_diameter_mm     : natural := 0;                                  -- Signal to hold tire diameter in milimeters
@@ -299,7 +299,7 @@ Set diameter:
 Increase local coutner of cycles if there is a cycle
 
 ```vhdl
-if(cycle_i = '1' and cycle_temp = '0') then     -- If the new cycle value is generated
+       if(cycle_i = '1' and cycle_temp = '0') then     -- If the new cycle value is generated
            s_cnt_cycles <= s_cnt_cycles+1;
            cycle_temp   <= '1';
         elsif(cycle_i = '0' and cycle_temp = '1') then
@@ -311,13 +311,13 @@ if(cycle_i = '1' and cycle_temp = '0') then     -- If the new cycle value is gen
 Reset values:
 
 ```vhdl
- if rising_edge(clk) then                            -- Increase local coutner of cycles if there is a cycle
+       if rising_edge(clk) then                            -- Increase local coutner of cycles if there is a cycle
             if (reset = '1') then                           -- Synchronous reset
                 s_cnt_cycles        <= (others => '0');     -- Clear local counter of cycles
                 first2displays      <= '0';                 -- Reset counting for first 2 displays
                 last2displays       <= '0';                 -- Reset counting for last 2 displays
-                calculation         <= 0;                   -- Reset signal for counting of first 2 digits
-                remainder           <= 0;                   -- Reset signal for counting of last 2 digits
+                calculation         <=  0;                   -- Reset signal for counting of first 2 digits
+                remainder           <=  0;                   -- Reset signal for counting of last 2 digits
                 tens_of_kilometers  <= (others => '0');     -- Reset tens of kilometers
                 kilometers          <= (others => '0');     -- Reset kilometers
                 hundreds_of_meters  <= (others => '0');     -- Reset hundrerds of meters
@@ -350,9 +350,11 @@ Calculating the signal for counting the first 2 digits:
                     -- The whole formula for calculation is 0,1885 * Wheel RPM * Diameter of the tire
                     -- 0,1885 -> 377/2000; s_cnt_cycles*60 -> Wheel rpm; tire_diameter_mm -> Diameter of the tire
                     calculation <= (to_integer(unsigned(s_cnt_cycles))*60*tire_diameter_mm*377);
-                    s_cnt_cycles <= (others => '0');                                  -- Clear all bits
-                    if(rising_edge(cycle_i)) then
-                        s_cnt_cycles <= (s_cnt_cycles-s_cnt_cycles)+1;                -- Add 1 cycle if the cycle is generated at 1 sec rising edge
+                   if(cycle_i = '1' and cycle_temp = '0') then
+                        s_cnt_cycles <= "000000000001";                               -- Add 1 cycle if the cycle is generated at 1 sec pulse
+                        cycle_temp   <= '1';
+                    else
+                        s_cnt_cycles <= (others => '0');                              -- Reset cycles value
                     end if;
                     first2displays <= '1';                                            -- At the end of the counting enable signal for counting of first 2 digits
                 end if;

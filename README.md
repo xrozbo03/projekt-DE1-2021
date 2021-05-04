@@ -1708,6 +1708,12 @@ Below are test input signals mostly in loop, which generates data for counters
 Closer view on reset after 14s
 ![top_sim_20s](images/closer_view.jpg)
 
+## Final discussion
+
+All the planned modules and their functions were successfuly constructed and simulated including the ones not in the task. There were problems 
+with the simulation of the TOP module which has been solved after a while. Problem also occured with serveral outputs. Mainy because of the inversion from
+vector output to logic output. Asynchronous reset has been replaced by synchrounous.
+
 ## Video
 
 Link to our presentation video - https://drive.google.com/file/d/15UwFpiUVmaMd5InHgXwBMQ3uqn0uYIgW/view?usp=sharing
@@ -1724,8 +1730,4 @@ Link to our presentation video - https://drive.google.com/file/d/15UwFpiUVmaMd5I
 - 330 Ohm resistor - https://dratek.cz/arduino/7655-rezistor-330r-0.25-w-1.html
 - 10kOhm resistor - https://dratek.cz/arduino/7650-rezistor-10k-0.25-w-1.html
 
-## Final discussion
 
-All the planned modules and their functions were successfuly constructed and simulated including the ones not in the task. There were problems 
-with the simulation of the TOP module which has been solved after a while. Problem also occured with serveral outputs. Mainy because of the inversion from
-vector output to logic output. Asynchronous reset has been replaced by synchrounous.  

@@ -1675,10 +1675,10 @@ Link to our presentation video - https://drive.google.com/file/d/15UwFpiUVmaMd5I
 
 ## References
 
+- Arty A7 Board reference manual - https://reference.digilentinc.com/reference/programmable-logic/arty-a7/reference-manual
+- Arty A7 Board schematic - https://reference.digilentinc.com/_media/reference/programmable-logic/arty-a7/arty_a7_sch.pdf
+- RPM to KMPH calculation - https://www.electrical4u.net/calculator/rpm-to-kmph-kmps-conversion-calculator/
 - 4-digit 7 - segment 0.56" display HS410561K-32, common anode - https://www.laskarduino.cz/4-mistny--sedmisegmentovy--0-56--displej-hs410561k-32--spolecna-anoda--cerveny/?gclid=Cj0KCQjw-LOEBhDCARIsABrC0TkHNEw1GL7z6yQH_oacR9Hl1ZPOSFJ3biUOZr_8lQqI0rBIFiMJ1xUaAt8FEALw_wcB
 - Hall sensor 44E - https://dratek.cz/arduino/7735-halluv-senzor-44e.html )
 - 330 Ohm resistor - https://dratek.cz/arduino/7655-rezistor-330r-0.25-w-1.html
 - 10kOhm resistor - https://dratek.cz/arduino/7650-rezistor-10k-0.25-w-1.html
-- Arty A7 Board reference manual - https://reference.digilentinc.com/reference/programmable-logic/arty-a7/reference-manual
-- Arty A7 Board schematic - https://reference.digilentinc.com/_media/reference/programmable-logic/arty-a7/arty_a7_sch.pdf
-- RPM to KMPH calculation - https://www.electrical4u.net/calculator/rpm-to-kmph-kmps-conversion-calculator/

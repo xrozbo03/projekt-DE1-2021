@@ -1662,6 +1662,11 @@ Below are test input signals mostly in loop, which generates data for counters
         wait;
     end process p_button_difficulty;
 ```
+ Simulation
+![top_sim_20s](images/top_sim_20s.jpg)
+
+Closer view on reset after 14s
+![top_sim_20s](images/closer_view.jpg)
 
 ## Video
 

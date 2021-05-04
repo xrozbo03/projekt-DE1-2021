@@ -1723,3 +1723,9 @@ Link to our presentation video - https://drive.google.com/file/d/15UwFpiUVmaMd5I
 - Hall sensor 44E - https://dratek.cz/arduino/7735-halluv-senzor-44e.html )
 - 330 Ohm resistor - https://dratek.cz/arduino/7655-rezistor-330r-0.25-w-1.html
 - 10kOhm resistor - https://dratek.cz/arduino/7650-rezistor-10k-0.25-w-1.html
+
+## Final discussion
+
+All the planned modules and their functions were successfuly constructed and simulated including the ones not in the task. There were problems 
+with the simulation of the TOP module which has been solved after a while. Problem also occured with serveral outputs. Mainy because of the inversion from
+vector output to logic output. Asynchronous reset has been replaced by synchrounous.  

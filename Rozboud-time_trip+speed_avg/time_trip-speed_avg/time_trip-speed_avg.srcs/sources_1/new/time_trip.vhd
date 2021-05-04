@@ -135,4 +135,5 @@ p_time_trip : process(clk, cycle_i, cnt_1sec_i)
     time_trip_dig2_o <= std_logic_vector(s_cnt3);
     time_trip_dig1_o <= std_logic_vector(s_cnt4);
     time_count_o     <= std_logic_vector(s_cntall);
+    
 end Behavioral;

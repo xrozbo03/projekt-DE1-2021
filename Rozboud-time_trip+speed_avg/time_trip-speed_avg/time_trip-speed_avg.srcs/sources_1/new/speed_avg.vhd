@@ -118,16 +118,14 @@ p_speed_avg : process (clk)
                          end if;
                      end if;
                  end if;
-             else
-             
-             -- Outputs retype to std_logic_vector
-             speed_avg_dig1_o <= std_logic_vector(s_cnt4);
-             speed_avg_dig2_o <= std_logic_vector(s_cnt3);
-             speed_avg_dig3_o <= std_logic_vector(s_cnt2);
-             speed_avg_dig4_o <= std_logic_vector(s_cnt1); 
-             
              end if;
          end if; 
+         
+    -- Outputs retype to std_logic_vector
+    speed_avg_dig1_o <= std_logic_vector(s_cnt4);
+    speed_avg_dig2_o <= std_logic_vector(s_cnt3);
+    speed_avg_dig3_o <= std_logic_vector(s_cnt2);
+    speed_avg_dig4_o <= std_logic_vector(s_cnt1); 
 
     end process p_speed_avg;
 

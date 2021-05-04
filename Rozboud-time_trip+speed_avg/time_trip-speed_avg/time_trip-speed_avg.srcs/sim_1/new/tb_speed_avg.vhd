@@ -138,7 +138,9 @@ begin
     begin
         report "Stimulus process started" severity note;
         
-        
+        s_distance <= "0000000000000000000";   -- 0
+        s_time_count <= "0000000000000000000"; -- 0
+        wait for 1000000ns;
         
         s_distance <= "0000000000000010100";   -- 20
         s_time_count <= "0000000000000000100"; -- 4

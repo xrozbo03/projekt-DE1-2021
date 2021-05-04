@@ -1252,7 +1252,7 @@ Simulation:
 
 ## TOP module description and simulations
 
-Top module shows how are signals connected module and interconnected between submodules.
+Top module shows how are signals connected to top module and interconnected between submodules.
 
 ```vhdl
 entity top is

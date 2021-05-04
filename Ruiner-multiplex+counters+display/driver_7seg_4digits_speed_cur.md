@@ -17,8 +17,8 @@ use ieee.numeric_std.all;
 ------------------------------------------------------------------------
 entity driver_7seg_4digits_speed_cur is
     port(
-        clk     : in  std_logic;        -- Main clock
-        reset   : in  std_logic;        -- Synchronous reset
+        clk              : in  std_logic;                           -- Main clock
+        reset            : in  std_logic;                           -- Synchronous reset
         -- 4-bit input values for individual digits
         speed_cur_dig1_i : in  std_logic_vector(4 - 1 downto 0);    -- Current speed value for 1. digit (tens of kilometers)
         speed_cur_dig2_i : in  std_logic_vector(4 - 1 downto 0);    -- Current speed value for 2. digit (kilometers)
@@ -29,7 +29,7 @@ entity driver_7seg_4digits_speed_cur is
         -- Common anode signals to individual displays
         dig_o            : out std_logic_vector(4 - 1 downto 0);
         -- Decimal point for specific digit
-        dp_o             : out std_logic_vector(4 - 1 downto 0)
+        dp_o             : out std_logic
     );
 end entity driver_7seg_4digits_speed_cur;
 
@@ -44,6 +44,8 @@ architecture Behavioral of driver_7seg_4digits_speed_cur is
     signal s_cnt : std_logic_vector(2 - 1 downto 0);
     -- Internal 4-bit value for 7-segment decoder
     signal s_hex : std_logic_vector(4 - 1 downto 0);
+    -- Internal decimal point value
+    signal dp    : std_logic_vector(4 - 1 downto 0);
 
 begin
     --------------------------------------------------------------------
@@ -90,23 +92,28 @@ begin
     --------------------------------------------------------------------
     p_mux : process(s_cnt, speed_cur_dig1_i, speed_cur_dig2_i, speed_cur_dig3_i, speed_cur_dig4_i)
     begin
-        dp_o            <= "0100";
+        dp            <= "1011";
         case s_cnt is
             when "11" =>
                 s_hex <= speed_cur_dig4_i;
                 dig_o <= "0001";
+                dp_o  <= dp(0);
 
             when "10" =>
                 s_hex <= speed_cur_dig3_i;
                 dig_o <= "0010";
+                dp_o  <= dp(1);
 
             when "01" =>
                 s_hex <= speed_cur_dig2_i;
                 dig_o <= "0100";
+                dp_o  <= dp(2);
 
             when others =>
                 s_hex <= speed_cur_dig1_i;
                 dig_o <= "1000";
+                dp_o  <= dp(3);
+
         end case;
     end process p_mux;
 
@@ -147,7 +154,7 @@ architecture testbench of tb_driver_7seg_4digits_speed_cur is
     signal s_speed_cur_dig2  : std_logic_vector(4 - 1 downto 0);
     signal s_speed_cur_dig3  : std_logic_vector(4 - 1 downto 0);
     signal s_speed_cur_dig4  : std_logic_vector(4 - 1 downto 0);    
-    signal s_dp              : std_logic_vector(4 - 1 downto 0);  
+    signal s_dp              : std_logic;  
     signal s_seg             : std_logic_vector(7 - 1 downto 0);   
     signal s_dig             : std_logic_vector(4 - 1 downto 0);
 

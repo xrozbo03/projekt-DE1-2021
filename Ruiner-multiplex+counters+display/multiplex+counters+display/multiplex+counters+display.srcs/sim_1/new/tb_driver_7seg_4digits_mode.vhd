@@ -37,7 +37,7 @@ architecture testbench of tb_driver_7seg_4digits_mode is
     signal s_seg                : std_logic_vector  (7 - 1 downto 0);
     signal s_LED                : STD_LOGIC_VECTOR  (4 - 1 downto 0);
     signal s_dig                : STD_LOGIC_VECTOR  (4 - 1 downto 0);
-    signal s_dp                 : STD_LOGIC_VECTOR  (4 - 1 downto 0);                                  
+    signal s_dp                 : std_logic;                                  
 
 begin
     -- Connecting testbench signals with multiplexer entity

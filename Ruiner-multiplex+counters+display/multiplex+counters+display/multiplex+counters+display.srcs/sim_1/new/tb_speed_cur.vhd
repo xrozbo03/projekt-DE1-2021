@@ -150,10 +150,10 @@ begin
         begin
 
             s_cycle <= '0';
-            wait for 50 ns;
+            wait for 20 ns;
 
             s_cycle <= '1';
-            wait for 5 ns;
+            wait for 35 ns;
 
             s_cycle <= '0';
             wait for 750 ns;

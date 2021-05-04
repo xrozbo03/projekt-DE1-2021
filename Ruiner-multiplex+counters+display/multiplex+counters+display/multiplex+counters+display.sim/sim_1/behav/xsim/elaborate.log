@@ -1,6 +1,6 @@
 Vivado Simulator 2020.2
 Copyright 1986-1999, 2001-2020 Xilinx, Inc. All Rights Reserved.
-Running: H:/Software/Xilinx/Vivado/2020.2/bin/unwrapped/win64.o/xelab.exe -wto 5eebcd2b656b4ee9a9851c3c4cdbfe19 --incr --debug typical --relax --mt 2 -L xil_defaultlib -L secureip --snapshot tb_cycle_behav xil_defaultlib.tb_cycle -log elaborate.log 
+Running: H:/Software/Xilinx/Vivado/2020.2/bin/unwrapped/win64.o/xelab.exe -wto 5eebcd2b656b4ee9a9851c3c4cdbfe19 --incr --debug typical --relax --mt 2 -L xil_defaultlib -L secureip --snapshot tb_driver_7seg_4digits_speed_cur_behav xil_defaultlib.tb_driver_7seg_4digits_speed_cur -log elaborate.log 
 Using 2 slave threads.
 Starting static elaboration
 Completed static elaboration
@@ -11,6 +11,9 @@ Compiling package std.standard
 Compiling package std.textio
 Compiling package ieee.std_logic_1164
 Compiling package ieee.numeric_std
-Compiling architecture behavioral of entity xil_defaultlib.cycle [cycle_default]
-Compiling architecture testbench of entity xil_defaultlib.tb_cycle
-Built simulation snapshot tb_cycle_behav
+Compiling architecture behavioral of entity xil_defaultlib.clock_enable [clock_enable_default]
+Compiling architecture behavioral of entity xil_defaultlib.cnt_up [cnt_up_default]
+Compiling architecture behavioral of entity xil_defaultlib.hex_7seg [hex_7seg_default]
+Compiling architecture behavioral of entity xil_defaultlib.driver_7seg_4digits_speed_cur [driver_7seg_4digits_speed_cur_de...]
+Compiling architecture testbench of entity xil_defaultlib.tb_driver_7seg_4digits_speed_cur
+Built simulation snapshot tb_driver_7seg_4digits_speed_cur_behav

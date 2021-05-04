@@ -29,7 +29,7 @@ architecture testbench of tb_driver_7seg_4digits_speed_cur is
     signal s_speed_cur_dig2  : std_logic_vector(4 - 1 downto 0);
     signal s_speed_cur_dig3  : std_logic_vector(4 - 1 downto 0); 
     signal s_speed_cur_dig4  : std_logic_vector(4 - 1 downto 0);    
-    signal s_dp              : std_logic_vector(4 - 1 downto 0);  
+    signal s_dp              : std_logic;  
     signal s_seg             : std_logic_vector(7 - 1 downto 0);   
     signal s_dig             : std_logic_vector(4 - 1 downto 0);
 

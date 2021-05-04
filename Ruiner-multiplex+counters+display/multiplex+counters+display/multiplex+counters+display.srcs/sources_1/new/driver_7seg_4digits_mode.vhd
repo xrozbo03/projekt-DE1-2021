@@ -31,7 +31,7 @@ entity driver_7seg_4digits_mode is
            seg_o              : out std_logic_vector (7 - 1 downto 0);     -- Cathode values for individual segments
            LED_o              : out STD_LOGIC_VECTOR (4 - 1 downto 0);     -- LEDs on board to display which mode is selected
            dig_o              : out STD_LOGIC_VECTOR (4 - 1 downto 0);     -- Choose which digit will be active (enable anode)
-           dp_o               : out STD_LOGIC_VECTOR (4 - 1 downto 0)      -- Choose decimal point of the digit
+           dp_o               : out std_logic                              -- Choose decimal point of the digit
     ); 
 end driver_7seg_4digits_mode;
 
@@ -45,6 +45,8 @@ architecture Behavioral of driver_7seg_4digits_mode is
     signal s_cnt_mode  : std_logic_vector(2 - 1 downto 0);
     -- Internal 4-bit value for 7-segment decoder
     signal s_hex       : std_logic_vector(4 - 1 downto 0);
+    -- Internal decimal point value
+    signal dp          : std_logic_vector(4 - 1 downto 0);
     
 begin
 
@@ -104,7 +106,7 @@ begin
     -- selecting data for a single digit, a decimal point signal and 
     -- switches the common anodes of each display.
     --------------------------------------------------------------------       
-    p_mux : process(s_cnt, s_cnt_mode,
+    p_mux : process(s_cnt, s_cnt_mode, dp,
                     speed_avg_dig1_i, speed_avg_dig2_i, speed_avg_dig3_i, speed_avg_dig4_i,
                     trip_dig1_i, trip_dig2_i, trip_dig3_i, trip_dig4_i,
                     all_dig1_i, all_dig2_i, all_dig3_i, all_dig4_i,
@@ -112,71 +114,87 @@ begin
     begin 
         case s_cnt_mode is
             when "00" =>                            -- Average speed is assigned to the mode combination "00"
-                dp_o    <= "0100";                  -- Enabled decimal point for average speed (second digit - kilometers)
+                dp      <= "1011";                  -- Enabled decimal point for average speed (second digit - kilometers)
                 LED_o   <= "1000";                  -- Turn on LED 4
                 if (s_cnt = "00") then
                     s_hex <= speed_avg_dig1_i;      -- Display tens of kilometers if counter combination is "00"
                     dig_o <= "1000";                -- Enable 1. digit from the left
+                    dp_o  <= dp(3);
                 elsif (s_cnt = "01") then
                     s_hex <= speed_avg_dig2_i;      -- Display kilometers if counter combination is "01"
                     dig_o <= "0100";                -- Enable 2. digit from the left
+                    dp_o  <= dp(2);
                 elsif (s_cnt = "10") then
                     s_hex <= speed_avg_dig3_i;      -- Display hundreds of meters if counter combination is "10"
                     dig_o <= "0010";                -- Enable 3. digit from the left
+                    dp_o  <= dp(1);
                 else
                     s_hex <= speed_avg_dig4_i;      -- Display tens of meters if counter combination is "11"
                     dig_o <= "0001";                -- Enable 4. digit from the left
+                    dp_o  <= dp(0);
                 end if;
                 
             when "01" =>                            -- Trip distance is assigned to the mode combination "01"
-                dp_o    <= "0010";                  -- Enabled decimal point for trip distance (third digit - kilometers)
+                dp      <= "1101";                  -- Enabled decimal point for trip distance (third digit - kilometers)
                 LED_o   <= "0100";                  -- Turn on LED 5
                 if (s_cnt = "00") then
                     s_hex <= trip_dig1_i;           -- Display hundreds of kilometers if counter combination is "00"
                     dig_o <= "1000";                -- Enable 1. digit from the left
+                    dp_o  <= dp(3);
                 elsif (s_cnt = "01") then
                     s_hex <= trip_dig2_i;           -- Display tens of kilometers if counter combination is "01"
                     dig_o <= "0100";                -- Enable 2. digit from the left
+                    dp_o  <= dp(2);
                 elsif (s_cnt = "10") then
                     s_hex <= trip_dig3_i;           -- Display kilometers if counter combination is "10"
                     dig_o <= "0010";                -- Enable 3. digit from the left
+                    dp_o  <= dp(1);
                 else
                     s_hex <= trip_dig4_i;           -- Display hundreds of meters if counter combination is "11"
                     dig_o <= "0001";                -- Enable 4. digit from the left
+                    dp_o  <= dp(0);
                 end if;
                 
             when "10" =>                            -- Total distance is assigned to the mode combination "10"
-                dp_o    <= "0000";                  -- Disabled decimal point for total distance
+                dp      <= "1111";                  -- Disabled decimal point for total distance
                 LED_o   <= "0010";                  -- Turn on LED 6
                 if (s_cnt = "00") then
                     s_hex <= all_dig1_i;            -- Display thousands of kilometers if counter combination is "00"
                     dig_o <= "1000";                -- Enable 1. digit from the left
+                    dp_o  <= dp(3);
                 elsif (s_cnt = "01") then
                     s_hex <= all_dig2_i;            -- Display hundreds of kilometers if counter combination is "01"
                     dig_o <= "0100";                -- Enable 2. digit from the left
+                    dp_o  <= dp(2);
                 elsif (s_cnt = "10") then
                     s_hex <= all_dig3_i;            -- Display tens of kilometers if counter combination is "10"
                     dig_o <= "0010";                -- Enable 3. digit from the left
+                    dp_o  <= dp(1);
                 else
                     s_hex <= all_dig4_i;            -- Display kilometers if counter combination is "11"
                     dig_o <= "0001";                -- Enable 4. digit from the left
+                    dp_o  <= dp(0);
                 end if;
                 
             when others =>                          -- Time trip is assigned to the mode combination "11"
-                dp_o    <= "0010";                  -- Enabled decimal point for time trip (hours)
+                dp      <= "1011";                  -- Enabled decimal point for time trip (hours)
                 LED_o   <= "0001";                  -- Turn on LED 7
                 if (s_cnt = "00") then
                     s_hex <= time_trip_dig1_i;      -- Display tens of hours if counter combination is "00"
                     dig_o <= "1000";                -- Enable 1. digit from the left
+                    dp_o  <= dp(3);
                 elsif (s_cnt = "01") then
                     s_hex <= time_trip_dig2_i;      -- Display hours if counter combination is "01"
                     dig_o <= "0100";                -- Enable 2. digit from the left
+                    dp_o  <= dp(2);
                 elsif (s_cnt = "10") then
                     s_hex <= time_trip_dig3_i;      -- Display tens of minutes if counter combination is "10"
                     dig_o <= "0010";                -- Enable 3. digit from the left
+                    dp_o  <= dp(1);
                 else
                     s_hex <= time_trip_dig4_i;      -- Display minutes if counter combination is "11"
                     dig_o <= "0001";                -- Enable 4. digit from the left
+                    dp_o  <= dp(0);
                 end if;
         end case;
     end process p_mux;

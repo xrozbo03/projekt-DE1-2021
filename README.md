@@ -44,7 +44,6 @@ schematic ( https://reference.digilentinc.com/_media/reference/programmable-logi
 
 ![7seg pins](images/7seg.png)
 
-![7seg zapojení](images/7seg-inspirace.png)
 
 Hall sensor
 

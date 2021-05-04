@@ -1,0 +1,118 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
+| Date         : Tue May  4 15:38:08 2021
+| Host         : Laptop-HP running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file top_control_sets_placed.rpt
+| Design       : top
+| Device       : xc7a100t
+------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |    40 |
+|    Minimum number of control sets                        |    40 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |   148 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |    40 |
+| >= 0 to < 4        |     1 |
+| >= 4 to < 6        |    22 |
+| >= 6 to < 8        |     0 |
+| >= 8 to < 10       |     0 |
+| >= 10 to < 12      |     2 |
+| >= 12 to < 14      |     1 |
+| >= 14 to < 16      |     0 |
+| >= 16              |    14 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |              28 |           11 |
+| No           | No                    | Yes                    |               0 |            0 |
+| No           | Yes                   | No                     |             177 |           52 |
+| Yes          | No                    | No                     |              84 |           23 |
+| Yes          | No                    | Yes                    |               0 |            0 |
+| Yes          | Yes                   | No                     |             251 |           69 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++------------------------+-------------------------------------+--------------------------------------------------------------+------------------+----------------+--------------+
+|      Clock Signal      |            Enable Signal            |                       Set/Reset Signal                       | Slice Load Count | Bel Load Count | Bels / Slice |
++------------------------+-------------------------------------+--------------------------------------------------------------+------------------+----------------+--------------+
+|  time_trip/s_enable__0 |                                     |                                                              |                1 |              1 |         1.00 |
+| ~hall_sens_i_IBUF_BUFG |                                     | distance/s_trip_dig1_o[3]_i_1_n_0                            |                2 |              4 |         2.00 |
+| ~hall_sens_i_IBUF_BUFG |                                     | distance/s_trip_dig2_o[3]_i_1_n_0                            |                1 |              4 |         4.00 |
+| ~hall_sens_i_IBUF_BUFG |                                     | distance/s_trip_dig3_o[3]_i_1_n_0                            |                2 |              4 |         2.00 |
+| ~hall_sens_i_IBUF_BUFG |                                     | distance/s_trip_dig4_o[3]_i_1_n_0                            |                1 |              4 |         4.00 |
+| ~hall_sens_i_IBUF_BUFG | distance/s_all_dig2_o               | distance/s_all_dig1_o                                        |                1 |              4 |         4.00 |
+| ~hall_sens_i_IBUF_BUFG | distance/s_count[10]_i_1_n_0        | distance/s_all_dig4_o                                        |                1 |              4 |         4.00 |
+| ~hall_sens_i_IBUF_BUFG | distance/s_all_dig4_o               |                                                              |                2 |              4 |         2.00 |
+| ~hall_sens_i_IBUF_BUFG | distance/s_all_dig3_o               | distance/s_all_dig2_o                                        |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG         |                                     |                                                              |                4 |              4 |         1.00 |
+|  clk_IBUF_BUFG         | time_trip/s_cnt4                    | reset_IBUF                                                   |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG         | time_trip/s_cnt2                    | reset_IBUF                                                   |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG         | time_trip/s_cnt1                    | reset_IBUF                                                   |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG         | time_trip/s_cnt3                    | reset_IBUF                                                   |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG         | speed_cur/hundreds_of_meters        | count_1sec/SR[0]                                             |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG         | speed_cur/kilometers[3]_i_2_n_0     | count_1sec/SR[0]                                             |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG         | speed_cur/tens_of_meters[3]_i_1_n_0 | count_1sec/SR[0]                                             |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG         | speed_cur/tens_of_kilometers        | count_1sec/SR[0]                                             |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG         | speed_avg/s_cnt1                    | speed_avg/s_time[18]_i_1_n_0                                 |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG         | speed_avg/s_cnt4                    | speed_avg/s_time[18]_i_1_n_0                                 |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG         | speed_avg/s_cnt2                    | speed_avg/s_time[18]_i_1_n_0                                 |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG         | speed_avg/s_cnt3                    | speed_avg/s_time[18]_i_1_n_0                                 |                1 |              4 |         4.00 |
+|  s_count_BUFG          |                                     |                                                              |                1 |              4 |         4.00 |
+| ~hall_sens_i_IBUF_BUFG |                                     | distance/p_2_in                                              |                3 |             11 |         3.67 |
+| ~hall_sens_i_IBUF_BUFG |                                     | distance/s_count[10]_i_1_n_0                                 |                3 |             11 |         3.67 |
+|  clk_IBUF_BUFG         | speed_cur/sel                       | reset_IBUF                                                   |                3 |             12 |         4.00 |
+|  clk_IBUF_BUFG         | speed_avg/s_time[18]_i_1_n_0        |                                                              |                5 |             19 |         3.80 |
+| ~hall_sens_i_IBUF_BUFG |                                     |                                                              |                5 |             19 |         3.80 |
+|  clk_IBUF_BUFG         | count_1sec/s_cnt0                   | reset_IBUF                                                   |                7 |             25 |         3.57 |
+|  clk_IBUF_BUFG         |                                     | count_1sec/clear                                             |                7 |             27 |         3.86 |
+|  clk_IBUF_BUFG         | speed_avg/s_cnt_result              | speed_avg/s_time[18]_i_1_n_0                                 |                8 |             30 |         3.75 |
+|  clk_IBUF_BUFG         | speed_avg/s_result_in_natural       |                                                              |                8 |             30 |         3.75 |
+|  clk_IBUF_BUFG         | count_1sec/s_cnt_seconds            | speed_cur/clear                                              |                8 |             31 |         3.88 |
+|  clk_IBUF_BUFG         | speed_cur/remainder[0]_i_1_n_0      | count_1sec/remainder                                         |                8 |             31 |         3.88 |
+|  clk_IBUF_BUFG         |                                     | driver_7seg_4digits_mode/clk_en0/s_cnt_local[0]_i_1__0_n_0   |                8 |             31 |         3.88 |
+|  clk_IBUF_BUFG         |                                     | driver_7seg_4digits_speed_cur/clk_en0/s_cnt_local[0]_i_1_n_0 |                8 |             31 |         3.88 |
+|  clk_IBUF_BUFG         | speed_avg/s_distance[0]_i_1_n_0     |                                                              |                8 |             31 |         3.88 |
+|  clk_IBUF_BUFG         | speed_avg/s_final_result            | speed_avg/s_time[18]_i_1_n_0                                 |                8 |             31 |         3.88 |
+|  clk_IBUF_BUFG         | speed_cur/calculation[0]_i_2_n_0    | count_1sec/remainder                                         |                8 |             31 |         3.88 |
+|  clk_IBUF_BUFG         |                                     | reset_IBUF                                                   |               17 |             50 |         2.94 |
++------------------------+-------------------------------------+--------------------------------------------------------------+------------------+----------------+--------------+
+
+

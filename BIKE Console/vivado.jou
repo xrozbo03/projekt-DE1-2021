@@ -1,0 +1,120 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Tue May  4 12:58:00 2021
+# Process ID: 109940
+# Current directory: D:/Programy/VUT/XILINX/Workspace/Projekt/Console
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent120884 D:\Programy\VUT\XILINX\Workspace\Projekt\Console\Console.xpr
+# Log file: D:/Programy/VUT/XILINX/Workspace/Projekt/Console/vivado.log
+# Journal file: D:/Programy/VUT/XILINX/Workspace/Projekt/Console\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project D:/Programy/VUT/XILINX/Workspace/Projekt/Console/Console.xpr
+update_compile_order -fileset sources_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run impl_1 -prev_step 
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+open_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+close_design
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 6
+wait_on_run impl_1
+open_run impl_1
+file copy -force D:/Programy/VUT/XILINX/Workspace/Projekt/Console/Console.runs/impl_1/top.bit D:/Programy/VUT/XILINX/Workspace/Projekt/Console/Bitstream.bit
+set_property -name {xsim.simulate.runtime} -value {20000ms} -objects [get_filesets sim_1]
+launch_simulation
+source tb_top.tcl
+save_wave_config {D:/Programy/VUT/XILINX/Workspace/Projekt/Console/tb_top_behav20s.wcfg}
+add_files -fileset sim_1 -norecurse D:/Programy/VUT/XILINX/Workspace/Projekt/Console/tb_top_behav20s.wcfg
+set_property xsim.view D:/Programy/VUT/XILINX/Workspace/Projekt/Console/tb_top_behav20s.wcfg [get_filesets sim_1]
+close_sim
+launch_simulation
+open_wave_config D:/Programy/VUT/XILINX/Workspace/Projekt/Console/tb_top_behav20s.wcfg
+source tb_top.tcl
+save_wave_config {D:/Programy/VUT/XILINX/Workspace/Projekt/Console/tb_top_behav20s.wcfg}
+save_wave_config {D:/Programy/VUT/XILINX/Workspace/Projekt/Console/tb_top_behav20s.wcfg}
+save_wave_config {D:/Programy/VUT/XILINX/Workspace/Projekt/Console/tb_top_behav20s.wcfg}
+save_wave_config {D:/Programy/VUT/XILINX/Workspace/Projekt/Console/tb_top_behav20s.wcfg}
+close_sim

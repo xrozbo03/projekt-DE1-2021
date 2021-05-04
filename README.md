@@ -1496,7 +1496,7 @@ begin
                               
 end Behavioral;
 ```
-![top module schema](images/top_module_schema.png)
+![top module schema](images/projekt_schema.png)
 ## Tb_top
 Below are test input signals mostly in loop, which generates data for counters
 ```vhdl

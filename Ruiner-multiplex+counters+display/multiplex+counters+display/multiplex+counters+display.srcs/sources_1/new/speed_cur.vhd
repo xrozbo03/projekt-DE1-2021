@@ -102,8 +102,9 @@ begin
                     -- 0,1885 -> 377/2000; s_cnt_cycles*60 -> Wheel rpm; tire_diameter_mm -> Diameter of the tire
                     calculation <= (to_integer(unsigned(s_cnt_cycles))*60*tire_diameter_mm*377);
                     s_cnt_cycles <= (others => '0');                                  -- Reset cycles value
-                    if(rising_edge(cycle_i)) then
+                    if(cycle_i = '1' and cycle_temp = '0') then
                         s_cnt_cycles <= (s_cnt_cycles-s_cnt_cycles)+1;                -- Add 1 cycle if the cycle is generated at 1 sec pulse
+                        cycle_temp   <= '1';
                     end if; 
                     first2displays <= '1';                                            -- At the end of the counting enable signal for counting of first 2 digits
                 end if;

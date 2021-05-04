@@ -44,7 +44,6 @@ schematic ( https://reference.digilentinc.com/_media/reference/programmable-logi
 
 ![7seg pins](images/7seg.png)
 
-
 Hall sensor
 
 ![Hall zapojení](images/hall.png)
@@ -472,6 +471,12 @@ Reset when the counter is counting and if the release of new value for distance 
                  s_enable_new_value  <= '0';
 
 ```
+When there's no signal from the counter and the release of the values for distance and time are disabled, we enable the values:
+```vhdl
+          elsif (cnt_1sec_i = '0') and (s_enable_new_value = '0') then 
+                 s_enable_new_value  <= '1';
+
+```
 
 When the value of the distance is larger than the time after conversion, a new value is set to the distance by subtracting the time value from the distance. The result is increased by 1.
 ```vhdl
@@ -524,7 +529,7 @@ Setting the outputs:
 
 ```
 Simulation:
-![speed_avg](images/speed_avg.png)
+![speed_avg](images/speed_tb.png)
 
 
 ## Module: distance
